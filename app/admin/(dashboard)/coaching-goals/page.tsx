@@ -1,0 +1,1 @@
+export default function coachinggoalsPage() { return <div className='p-8'><h1 className='text-2xl font-display uppercase'>coaching-goals</h1><p className='mt-4 text-on-surface-variant'>This module is under construction.</p></div>; }
