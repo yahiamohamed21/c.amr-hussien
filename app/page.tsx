@@ -8,6 +8,7 @@ import { Services } from "@/components/Services";
 import { Process } from "@/components/Process";
 import { Philosophy } from "@/components/Philosophy";
 import { Results } from "@/components/Results";
+import { Gallery } from "@/components/Gallery";
 import { Accreditations } from "@/components/Accreditations";
 import { Education } from "@/components/Education";
 import { Contact } from "@/components/Contact";
@@ -27,6 +28,7 @@ export default function Home() {
         <Process />
         <Philosophy />
         <Results />
+        <Gallery />
         <Accreditations />
         <Education />
         <Contact />
