@@ -44,32 +44,46 @@ export function About() {
 
         {/* Right Side: Image Composition */}
         <div className="col-span-12 lg:col-span-6 lg:col-start-7 relative">
-          <div className="relative w-full max-w-[500px] mx-auto lg:mx-0 lg:ml-auto pr-8 pb-8 scroll-reveal">
-            {/* The main image */}
-            <div className="aspect-[3/4] relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-white/5">
-              <Image
-                fill
-                className="object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-700"
-                alt="Coach Amr Portrait"
-                src="/c_amr.png"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-50"></div>
+          <div className="relative w-full max-w-[500px] mx-auto lg:mx-0 lg:ml-auto pr-4 pb-12 scroll-reveal">
+            
+            {/* Premium Overlapping Collage */}
+            <div className="relative w-full aspect-[4/5] z-10">
+              {/* Main Large Image (Left) */}
+              <div className="absolute top-0 left-0 w-[70%] h-[85%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 z-10 group">
+                <Image
+                  fill
+                  className="object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700"
+                  alt="Coach Amr 1"
+                  src="/image-1.jpeg"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+              </div>
+              
+              {/* Top Right Small Image */}
+              <div className="absolute top-[5%] right-0 w-[45%] h-[40%] rounded-2xl overflow-hidden shadow-2xl border-4 border-background z-20 group">
+                <Image
+                  fill
+                  className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                  alt="Coach Amr 2"
+                  src="/image-2.jpeg"
+                />
+              </div>
+
+              {/* Bottom Right Small Image */}
+              <div className="absolute bottom-[5%] right-[5%] w-[50%] h-[45%] rounded-2xl overflow-hidden shadow-2xl border-4 border-background z-30 group">
+                <Image
+                  fill
+                  className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                  alt="Coach Amr 3"
+                  src="/image-3.jpeg"
+                />
+              </div>
             </div>
 
             {/* Decorative Offset Box */}
-            <div className="absolute top-8 right-0 bottom-0 left-8 border-2 border-primary-container rounded-2xl z-0 hidden md:block opacity-50"></div>
+            <div className="absolute top-6 right-4 bottom-6 left-6 border-2 border-primary/30 rounded-2xl z-0 hidden md:block"></div>
 
-            {/* Floating Glass Badge (Moved to bottom left so it doesn't cover face) */}
-            <div className="absolute -bottom-4 left-2 md:-left-6 bg-background/80 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-xl z-20 flex items-center gap-4 scroll-reveal" style={{ transitionDelay: '200ms' }}>
-              <div className="w-12 h-12 bg-primary-container text-on-primary-fixed rounded-full flex items-center justify-center shrink-0">
-                <span className="font-display text-xl">10+</span>
-              </div>
-              <div className="whitespace-nowrap">
-                <p className="font-label-caps text-[10px] md:text-xs tracking-widest text-on-surface-variant uppercase">Years of</p>
-                <p className="font-bold text-sm md:text-base text-on-surface">Experience</p>
-              </div>
             </div>
-          </div>
         </div>
 
       </div>

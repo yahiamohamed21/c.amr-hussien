@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export function Services() {
   // We define the static data here for now, but structure it so it's easy to replace with an API map later.
@@ -26,15 +27,64 @@ export function Services() {
         ]);
       });
   }, []);
+return(
+    <section id="services" className="py-24 relative bg-black overflow-hidden">
+      {/* Background Images Layer */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        
+        {/* Mobile Background (Single Image, no fading mask) */}
+        <div className="absolute inset-0 w-full h-full block md:hidden">
+          <Image
+            src="/image-5.jpeg"
+            alt="Nutrition Background"
+            fill
+            className="object-cover object-center opacity-70"
+          />
+        </div>
 
-  return (
-    <section id="services" className="py-24 relative bg-background overflow-hidden">
+        {/* Desktop Background (Dual Blended Images) */}
+        <div className="absolute inset-0 w-full h-full hidden md:block">
+          <div 
+            className="absolute inset-y-0 left-0 w-[60%] h-full"
+            style={{
+              WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%)',
+              maskImage: 'linear-gradient(to right, black 60%, transparent 100%)'
+            }}
+          >
+            <Image
+              src="/image-5.jpeg"
+              alt="Nutrition Background 1"
+              fill
+              className="object-cover object-center opacity-70"
+            />
+          </div>
+
+          <div 
+            className="absolute inset-y-0 right-0 w-[60%] h-full"
+            style={{
+              WebkitMaskImage: 'linear-gradient(to left, black 60%, transparent 100%)',
+              maskImage: 'linear-gradient(to left, black 60%, transparent 100%)'
+            }}
+          >
+            <Image
+              src="/image-6.jpeg"
+              alt="Nutrition Background 2"
+              fill
+              className="object-cover object-center opacity-70"
+            />
+          </div>
+        </div>
+
+        {/* Global Clean Overlay for text readability (no muddy gradients) */}
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+
       {/* Background accents */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent"></div>
-      <div className="absolute top-40 -left-40 w-96 h-96 bg-primary-container/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent z-0"></div>
+      <div className="absolute top-40 -left-40 w-96 h-96 bg-primary-container/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
       <div className="px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto relative z-10">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div className="max-w-2xl">
@@ -51,7 +101,7 @@ export function Services() {
               </span>
             </h2>
           </div>
-          
+
           <div className="md:max-w-sm">
             <p className="font-body-md text-on-surface-variant text-sm md:text-base border-l-2 border-primary/30 pl-4 py-1">
               A comprehensive suite of elite performance protocols designed to optimize every facet of your physical potential.
@@ -62,19 +112,19 @@ export function Services() {
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {services.map((service, i) => (
-            <div 
+            <div
               key={service.id}
               className={`group relative overflow-hidden bg-surface-container-lowest rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-500 hover:border-primary/50 hover:shadow-xl hover:-translate-y-1 ${service.featured ? 'md:col-span-2 lg:col-span-2 row-span-2 p-8 md:p-12' : 'p-6 md:p-8'}`}
             >
               {/* Hover Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary-container/0 via-transparent to-primary-container/0 group-hover:from-primary/5 transition-colors duration-500"></div>
-              
+
               <div className="relative z-10 h-full flex flex-col">
                 <div className="flex justify-between items-start mb-auto">
                   <div className={`flex items-center justify-center rounded-xl bg-background border border-black/10 dark:border-white/5 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 ${service.featured ? 'w-16 h-16 text-3xl mb-8' : 'w-12 h-12 text-2xl mb-6'}`}>
                     <span className="material-symbols-outlined">{service.icon}</span>
                   </div>
-                  
+
                   {/* Decorative Lamp (Lightbulb) */}
                   <div className="w-8 h-8 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:border-primary/50 group-hover:text-primary group-hover:shadow-[0_0_15px_rgba(184,211,0,0.5)]">
                     <span className="material-symbols-outlined text-sm animate-pulse">lightbulb</span>
