@@ -132,7 +132,12 @@ export function Footer() {
           <div>© {new Date().getFullYear()} {brandName}. ELITE PERFORMANCE COACHING.</div>
           
           {/* Creator Badge */}
-          <a href="#" className="flex items-center border border-outline-variant/30 rounded-full px-4 py-2 bg-surface hover:bg-primary/10 hover:border-primary/50 transition-all duration-500 group cursor-pointer relative overflow-hidden shadow-sm">
+          <a 
+            href="https://www.linkedin.com/in/yahia-mohamed-b8b440372/" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center border border-outline-variant/30 rounded-full px-4 py-2 bg-surface hover:bg-primary/10 hover:border-primary/50 transition-all duration-500 group cursor-pointer relative overflow-hidden shadow-sm"
+          >
             <div className="absolute inset-0 w-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent group-hover:w-full transition-all duration-700 ease-in-out -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%]"></div>
             <span className="text-primary font-bold tracking-widest mr-2 opacity-70 group-hover:opacity-100 transition-opacity text-xs">{"</>"}</span>
             <span className="text-on-surface-variant group-hover:text-on-surface transition-colors duration-300 text-[10px] md:text-xs">
