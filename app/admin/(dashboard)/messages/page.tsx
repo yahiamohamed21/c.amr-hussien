@@ -108,6 +108,7 @@ export default function MessagesPage() {
   };
 
   const formatWhatsAppLink = (phone: string) => {
+    if (!phone) return "#";
     // Strip everything but numbers
     const cleanPhone = phone.replace(/\D/g, "");
     return `https://wa.me/${cleanPhone}`;
@@ -192,12 +193,12 @@ export default function MessagesPage() {
                       <td className="p-4 text-sm text-on-surface-variant">{m.primaryGoal}</td>
                       <td className="p-4 text-sm">
                         <a 
-                          href={formatWhatsAppLink(m.whatsappNumber)} 
+                          href={formatWhatsAppLink(m.whatsAppNumber)} 
                           target="_blank" 
                           rel="noreferrer"
                           className="text-primary hover:underline flex items-center gap-1.5"
                         >
-                          {m.whatsappNumber}
+                          {m.whatsAppNumber}
                           <ExternalLink className="w-3.5 h-3.5" />
                         </a>
                       </td>
