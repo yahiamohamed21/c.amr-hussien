@@ -203,7 +203,7 @@ export function Contact() {
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   >
                     <span className={goal ? "text-on-surface" : "text-transparent select-none"}>
-                      {goal ? goals.find(g => g.value === goal)?.label : "Placeholder"}
+                      {goal ? goals.find((g: any) => g.value === goal)?.label : "Placeholder"}
                     </span>
                     <span className={`material-symbols-outlined transition-transform duration-300 text-on-surface-variant ${isDropdownOpen ? 'rotate-180' : ''}`}>
                       expand_more
@@ -221,7 +221,7 @@ export function Contact() {
 
                   {/* Dropdown Menu */}
                   <div className={`absolute top-full left-0 w-full bg-surface-container-highest border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-30 transition-all duration-300 origin-top overflow-hidden ${isDropdownOpen ? 'opacity-100 scale-y-100 mt-2' : 'opacity-0 scale-y-0 mt-0 pointer-events-none'}`}>
-                    {goals.map(g => (
+                    {goals.map((g: any) => (
                       <div
                         key={g.value}
                         className={`px-6 py-4 cursor-pointer transition-colors text-base md:text-lg ${goal === g.value ? 'bg-primary/20 text-primary' : 'text-on-surface hover:bg-primary hover:text-black'}`}
