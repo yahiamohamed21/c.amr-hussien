@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard, Map, Image as ImageIcon, BarChart3, 
   Info, Briefcase, GraduationCap, Quote, Images, 
-  Award, Target, MessageSquare, Settings, LayoutTemplate, Link as LinkIcon
+  Award, Target, MessageSquare, Settings, LayoutTemplate, Link as LinkIcon,
+  Activity
 } from "lucide-react";
 import clsx from "clsx";
 
@@ -18,6 +19,7 @@ const navItems = [
   { name: "Hero", href: "/admin/hero", icon: LayoutTemplate },
   { name: "Statistics", href: "/admin/statistics", icon: BarChart3 },
   { name: "About", href: "/admin/about", icon: Info },
+  { name: "Injury Rehab", href: "/admin/injury-rehab", icon: Activity },
   { name: "Services", href: "/admin/services", icon: Briefcase },
   { name: "Methodology", href: "/admin/methodology", icon: GraduationCap },
   { name: "Motivation Banner", href: "/admin/motivation-banner", icon: Quote },
