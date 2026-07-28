@@ -5,6 +5,7 @@ import { api } from "@/lib/api";
 import { Button, Input } from "@/components/ui";
 import { useAdminAlert } from "@/hooks/useAdminAlert";
 import { Plus, Edit2, Trash2, Eye, EyeOff } from "lucide-react";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 export default function QualificationsPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -34,7 +35,7 @@ export default function QualificationsPage() {
   const handleEdit = (item: any) => {
     setFormData({ 
       ...item, 
-      issueDate: item.issueDate ? item.issueDate.split('T')[0] : "" 
+      year: item.year ? String(item.year) : "" 
     });
     setIsEditing(true);
   };
@@ -42,9 +43,10 @@ export default function QualificationsPage() {
   const handleCreate = () => {
     setFormData({
       name: "",
+      institution: "",
       description: "",
-      issuer: "",
-      issueDate: "",
+      year: "",
+      imageId: "",
       displayOrder: items.length,
       isVisible: true,
     });
@@ -67,8 +69,13 @@ export default function QualificationsPage() {
     e.preventDefault();
     try {
       const payload = {
-        ...formData,
-        issueDate: formData.issueDate ? new Date(formData.issueDate).toISOString() : null
+        name: formData.name,
+        institution: formData.institution,
+        description: formData.description || null,
+        year: formData.year ? parseInt(formData.year) : null,
+        imageId: formData.imageId || null,
+        displayOrder: parseInt(formData.displayOrder) || 0,
+        isVisible: formData.isVisible,
       };
 
       if (formData.id) {
@@ -105,17 +112,24 @@ export default function QualificationsPage() {
             required
           />
           <Input
-            label="Issuer (e.g. NASM, ISSA)"
-            value={formData.issuer}
-            onChange={(e) => setFormData({ ...formData, issuer: e.target.value })}
+            label="Institution (e.g. NASM, ISSA)"
+            value={formData.institution}
+            onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
             required
           />
           <Input
-            label="Issue Date"
-            type="date"
-            value={formData.issueDate}
-            onChange={(e) => setFormData({ ...formData, issueDate: e.target.value })}
+            label="Year"
+            type="number"
+            value={formData.year}
+            onChange={(e) => setFormData({ ...formData, year: e.target.value })}
           />
+
+          <ImageUploader
+            label="Certificate Image (Optional)"
+            value={formData.imageId}
+            onUpload={(id) => setFormData({ ...formData, imageId: id })}
+          />
+
           <Input
             label="Display Order"
             type="number"
@@ -171,9 +185,10 @@ export default function QualificationsPage() {
           <table className="w-full text-left">
             <thead className="bg-surface-container-low border-b border-white/5 text-sm font-label-caps uppercase text-on-surface-variant">
               <tr>
+                <th className="p-4 w-16">Img</th>
                 <th className="p-4">Degree / Title</th>
-                <th className="p-4">Issuer</th>
-                <th className="p-4">Issue Date</th>
+                <th className="p-4">Institution</th>
+                <th className="p-4">Year</th>
                 <th className="p-4 w-24">Visible</th>
                 <th className="p-4 w-24">Order</th>
                 <th className="p-4 w-32 text-right">Actions</th>
@@ -182,11 +197,16 @@ export default function QualificationsPage() {
             <tbody>
               {items.map((item) => (
                 <tr key={item.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
-                  <td className="p-4 text-on-surface font-semibold">{item.name}</td>
-                  <td className="p-4 text-sm text-on-surface-variant">{item.issuer}</td>
-                  <td className="p-4 text-sm text-on-surface-variant">
-                    {item.issueDate ? new Date(item.issueDate).toLocaleDateString() : "-"}
+                  <td className="p-4">
+                    {item.imageId ? (
+                      <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${item.imageId}`} className="w-10 h-10 object-cover rounded" />
+                    ) : (
+                      <div className="w-10 h-10 bg-white/10 rounded flex items-center justify-center text-xs text-on-surface-variant/40">No Img</div>
+                    )}
                   </td>
+                  <td className="p-4 text-on-surface font-semibold">{item.name}</td>
+                  <td className="p-4 text-sm text-on-surface-variant">{item.institution}</td>
+                  <td className="p-4 text-sm text-on-surface-variant">{item.year || "-"}</td>
                   <td className="p-4 text-sm text-on-surface-variant">
                     {item.isVisible ? (
                       <span className="flex items-center gap-1.5 text-primary"><Eye className="w-4 h-4" /> Yes</span>
@@ -207,7 +227,7 @@ export default function QualificationsPage() {
               ))}
               {items.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="p-12 text-center text-on-surface-variant italic">No qualifications found.</td>
+                  <td colSpan={7} className="p-12 text-center text-on-surface-variant italic">No qualifications found.</td>
                 </tr>
               )}
             </tbody>
