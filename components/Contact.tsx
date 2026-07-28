@@ -30,7 +30,7 @@ export function Contact() {
     { value: "Injury Rehabilitation", label: "Injury Rehabilitation" },
   ];
 
-  const goals: Array<{ value: string; label: string }> = dbGoals?.length > 0
+  const goals = dbGoals?.length > 0
     ? dbGoals.map((g: any) => ({ value: g.name, label: g.name }))
     : defaultGoals;
 
@@ -80,14 +80,14 @@ export function Contact() {
 
   return (
     <section className="py-32 px-margin-mobile md:px-margin-desktop bg-surface relative border-t border-white/5 overflow-hidden" id="contact">
-      
+
       {/* Background massive text */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.03] select-none z-0">
         <h2 className="font-display font-black text-[clamp(5rem,20vw,25rem)] leading-none uppercase">APPLY</h2>
       </div>
 
       <div className="max-w-[1200px] mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16">
-        
+
         {/* Left Column: Typography */}
         <div className="lg:col-span-5 flex flex-col justify-center">
           <div className="flex items-center gap-4 mb-6">
@@ -96,7 +96,7 @@ export function Contact() {
               The Final Step
             </span>
           </div>
-          
+
           <h2 className="font-display-xl text-[clamp(4rem,8vw,6rem)] leading-[0.85] uppercase tracking-tighter text-on-surface mb-8">
             READY TO <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container relative">
@@ -104,7 +104,7 @@ export function Contact() {
               <span className="absolute inset-0 bg-primary/20 blur-[50px] -z-10"></span>
             </span>
           </h2>
-          
+
           <div className="border-l-2 border-primary/30 pl-6 space-y-4">
             <p className="font-body-md text-on-surface-variant text-lg leading-relaxed">
               Applications for the Elite Performance Program are strictly reviewed. We only work with those who are <strong className="text-on-surface">relentless</strong> about their goals.
@@ -130,12 +130,12 @@ export function Contact() {
               <h3 className="font-display text-3xl md:text-4xl uppercase tracking-wider text-on-surface mb-4">
                 Application Received
               </h3>
-              
+
               <p className="font-body-md text-on-surface-variant text-base md:text-lg max-w-sm mb-10 leading-relaxed">
                 Thank you for applying. We will review your biometrics and goals and contact you via WhatsApp shortly.
               </p>
 
-              <button 
+              <button
                 onClick={() => {
                   setIsSubmitted(false);
                   setFullName("");
@@ -143,7 +143,7 @@ export function Contact() {
                   setWhatsAppNumber("");
                   setGoal("");
                   setHealthConsiderations("");
-                }} 
+                }}
                 className="group relative px-8 py-3 bg-surface-container-high border border-white/10 hover:border-primary/50 transition-colors duration-300"
               >
                 <span className="font-label-caps text-xs tracking-widest text-on-surface uppercase group-hover:text-primary transition-colors">
@@ -153,52 +153,52 @@ export function Contact() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="bg-surface-container border border-black/10 dark:border-white/10 p-8 md:p-12 shadow-2xl relative">
-              
+
               {/* Form Corner Accents */}
               <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary"></div>
               <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary"></div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 mb-10">
                 <div className="relative group">
-                  <input 
-                    className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent" 
-                    placeholder="Full Name" 
-                    id="name" 
-                    type="text" 
+                  <input
+                    className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent"
+                    placeholder="Full Name"
+                    id="name"
+                    type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    required 
+                    required
                   />
                   <label htmlFor="name" className="absolute left-0 top-4 text-on-surface-variant text-lg transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-primary peer-focus:tracking-widest uppercase peer-valid:-top-6 peer-valid:text-xs peer-valid:text-on-surface-variant font-label-caps">Full Name</label>
                 </div>
                 <div className="relative group">
-                  <input 
-                    className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent" 
-                    placeholder="Email" 
-                    id="email" 
-                    type="email" 
+                  <input
+                    className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent"
+                    placeholder="Email"
+                    id="email"
+                    type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required 
+                    required
                   />
                   <label htmlFor="email" className="absolute left-0 top-4 text-on-surface-variant text-lg transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-primary peer-focus:tracking-widest uppercase peer-valid:-top-6 peer-valid:text-xs peer-valid:text-on-surface-variant font-label-caps">Email Address</label>
                 </div>
                 <div className="relative group">
-                  <input 
-                    className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent" 
-                    placeholder="WhatsApp" 
-                    id="whatsapp" 
-                    type="tel" 
+                  <input
+                    className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent"
+                    placeholder="WhatsApp"
+                    id="whatsapp"
+                    type="tel"
                     value={whatsAppNumber}
                     onChange={(e) => setWhatsAppNumber(e.target.value)}
-                    required 
+                    required
                   />
                   <label htmlFor="whatsapp" className="absolute left-0 top-4 text-on-surface-variant text-lg transition-all peer-focus:-top-6 peer-focus:text-xs peer-focus:text-primary peer-focus:tracking-widest uppercase peer-valid:-top-6 peer-valid:text-xs peer-valid:text-on-surface-variant font-label-caps">WhatsApp Number</label>
                 </div>
-                
+
                 {/* Custom Dropdown */}
                 <div className="relative group">
-                  <div 
+                  <div
                     className={`w-full bg-transparent border-b-2 ${goal || isDropdownOpen ? 'border-primary' : 'border-black/10 dark:border-white/10'} text-on-surface py-4 text-lg cursor-pointer flex justify-between items-center transition-colors relative z-20`}
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   >
@@ -209,7 +209,7 @@ export function Contact() {
                       expand_more
                     </span>
                   </div>
-                  
+
                   <label className={`absolute left-0 transition-all pointer-events-none uppercase tracking-widest font-label-caps z-20 ${goal || isDropdownOpen ? '-top-6 text-xs text-primary' : 'top-4 text-lg text-on-surface-variant'}`}>
                     Primary Goal
                   </label>
@@ -222,8 +222,8 @@ export function Contact() {
                   {/* Dropdown Menu */}
                   <div className={`absolute top-full left-0 w-full bg-surface-container-highest border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-30 transition-all duration-300 origin-top overflow-hidden ${isDropdownOpen ? 'opacity-100 scale-y-100 mt-2' : 'opacity-0 scale-y-0 mt-0 pointer-events-none'}`}>
                     {goals.map(g => (
-                      <div 
-                        key={g.value} 
+                      <div
+                        key={g.value}
                         className={`px-6 py-4 cursor-pointer transition-colors text-base md:text-lg ${goal === g.value ? 'bg-primary/20 text-primary' : 'text-on-surface hover:bg-primary hover:text-black'}`}
                         onClick={() => {
                           setGoal(g.value);
@@ -238,11 +238,11 @@ export function Contact() {
               </div>
 
               <div className="relative group mb-8">
-                <textarea 
-                  className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent resize-none" 
-                  placeholder="Injuries" 
-                  id="injuries" 
-                  rows={3} 
+                <textarea
+                  className="w-full bg-transparent border-b-2 border-black/10 dark:border-white/10 text-on-surface py-4 text-lg focus:outline-none focus:border-primary transition-colors peer placeholder-transparent resize-none"
+                  placeholder="Injuries"
+                  id="injuries"
+                  rows={3}
                   value={healthConsiderations}
                   onChange={(e) => setHealthConsiderations(e.target.value)}
                   required
@@ -256,14 +256,14 @@ export function Contact() {
                 </div>
               )}
 
-              <button 
-                className="group relative w-full bg-primary-container overflow-hidden flex items-center justify-center py-6 disabled:opacity-50 disabled:cursor-not-allowed" 
+              <button
+                className="group relative w-full bg-primary-container overflow-hidden flex items-center justify-center py-6 disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
                 disabled={isSubmitting}
               >
                 {/* Button Hover Sweep */}
                 <div className="absolute inset-0 w-0 bg-white transition-all duration-500 ease-out group-hover:w-full"></div>
-                
+
                 <span className="relative z-10 font-display text-2xl md:text-3xl uppercase tracking-widest text-on-primary-container group-hover:text-black transition-colors duration-500 flex items-center gap-4">
                   {isSubmitting ? "Submitting..." : "Submit Application"}
                   {!isSubmitting && (
@@ -271,7 +271,7 @@ export function Contact() {
                   )}
                 </span>
               </button>
-              
+
             </form>
           )}
         </div>

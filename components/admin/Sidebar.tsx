@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { 
   LayoutDashboard, Map, Image as ImageIcon, BarChart3, 
   Info, Briefcase, GraduationCap, Quote, Images, 
   Award, Target, MessageSquare, Settings, LayoutTemplate, Link as LinkIcon,
-  Activity
+  Activity, LogOut
 } from "lucide-react";
 import clsx from "clsx";
+import { useAuthStore } from "@/lib/store/auth";
 
 const navItems = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
@@ -32,37 +33,67 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    router.push("/admin/login");
+  };
 
   return (
-    <div className="w-64 flex-shrink-0 bg-surface border-r border-white/5 h-screen overflow-y-auto flex flex-col">
-      <div className="p-6 sticky top-0 bg-surface z-10 border-b border-white/5">
-        <Link href="/admin" className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary-container text-on-primary-fixed flex items-center justify-center font-display text-lg font-bold rounded">A</div>
-          <span className="font-label-caps uppercase tracking-widest text-on-surface text-sm">Workspace</span>
-        </Link>
+    <div className="w-64 flex-shrink-0 bg-surface border-r border-white/5 h-screen overflow-y-auto flex flex-col justify-between">
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="p-6 bg-surface z-10 border-b border-white/5">
+          <Link href="/admin" className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-primary-container text-on-primary-fixed flex items-center justify-center font-display text-lg font-bold rounded">A</div>
+            <span className="font-label-caps uppercase tracking-widest text-on-surface text-sm">Workspace</span>
+          </Link>
+        </div>
+
+        <nav className="flex-grow py-6 px-4 space-y-1 overflow-y-auto">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={clsx(
+                  "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-body-md text-sm",
+                  isActive 
+                    ? "bg-primary-container/10 text-primary-container font-semibold" 
+                    : "text-on-surface-variant hover:bg-white/5 hover:text-on-surface"
+                )}
+              >
+                <Icon className="w-5 h-5" />
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
       </div>
 
-      <nav className="flex-1 py-6 px-4 space-y-1">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={clsx(
-                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-body-md text-sm",
-                isActive 
-                  ? "bg-primary-container/10 text-primary-container font-semibold" 
-                  : "text-on-surface-variant hover:bg-white/5 hover:text-on-surface"
-              )}
-            >
-              <Icon className="w-5 h-5" />
-              {item.name}
-            </Link>
-          );
-        })}
-      </nav>
+      {/* User Profile Info & Logout */}
+      <div className="p-4 border-t border-white/5 bg-surface-container-low flex items-center justify-between gap-3 sticky bottom-0 z-10">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center font-display text-lg font-bold border border-white/10 shadow-inner">
+            A
+          </div>
+          <div className="text-left">
+            <p className="text-sm font-label-caps tracking-widest text-on-surface font-semibold">c.amr</p>
+            <p className="text-[10px] text-on-surface-variant uppercase tracking-wider">Administrator</p>
+          </div>
+        </div>
+
+        <button 
+          onClick={handleLogout}
+          title="Log out"
+          className="p-2 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-lg transition-colors"
+        >
+          <LogOut className="w-5 h-5" />
+        </button>
+      </div>
     </div>
   );
 }
