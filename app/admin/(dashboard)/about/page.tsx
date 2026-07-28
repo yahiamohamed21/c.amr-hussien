@@ -15,7 +15,9 @@ const aboutSchema = z.object({
   title: z.string().min(1, "Required"),
   body: z.string().min(1, "Required"),
   watermarkText: z.string().optional(),
-  imageId: z.string().nullable().optional(),
+  image1Id: z.string().nullable().optional(),
+  image2Id: z.string().nullable().optional(),
+  image3Id: z.string().nullable().optional(),
   isVisible: z.boolean(),
 });
 
@@ -40,7 +42,9 @@ export default function AboutAdminPage() {
       title: "More Than Fitness",
       body: "",
       watermarkText: "PERFORMANCE",
-      imageId: null,
+      image1Id: null,
+      image2Id: null,
+      image3Id: null,
       isVisible: true,
     },
   });
@@ -96,12 +100,22 @@ export default function AboutAdminPage() {
           </div>
         </div>
 
-        <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">Image</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">Images (Up to 3)</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <ImageUploader
-            label="Section Image"
-            value={form.watch("imageId")}
-            onUpload={(id) => form.setValue("imageId", id)}
+            label="Main Image (Left)"
+            value={form.watch("image1Id")}
+            onUpload={(id) => form.setValue("image1Id", id)}
+          />
+          <ImageUploader
+            label="Secondary Image (Top Right)"
+            value={form.watch("image2Id")}
+            onUpload={(id) => form.setValue("image2Id", id)}
+          />
+          <ImageUploader
+            label="Tertiary Image (Bottom Right)"
+            value={form.watch("image3Id")}
+            onUpload={(id) => form.setValue("image3Id", id)}
           />
         </div>
 

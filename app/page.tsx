@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { Mission } from "@/components/Mission";
 import { About } from "@/components/About";
 import { InjuryExpert } from "@/components/InjuryExpert";
+import { QuoteDivider } from "@/components/QuoteDivider";
 import { Services } from "@/components/Services";
 import { Process } from "@/components/Process";
 import { Philosophy } from "@/components/Philosophy";
@@ -21,6 +22,7 @@ export default function Home() {
         <Mission />
         <About />
         <InjuryExpert />
+        <QuoteDivider />
         <Services />
         <Process />
         <Philosophy />

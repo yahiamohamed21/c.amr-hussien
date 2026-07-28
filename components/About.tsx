@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { CheckCircle2 } from "lucide-react";
-import Image from "next/image";
 
 export function About() {
   const { data: about, isLoading } = useQuery({
@@ -94,50 +93,36 @@ His philosophy is simple: performance changes your life. When you master your bo
               {/* Premium Offset Decorative Frame */}
               <div className="absolute -inset-4 border border-primary/20 rounded-2xl z-0 pointer-events-none transform translate-x-2 translate-y-2 hidden md:block"></div>
 
-              {about?.imageId ? (
-                <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-black/40">
+              {/* Premium Overlapping Collage (Dynamic/Fallback) */}
+              <div className="relative w-full h-full">
+                {/* Main Large Image (Left) */}
+                <div className="absolute top-0 left-0 w-[72%] h-[88%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 z-10 group">
                   <img
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.imageId}`}
-                    className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-750 scale-100 hover:scale-105"
-                    alt={displayTitle}
+                    className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700 hover:scale-102"
+                    alt="Coach Amr 1"
+                    src={about?.image1Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image1Id}` : "/image-1.jpeg"}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
                 </div>
-              ) : (
-                /* Premium Overlapping Collage */
-                <div className="relative w-full h-full">
-                  {/* Main Large Image (Left) */}
-                  <div className="absolute top-0 left-0 w-[72%] h-[88%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 z-10 group">
-                    <Image
-                      fill
-                      className="object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700 hover:scale-102"
-                      alt="Coach Amr 1"
-                      src="/image-1.jpeg"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-                  </div>
-                  
-                  {/* Top Right Small Image */}
-                  <div className="absolute top-[4%] right-0 w-[46%] h-[42%] rounded-2xl overflow-hidden shadow-2xl border-4 border-surface-container z-20 group">
-                    <Image
-                      fill
-                      className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                      alt="Coach Amr 2"
-                      src="/image-2.jpeg"
-                    />
-                  </div>
-
-                  {/* Bottom Right Small Image */}
-                  <div className="absolute bottom-[4%] right-[4%] w-[52%] h-[48%] rounded-2xl overflow-hidden shadow-2xl border-4 border-surface-container z-30 group">
-                    <Image
-                      fill
-                      className="object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                      alt="Coach Amr 3"
-                      src="/image-3.jpeg"
-                    />
-                  </div>
+                
+                {/* Top Right Small Image */}
+                <div className="absolute top-[4%] right-0 w-[46%] h-[42%] rounded-2xl overflow-hidden shadow-2xl border-4 border-surface-container z-20 group">
+                  <img
+                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    alt="Coach Amr 2"
+                    src={about?.image2Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image2Id}` : "/image-2.jpeg"}
+                  />
                 </div>
-              )}
+
+                {/* Bottom Right Small Image */}
+                <div className="absolute bottom-[4%] right-[4%] w-[52%] h-[48%] rounded-2xl overflow-hidden shadow-2xl border-4 border-surface-container z-30 group">
+                  <img
+                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    alt="Coach Amr 3"
+                    src={about?.image3Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image3Id}` : "/image-3.jpeg"}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 

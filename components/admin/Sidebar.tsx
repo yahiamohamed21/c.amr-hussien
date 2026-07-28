@@ -16,7 +16,6 @@ const navItems = [
   { name: "Messages", href: "/admin/messages", icon: MessageSquare },
   { name: "Media Library", href: "/admin/media", icon: ImageIcon },
   { name: "Site Settings", href: "/admin/site-settings", icon: Settings },
-  { name: "Navigation", href: "/admin/navigation", icon: Map },
   { name: "Hero", href: "/admin/hero", icon: LayoutTemplate },
   { name: "About", href: "/admin/about", icon: Info },
   { name: "Injury Rehab", href: "/admin/injury-rehab", icon: Activity },
