@@ -115,9 +115,8 @@ export function InjuryExpert() {
               
               {/* Image 1 */}
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 group shadow-2xl mt-8 lg:mt-0">
-                <Image
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                <img
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   alt="Injury Rehabilitation - Amr 1"
                   src={img1Url}
                 />
@@ -126,9 +125,8 @@ export function InjuryExpert() {
 
               {/* Image 2 */}
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 group shadow-2xl mt-16 lg:mt-12">
-                <Image
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                <img
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   alt="Injury Rehabilitation - Amr 2"
                   src={img2Url}
                 />

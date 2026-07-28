@@ -8,7 +8,7 @@ import { api } from "@/lib/api";
 import { handleApiError } from "@/lib/error-parser";
 import { Input, Button } from "@/components/ui";
 import { ImageUploader } from "@/components/admin/ImageUploader";
-import { useState } from "react";
+import { useAdminAlert } from "@/hooks/useAdminAlert";
 
 const injuryRehabSchema = z.object({
   eyebrow: z.string().min(1, "Required"),
@@ -24,7 +24,7 @@ type InjuryRehabForm = z.infer<typeof injuryRehabSchema>;
 
 export default function InjuryRehabAdminPage() {
   const queryClient = useQueryClient();
-  const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const { showSuccess, showError } = useAdminAlert();
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-injury-rehab"],
@@ -53,18 +53,16 @@ export default function InjuryRehabAdminPage() {
       return res.data;
     },
     onSuccess: () => {
-      setToastMessage({ type: 'success', text: 'Injury Rehab section updated successfully!' });
+      showSuccess("Injury Rehab section updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["admin-injury-rehab"] });
-      setTimeout(() => setToastMessage(null), 3000);
     },
     onError: (error) => {
       const msg = handleApiError(error, form);
-      setToastMessage({ type: 'error', text: msg });
+      showError(msg);
     },
   });
 
   const onSubmit = (payload: InjuryRehabForm) => {
-    setToastMessage(null);
     mutation.mutate(payload);
   };
 
@@ -77,12 +75,6 @@ export default function InjuryRehabAdminPage() {
       <div className="flex justify-between items-center">
         <h1 className="font-display text-3xl uppercase tracking-wider text-on-surface">Injury Rehab Section</h1>
       </div>
-
-      {toastMessage && (
-        <div className={`p-4 rounded-lg font-body-md ${toastMessage.type === 'success' ? 'bg-primary-container/20 text-primary-container border border-primary-container/30' : 'bg-error/20 text-error border border-error/30'}`}>
-          {toastMessage.text}
-        </div>
-      )}
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-surface p-8 rounded-2xl border border-white/5 space-y-6">
         

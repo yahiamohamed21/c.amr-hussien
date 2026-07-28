@@ -8,7 +8,7 @@ import { api } from "@/lib/api";
 import { handleApiError } from "@/lib/error-parser";
 import { Input, Button } from "@/components/ui";
 import { ImageUploader } from "@/components/admin/ImageUploader";
-import { useState } from "react";
+import { useAdminAlert } from "@/hooks/useAdminAlert";
 
 const aboutSchema = z.object({
   eyebrow: z.string().min(1, "Required"),
@@ -23,7 +23,7 @@ type AboutForm = z.infer<typeof aboutSchema>;
 
 export default function AboutAdminPage() {
   const queryClient = useQueryClient();
-  const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const { showSuccess, showError } = useAdminAlert();
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-about"],
@@ -51,18 +51,16 @@ export default function AboutAdminPage() {
       return res.data;
     },
     onSuccess: () => {
-      setToastMessage({ type: 'success', text: 'About section updated successfully!' });
+      showSuccess("About section updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["admin-about"] });
-      setTimeout(() => setToastMessage(null), 3000);
     },
     onError: (error) => {
       const msg = handleApiError(error, form);
-      setToastMessage({ type: 'error', text: msg });
+      showError(msg);
     },
   });
 
   const onSubmit = (payload: AboutForm) => {
-    setToastMessage(null);
     mutation.mutate(payload);
   };
 
@@ -75,12 +73,6 @@ export default function AboutAdminPage() {
       <div className="flex justify-between items-center">
         <h1 className="font-display text-3xl uppercase tracking-wider text-on-surface">About Section</h1>
       </div>
-
-      {toastMessage && (
-        <div className={`p-4 rounded-lg font-body-md ${toastMessage.type === 'success' ? 'bg-primary-container/20 text-primary-container border border-primary-container/30' : 'bg-error/20 text-error border border-error/30'}`}>
-          {toastMessage.text}
-        </div>
-      )}
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-surface p-8 rounded-2xl border border-white/5 space-y-6">
         
