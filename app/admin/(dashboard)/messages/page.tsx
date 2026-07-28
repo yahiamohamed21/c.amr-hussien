@@ -84,9 +84,8 @@ export default function MessagesPage() {
     try {
       await api.patch(`/api/v1/admin/messages/${id}/status`, { status: newStatus });
       showSuccess("Status updated successfully.");
-      // Update local state
       if (selectedMessage && selectedMessage.id === id) {
-        setSelectedMessage(prev => ({ ...prev, status: newStatus }));
+        setSelectedMessage({ ...selectedMessage, status: newStatus });
       }
       setMessages(prev => prev.map(m => m.id === id ? { ...m, status: newStatus } : m));
     } catch (err) {

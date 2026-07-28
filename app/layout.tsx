@@ -51,7 +51,7 @@ export default function RootLayout({
           <div className="fixed inset-0 z-[-1] hidden dark:block">
             <DarkBackground />
           </div>
-          
+
           <SplashScreen />
           <ScrollRevealProvider />
           {children}

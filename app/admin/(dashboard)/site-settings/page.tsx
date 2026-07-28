@@ -7,7 +7,7 @@ import * as z from "zod";
 import { api } from "@/lib/api";
 import { handleApiError } from "@/lib/error-parser";
 import { Input, Button } from "@/components/ui";
-import { useState } from "react";
+import { useAdminAlert } from "@/hooks/useAdminAlert";
 
 const siteSettingsSchema = z.object({
   brandName: z.string().min(1, "Required"),
@@ -15,15 +15,18 @@ const siteSettingsSchema = z.object({
   defaultMetaDescription: z.string().optional(),
   instagramUrl: z.string().optional(),
   xUrl: z.string().optional(),
+  facebookUrl: z.string().optional(),
+  linkedInUrl: z.string().optional(),
   whatsAppNumber: z.string().optional(),
   contactEmail: z.string().optional(),
+  isAcceptingApplications: z.boolean(),
 });
 
 type SiteSettingsForm = z.infer<typeof siteSettingsSchema>;
 
 export default function SiteSettingsAdminPage() {
   const queryClient = useQueryClient();
-  const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const { showSuccess, showError } = useAdminAlert();
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-site-settings"],
@@ -41,8 +44,11 @@ export default function SiteSettingsAdminPage() {
       defaultMetaDescription: "",
       instagramUrl: "",
       xUrl: "",
+      facebookUrl: "",
+      linkedInUrl: "",
       whatsAppNumber: "",
       contactEmail: "",
+      isAcceptingApplications: true,
     },
   });
 
@@ -52,18 +58,17 @@ export default function SiteSettingsAdminPage() {
       return res.data;
     },
     onSuccess: () => {
-      setToastMessage({ type: 'success', text: 'Site settings updated successfully!' });
+      showSuccess("Site settings updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["admin-site-settings"] });
-      setTimeout(() => setToastMessage(null), 3000);
+      queryClient.invalidateQueries({ queryKey: ["public-site-settings"] });
     },
     onError: (error) => {
       const msg = handleApiError(error, form);
-      setToastMessage({ type: 'error', text: msg });
+      showError(msg);
     },
   });
 
   const onSubmit = (payload: SiteSettingsForm) => {
-    setToastMessage(null);
     mutation.mutate(payload);
   };
 
@@ -77,13 +82,20 @@ export default function SiteSettingsAdminPage() {
         <h1 className="font-display text-3xl uppercase tracking-wider text-on-surface">Site Settings</h1>
       </div>
 
-      {toastMessage && (
-        <div className={`p-4 rounded-lg font-body-md ${toastMessage.type === 'success' ? 'bg-primary-container/20 text-primary-container border border-primary-container/30' : 'bg-error/20 text-error border border-error/30'}`}>
-          {toastMessage.text}
-        </div>
-      )}
-
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-surface p-8 rounded-2xl border border-white/5 space-y-6">
+        
+        <div className="flex items-center gap-4 mb-6 pb-6 border-b border-white/5">
+          <input 
+            type="checkbox" 
+            id="isAcceptingApplications" 
+            {...form.register("isAcceptingApplications")} 
+            className="w-5 h-5 accent-primary-container" 
+          />
+          <label htmlFor="isAcceptingApplications" className="text-on-surface font-label-caps uppercase tracking-widest text-sm select-none">
+            Accept Coaching Applications / Messages
+          </label>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input label="Brand Name" {...form.register("brandName")} error={form.formState.errors.brandName?.message} required />
           <Input label="Default Meta Title" {...form.register("defaultMetaTitle")} error={form.formState.errors.defaultMetaTitle?.message} />
@@ -101,7 +113,9 @@ export default function SiteSettingsAdminPage() {
           <Input label="WhatsApp Number" {...form.register("whatsAppNumber")} error={form.formState.errors.whatsAppNumber?.message} />
           <Input label="Contact Email" {...form.register("contactEmail")} error={form.formState.errors.contactEmail?.message} />
           <Input label="Instagram URL" {...form.register("instagramUrl")} error={form.formState.errors.instagramUrl?.message} />
-          <Input label="X (Twitter) URL" {...form.register("xUrl")} error={form.formState.errors.xUrl?.message} />
+          <Input label="Twitter (X) URL" {...form.register("xUrl")} error={form.formState.errors.xUrl?.message} />
+          <Input label="Facebook URL" {...form.register("facebookUrl")} error={form.formState.errors.facebookUrl?.message} />
+          <Input label="LinkedIn URL" {...form.register("linkedInUrl")} error={form.formState.errors.linkedInUrl?.message} />
         </div>
 
         <div className="flex justify-end pt-4 border-t border-white/5">

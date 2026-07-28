@@ -17,6 +17,8 @@ const footerSchema = z.object({
   isVisible: z.boolean(),
   instagramUrl: z.string().optional(),
   xUrl: z.string().optional(),
+  facebookUrl: z.string().optional(),
+  linkedInUrl: z.string().optional(),
 });
 
 type FooterForm = z.infer<typeof footerSchema>;
@@ -51,6 +53,8 @@ export default function FooterAdminPage() {
       isVisible: footerData.isVisible ?? true,
       instagramUrl: settingsData.instagramUrl || "",
       xUrl: settingsData.xUrl || "",
+      facebookUrl: settingsData.facebookUrl || "",
+      linkedInUrl: settingsData.linkedInUrl || "",
     } : {
       brandName: "Amr Hussien",
       description: "",
@@ -59,6 +63,8 @@ export default function FooterAdminPage() {
       isVisible: true,
       instagramUrl: "",
       xUrl: "",
+      facebookUrl: "",
+      linkedInUrl: "",
     },
   });
 
@@ -79,6 +85,8 @@ export default function FooterAdminPage() {
         brandName: settingsData?.brandName || payload.brandName,
         instagramUrl: payload.instagramUrl,
         xUrl: payload.xUrl,
+        facebookUrl: payload.facebookUrl,
+        linkedInUrl: payload.linkedInUrl,
       });
     },
     onSuccess: () => {
@@ -131,6 +139,8 @@ export default function FooterAdminPage() {
           <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface md:col-span-2">Social Links</h3>
           <Input label="Instagram URL" {...form.register("instagramUrl")} error={form.formState.errors.instagramUrl?.message} />
           <Input label="Twitter (X) URL" {...form.register("xUrl")} error={form.formState.errors.xUrl?.message} />
+          <Input label="Facebook URL" {...form.register("facebookUrl")} error={form.formState.errors.facebookUrl?.message} />
+          <Input label="LinkedIn URL" {...form.register("linkedInUrl")} error={form.formState.errors.linkedInUrl?.message} />
         </div>
 
         <div className="flex justify-end pt-4 border-t border-white/5">
