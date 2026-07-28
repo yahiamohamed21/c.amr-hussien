@@ -7,7 +7,7 @@ import * as z from "zod";
 import { api } from "@/lib/api";
 import { handleApiError } from "@/lib/error-parser";
 import { Input, Button } from "@/components/ui";
-import { useState } from "react";
+import { useAdminAlert } from "@/hooks/useAdminAlert";
 
 const footerSchema = z.object({
   brandName: z.string().min(1, "Required"),
@@ -15,55 +15,89 @@ const footerSchema = z.object({
   copyrightText: z.string().optional(),
   closingStatement: z.string().optional(),
   isVisible: z.boolean(),
+  instagramUrl: z.string().optional(),
+  xUrl: z.string().optional(),
 });
 
 type FooterForm = z.infer<typeof footerSchema>;
 
 export default function FooterAdminPage() {
   const queryClient = useQueryClient();
-  const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const { showSuccess, showError } = useAdminAlert();
 
-  const { data, isLoading } = useQuery({
+  const { data: footerData, isLoading: isFooterLoading } = useQuery({
     queryKey: ["admin-footer"],
     queryFn: async () => {
       const res = await api.get("/api/v1/admin/footer");
-      return res.data; // Note: Returns object containing links list too, but we just bind content to form
+      return res.data;
+    },
+  });
+
+  const { data: settingsData, isLoading: isSettingsLoading } = useQuery({
+    queryKey: ["admin-site-settings"],
+    queryFn: async () => {
+      const res = await api.get("/api/v1/admin/site-settings");
+      return res.data;
     },
   });
 
   const form = useForm<FooterForm>({
     resolver: zodResolver(footerSchema),
-    values: data || {
+    values: (footerData && settingsData) ? {
+      brandName: footerData.brandName || "",
+      description: footerData.description || "",
+      copyrightText: footerData.copyrightText || "",
+      closingStatement: footerData.closingStatement || "",
+      isVisible: footerData.isVisible ?? true,
+      instagramUrl: settingsData.instagramUrl || "",
+      xUrl: settingsData.xUrl || "",
+    } : {
       brandName: "Amr Hussien",
       description: "",
       copyrightText: "",
       closingStatement: "",
       isVisible: true,
+      instagramUrl: "",
+      xUrl: "",
     },
   });
 
   const mutation = useMutation({
     mutationFn: async (payload: FooterForm) => {
-      const res = await api.put("/api/v1/admin/footer", payload);
-      return res.data;
+      // 1. Update footer content
+      await api.put("/api/v1/admin/footer", {
+        brandName: payload.brandName,
+        description: payload.description,
+        copyrightText: payload.copyrightText,
+        closingStatement: payload.closingStatement,
+        isVisible: payload.isVisible,
+      });
+
+      // 2. Update site settings (for socials)
+      await api.put("/api/v1/admin/site-settings", {
+        ...settingsData, // Preserve current WhatsApp number, email, metadata, etc.
+        brandName: settingsData?.brandName || payload.brandName,
+        instagramUrl: payload.instagramUrl,
+        xUrl: payload.xUrl,
+      });
     },
     onSuccess: () => {
-      setToastMessage({ type: 'success', text: 'Footer updated successfully!' });
+      showSuccess("Footer and Social Links updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["admin-footer"] });
-      setTimeout(() => setToastMessage(null), 3000);
+      queryClient.invalidateQueries({ queryKey: ["admin-site-settings"] });
+      queryClient.invalidateQueries({ queryKey: ["public-site-settings"] });
     },
     onError: (error) => {
       const msg = handleApiError(error, form);
-      setToastMessage({ type: 'error', text: msg });
+      showError(msg);
     },
   });
 
   const onSubmit = (payload: FooterForm) => {
-    setToastMessage(null);
     mutation.mutate(payload);
   };
 
-  if (isLoading) {
+  if (isFooterLoading || isSettingsLoading) {
     return <div className="text-on-surface-variant">Loading Footer Data...</div>;
   }
 
@@ -72,12 +106,6 @@ export default function FooterAdminPage() {
       <div className="flex justify-between items-center">
         <h1 className="font-display text-3xl uppercase tracking-wider text-on-surface">Footer Content</h1>
       </div>
-
-      {toastMessage && (
-        <div className={`p-4 rounded-lg font-body-md ${toastMessage.type === 'success' ? 'bg-primary-container/20 text-primary-container border border-primary-container/30' : 'bg-error/20 text-error border border-error/30'}`}>
-          {toastMessage.text}
-        </div>
-      )}
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-surface p-8 rounded-2xl border border-white/5 space-y-6">
         
@@ -99,6 +127,10 @@ export default function FooterAdminPage() {
             />
             {form.formState.errors.description && <p className="text-error text-xs mt-2 font-body-md">{form.formState.errors.description.message}</p>}
           </div>
+
+          <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface md:col-span-2">Social Links</h3>
+          <Input label="Instagram URL" {...form.register("instagramUrl")} error={form.formState.errors.instagramUrl?.message} />
+          <Input label="Twitter (X) URL" {...form.register("xUrl")} error={form.formState.errors.xUrl?.message} />
         </div>
 
         <div className="flex justify-end pt-4 border-t border-white/5">
