@@ -1,36 +1,57 @@
 "use client";
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 
 export function Process() {
-  const steps = [
+  const { data: methodology } = useQuery({
+    queryKey: ["public-methodology"],
+    queryFn: async () => {
+      const res = await api.get("/api/v1/public/methodology");
+      return res.data;
+    },
+    retry: false,
+  });
+
+  const defaultSteps = [
     {
       id: "01",
       title: "ASSESS",
       description: "Biometric screening, movement analysis, and goal profiling to establish your baseline data.",
-      bg: "bg-surface"
     },
     {
       id: "02",
       title: "BUILD",
       description: "Foundational programming designed to address imbalances and strengthen the core physiological pillars.",
-      bg: "bg-surface-container"
     },
     {
       id: "03",
       title: "PERFORM",
       description: "High-intensity execution phase focusing on peak outputs, power, and metabolic efficiency.",
-      bg: "bg-surface-container-high"
     },
     {
       id: "04",
       title: "SUSTAIN",
       description: "Strategic maintenance and recovery protocols to ensure longevity and permanent transformation.",
-      bg: "bg-surface-container-highest"
     }
   ];
 
+  const displaySteps = methodology?.steps?.length > 0
+    ? methodology.steps.map((s: any, index: number) => ({
+        id: String(index + 1).padStart(2, "0"),
+        title: s.name,
+        description: s.description,
+      }))
+    : defaultSteps;
+
+  const eyebrow = methodology?.eyebrow || "The Process";
+  const title = methodology?.title || "THE PERFORMANCE METHOD";
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(0); // Default open first one
+
+  // If the section is explicitly set to invisible in database, we can choose to hide or show fallback.
+  // The API returns 404 when IsVisible is false, so it will fall back to default steps.
 
   return (
     <section id="methodology" className="py-32 px-margin-mobile md:px-margin-desktop bg-background overflow-hidden relative border-t border-black/5 dark:border-white/5">
@@ -45,21 +66,19 @@ export function Process() {
           <div className="flex items-center gap-4 mb-6">
             <span className="w-12 h-[2px] bg-primary"></span>
             <span className="font-label-caps text-label-caps text-primary uppercase tracking-widest">
-              The Process
+              {eyebrow}
             </span>
           </div>
           <h2 className="font-display-xl text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] uppercase tracking-tight text-on-surface max-w-3xl">
-            THE PERFORMANCE <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">METHOD</span>
+            {title}
           </h2>
         </div>
 
         {/* Interactive Accordion */}
         <div className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[450px]">
-          {steps.map((step, index) => {
+          {displaySteps.map((step: any, index: number) => {
             const isHovered = hoveredIndex === index;
             const isAnyHovered = hoveredIndex !== null;
-            // On desktop, the hovered item expands (flex-[3]), others shrink (flex-1).
-            // If none hovered, all are equal (flex-1).
             
             return (
               <div 
@@ -99,7 +118,6 @@ export function Process() {
                     className={`
                       grid transition-all duration-700 ease-in-out
                       ${isHovered ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 lg:opacity-0 lg:mt-0 opacity-100 mt-4 grid-rows-[1fr]'}
-                      /* Note: On mobile, we always want the text visible or just allow it to expand. To keep it clean on mobile, we'll let it stay visible if hovered, or we can just make it fully responsive. */
                     `}
                   >
                     <div className="overflow-hidden">

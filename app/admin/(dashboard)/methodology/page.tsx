@@ -8,8 +8,8 @@ import { api } from "@/lib/api";
 import { handleApiError } from "@/lib/error-parser";
 import { Input, Button } from "@/components/ui";
 import { useAdminAlert } from "@/hooks/useAdminAlert";
-import { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { Plus, Edit2, Trash2, Eye, EyeOff } from "lucide-react";
 
 const methodologySectionSchema = z.object({
   eyebrow: z.string().min(1, "Required"),
@@ -73,7 +73,10 @@ export default function MethodologyAdminPage() {
 
   // Steps Handlers
   const handleEditStep = (step: any) => {
-    setEditingStep({ ...step });
+    setEditingStep({ 
+      ...step,
+      isVisible: step.isVisible ?? true 
+    });
     setIsEditingStep(true);
   };
 
@@ -102,11 +105,18 @@ export default function MethodologyAdminPage() {
   const handleSaveStep = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const payload = {
+        name: editingStep.name,
+        description: editingStep.description,
+        displayOrder: editingStep.displayOrder,
+        isVisible: editingStep.isVisible ?? true,
+      };
+
       if (editingStep.id) {
-        await api.put(`/api/v1/admin/methodology/steps/${editingStep.id}`, editingStep);
+        await api.put(`/api/v1/admin/methodology/steps/${editingStep.id}`, payload);
         showSuccess("Step updated successfully.");
       } else {
-        await api.post("/api/v1/admin/methodology/steps", editingStep);
+        await api.post("/api/v1/admin/methodology/steps", payload);
         showSuccess("Step created successfully.");
       }
       setIsEditingStep(false);
@@ -147,6 +157,17 @@ export default function MethodologyAdminPage() {
               className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors min-h-[100px]"
               required
             />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="step-isVisible"
+              checked={editingStep.isVisible}
+              onChange={(e) => setEditingStep({ ...editingStep, isVisible: e.target.checked })}
+              className="w-5 h-5 accent-primary-container"
+            />
+            <label htmlFor="step-isVisible" className="text-on-surface font-label-caps uppercase tracking-widest text-sm select-none">Visible on Public Site</label>
           </div>
 
           <div className="flex gap-4 pt-4 border-t border-white/10">
@@ -210,6 +231,7 @@ export default function MethodologyAdminPage() {
                 <th className="p-4 w-16">Order</th>
                 <th className="p-4">Name</th>
                 <th className="p-4">Description</th>
+                <th className="p-4 w-24">Visible</th>
                 <th className="p-4 w-32 text-right">Actions</th>
               </tr>
             </thead>
@@ -219,6 +241,13 @@ export default function MethodologyAdminPage() {
                   <td className="p-4 text-primary font-bold">{step.displayOrder}</td>
                   <td className="p-4 text-on-surface font-semibold">{step.name}</td>
                   <td className="p-4 text-sm text-on-surface-variant truncate max-w-xs">{step.description}</td>
+                  <td className="p-4 text-sm text-on-surface-variant">
+                    {step.isVisible ? (
+                      <span className="flex items-center gap-1.5 text-primary"><Eye className="w-4 h-4" /> Yes</span>
+                    ) : (
+                      <span className="flex items-center gap-1.5 text-on-surface-variant/40"><EyeOff className="w-4 h-4" /> No</span>
+                    )}
+                  </td>
                   <td className="p-4 flex gap-2 justify-end">
                     <Button variant="ghost" className="p-2 min-h-0" onClick={() => handleEditStep(step)}>
                       <Edit2 className="w-4 h-4" />
@@ -231,7 +260,7 @@ export default function MethodologyAdminPage() {
               ))}
               {steps.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="p-12 text-center text-on-surface-variant italic">No methodology steps found.</td>
+                  <td colSpan={5} className="p-12 text-center text-on-surface-variant italic">No methodology steps found.</td>
                 </tr>
               )}
             </tbody>
