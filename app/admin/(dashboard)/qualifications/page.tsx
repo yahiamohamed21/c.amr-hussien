@@ -120,6 +120,8 @@ export default function QualificationsPage() {
           <Input
             label="Year"
             type="number"
+            min="1900"
+            max="2200"
             value={formData.year}
             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
           />

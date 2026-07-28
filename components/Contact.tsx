@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 
 export function Contact() {
   const [fullName, setFullName] = useState("");
@@ -13,12 +15,24 @@ export function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const goals = [
+  const { data: dbGoals } = useQuery({
+    queryKey: ["public-coaching-goals"],
+    queryFn: async () => {
+      const res = await api.get("/api/v1/public/coaching-goals");
+      return res.data;
+    },
+  });
+
+  const defaultGoals = [
     { value: "Strength & Muscle", label: "Strength & Muscle" },
     { value: "Fat Loss Transformation", label: "Fat Loss Transformation" },
     { value: "Athletic Performance", label: "Athletic Performance" },
     { value: "Injury Rehabilitation", label: "Injury Rehabilitation" },
   ];
+
+  const goals: Array<{ value: string; label: string }> = dbGoals?.length > 0
+    ? dbGoals.map((g: any) => ({ value: g.name, label: g.name }))
+    : defaultGoals;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

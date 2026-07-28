@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Button, Input } from "@/components/ui";
 import { useAdminAlert } from "@/hooks/useAdminAlert";
-import { Plus, Edit2, Trash2, Eye, EyeOff } from "lucide-react";
+import { Plus, Edit2, Trash2, Eye, EyeOff, ArrowUp, ArrowDown } from "lucide-react";
 
 export default function CoachingGoalsPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -19,7 +19,9 @@ export default function CoachingGoalsPage() {
     setLoading(true);
     try {
       const res = await api.get("/api/v1/admin/coaching-goals");
-      setItems(res.data);
+      // Sort items by displayOrder initially
+      const sorted = (res.data || []).sort((a: any, b: any) => a.displayOrder - b.displayOrder);
+      setItems(sorted);
     } catch (err) {
       showError("Failed to load coaching goals.");
     } finally {
@@ -77,6 +79,43 @@ export default function CoachingGoalsPage() {
       } else {
         showError("Operation failed.");
       }
+    }
+  };
+
+  const handleMove = async (index: number, direction: 'up' | 'down') => {
+    const newItems = [...items];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    if (targetIndex < 0 || targetIndex >= newItems.length) return;
+    
+    // Swap items
+    const temp = newItems[index];
+    newItems[index] = newItems[targetIndex];
+    newItems[targetIndex] = temp;
+    
+    // Re-assign displayOrder sequentially
+    const updatedItems = newItems.map((item, idx) => ({
+      ...item,
+      displayOrder: idx
+    }));
+    
+    // Optimistic UI update
+    setItems(updatedItems);
+    
+    try {
+      // Send bulk reorder request to backend
+      const payload = {
+        items: updatedItems.map(item => ({
+          id: item.id,
+          displayOrder: item.displayOrder
+        }))
+      };
+      await api.patch("/api/v1/admin/coaching-goals/reorder", payload);
+      showSuccess("Order updated successfully.");
+    } catch (err) {
+      showError("Failed to update ordering on the server.");
+      // Rollback to original items
+      fetchItems();
     }
   };
 
@@ -138,15 +177,16 @@ export default function CoachingGoalsPage() {
           <table className="w-full text-left">
             <thead className="bg-surface-container-low border-b border-white/5 text-sm font-label-caps uppercase text-on-surface-variant">
               <tr>
+                <th className="p-4 w-20">Order</th>
                 <th className="p-4">Goal Name</th>
                 <th className="p-4 w-24">Visible</th>
-                <th className="p-4 w-24">Order</th>
-                <th className="p-4 w-32 text-right">Actions</th>
+                <th className="p-4 w-40 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {items.map((item) => (
+              {items.map((item, index) => (
                 <tr key={item.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
+                  <td className="p-4 font-bold text-primary">{item.displayOrder}</td>
                   <td className="p-4 text-on-surface font-semibold">{item.name}</td>
                   <td className="p-4 text-sm text-on-surface-variant">
                     {item.isVisible ? (
@@ -155,8 +195,29 @@ export default function CoachingGoalsPage() {
                       <span className="flex items-center gap-1.5 text-on-surface-variant/40"><EyeOff className="w-4 h-4" /> No</span>
                     )}
                   </td>
-                  <td className="p-4 text-sm text-on-surface-variant">{item.displayOrder}</td>
-                  <td className="p-4 flex gap-2 justify-end">
+                  <td className="p-4 flex gap-2 justify-end items-center">
+                    {/* Reordering Controls */}
+                    <div className="flex gap-1 border-r border-white/5 pr-2 mr-2">
+                      <Button 
+                        variant="ghost" 
+                        className="p-1.5 min-h-0 disabled:opacity-20"
+                        disabled={index === 0}
+                        onClick={() => handleMove(index, 'up')}
+                        title="Move Up"
+                      >
+                        <ArrowUp className="w-4 h-4" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="p-1.5 min-h-0 disabled:opacity-20"
+                        disabled={index === items.length - 1}
+                        onClick={() => handleMove(index, 'down')}
+                        title="Move Down"
+                      >
+                        <ArrowDown className="w-4 h-4" />
+                      </Button>
+                    </div>
+
                     <Button variant="ghost" className="p-2 min-h-0" onClick={() => handleEdit(item)}>
                       <Edit2 className="w-4 h-4" />
                     </Button>
@@ -168,7 +229,7 @@ export default function CoachingGoalsPage() {
               ))}
               {items.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="p-12 text-center text-on-surface-variant italic">No goals found.</td>
+                  <td colSpan={4} className="p-12 text-center text-on-surface-variant italic">No goals found.</td>
                 </tr>
               )}
             </tbody>

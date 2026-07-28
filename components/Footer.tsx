@@ -12,10 +12,21 @@ export function Footer() {
     },
   });
 
+  const { data: footerData } = useQuery({
+    queryKey: ["public-footer"],
+    queryFn: async () => {
+      const res = await api.get("/api/v1/public/footer");
+      return res.data;
+    },
+  });
+
   const instagramUrl = settings?.instagramUrl;
   const xUrl = settings?.xUrl;
   const facebookUrl = settings?.facebookUrl;
   const linkedInUrl = settings?.linkedInUrl;
+
+  const brandName = footerData?.brandName || settings?.brandName || "AMR HUSSIEN";
+  const footerDesc = footerData?.description || "Redefining human potential through scientific precision, data-driven protocols, and elite athletic coaching.";
 
   return (
     <footer className="bg-background w-full pt-16 md:pt-32 pb-8 px-margin-mobile md:px-margin-desktop relative overflow-hidden border-t border-white/10">
@@ -29,10 +40,10 @@ export function Footer() {
           <div className="col-span-2 md:col-span-5 flex flex-col justify-between">
             <div>
               <div className="font-display text-4xl md:text-5xl font-bold text-on-surface uppercase mb-4 md:mb-6 tracking-tight">
-                AMR HUSSIEN
+                {brandName}
               </div>
               <p className="font-body-md text-on-surface-variant text-base md:text-lg max-w-sm mb-8 md:mb-12 border-l-2 border-primary/30 pl-4">
-                Redefining human potential through scientific precision, data-driven protocols, and elite athletic coaching.
+                {footerDesc}
               </p>
             </div>
             
@@ -112,13 +123,13 @@ export function Footer() {
         {/* Massive Brand Watermark */}
         <div className="w-full flex justify-center mb-8 border-b border-black/5 dark:border-white/5 pb-16">
           <h1 className="font-display font-black text-[clamp(4rem,15vw,25rem)] leading-none uppercase text-black/[0.03] dark:text-white/[0.03] select-none tracking-tighter w-full text-center">
-            AMR HUSSIEN
+            {brandName}
           </h1>
         </div>
 
         {/* Copyright Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 font-label-caps text-[10px] tracking-[0.2em] uppercase text-on-surface-variant/40">
-          <div>© {new Date().getFullYear()} AMR HUSSIEN. ELITE PERFORMANCE COACHING.</div>
+          <div>© {new Date().getFullYear()} {brandName}. ELITE PERFORMANCE COACHING.</div>
           
           {/* Creator Badge */}
           <a href="#" className="flex items-center border border-outline-variant/30 rounded-full px-4 py-2 bg-surface hover:bg-primary/10 hover:border-primary/50 transition-all duration-500 group cursor-pointer relative overflow-hidden shadow-sm">

@@ -3,6 +3,104 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/components/ui";
 
+interface BeforeAfterProps {
+  before: string;
+  after: string;
+  name: string;
+}
+
+function BeforeAfterSlider({ before, after, name }: BeforeAfterProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [sliderPosition, setSliderPosition] = useState(50); // Default to 50%
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.getBoundingClientRect().width);
+      }
+    };
+    updateWidth();
+    
+    // Use ResizeObserver for responsive width updates
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(containerRef.current);
+    
+    return () => observer.disconnect();
+  }, []);
+
+  const handleMove = (clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percentage);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    // Only move if we hover/move mouse
+    handleMove(e.clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      handleMove(e.touches[0].clientX);
+    }
+  };
+
+  return (
+    <div 
+      ref={containerRef}
+      className="relative aspect-[4/5] bg-surface-container overflow-hidden rounded-lg shadow-2xl border border-black/5 dark:border-white/5 select-none touch-none cursor-ew-resize group"
+      onMouseMove={handleMouseMove}
+      onTouchMove={handleTouchMove}
+    >
+      {/* After Image (Background) */}
+      <img
+        className="absolute inset-0 w-full h-full object-cover filter contrast-[1.05]"
+        src={after}
+        alt={`${name} After`}
+        draggable="false"
+      />
+      <div className="absolute top-4 right-4 bg-primary-container text-on-primary-fixed px-3 py-1 rounded font-label-caps text-[10px] tracking-widest uppercase shadow-md z-20">
+        After
+      </div>
+
+      {/* Before Image (Clipped Overlay) */}
+      <div 
+        className="absolute inset-0 overflow-hidden border-r-2 border-primary z-10 pointer-events-none"
+        style={{ width: `${sliderPosition}%` }}
+      >
+        <div 
+          className="absolute inset-0 h-full"
+          style={{ width: containerWidth ? `${containerWidth}px` : '100%' }}
+        >
+          <img
+            className="w-full h-full object-cover filter grayscale"
+            src={before}
+            alt={`${name} Before`}
+            draggable="false"
+          />
+        </div>
+        <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded font-label-caps text-[10px] tracking-widest uppercase text-white z-20">
+          Before
+        </div>
+      </div>
+
+      {/* Slider Bar Handle */}
+      <div 
+        className="absolute top-0 bottom-0 w-[2px] bg-primary pointer-events-none z-20"
+        style={{ left: `${sliderPosition}%` }}
+      >
+        <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-primary text-black flex items-center justify-center shadow-[0_0_15px_rgba(184,211,0,0.5)] border border-black/10 transition-transform duration-300 group-hover:scale-110">
+          <span className="material-symbols-outlined text-lg font-bold select-none rotate-90">unfold_more</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Results() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -85,45 +183,18 @@ export function Results() {
           className="flex overflow-x-auto snap-x snap-mandatory gap-8 md:gap-12 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {transformations.map((item) => (
-            <div key={item.id} className="group cursor-pointer flex flex-col flex-none w-[85vw] md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] snap-start">
+            <div key={item.id} className="flex flex-col flex-none w-[85vw] md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] snap-start">
               
-              {/* Interactive Before/After Image Container */}
-              <div className="relative aspect-[4/5] bg-surface-container overflow-hidden mb-8 border border-black/5 dark:border-white/5 rounded-lg shadow-2xl">
-                
-                {/* After Image (Background) */}
-                <img
-                  className="absolute inset-0 w-full h-full object-cover filter contrast-125 transition-transform duration-1000 group-hover:scale-105"
-                  src={item.afterImage}
-                  alt={`${item.name} After`}
-                />
-                
-                {/* Before Image (Foreground, wipes away on hover) */}
-                <div className="absolute inset-0 w-full h-full overflow-hidden transition-all duration-[800ms] ease-in-out group-hover:w-0 border-r-2 border-primary group-hover:border-transparent">
-                  <img
-                    className="absolute inset-0 w-full h-full object-cover filter grayscale opacity-80"
-                    src={item.beforeImage}
-                    alt={`${item.name} Before`}
-                    style={{ width: '100%', minWidth: '100%' }}
-                  />
-                  <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded font-label-caps text-[10px] tracking-widest uppercase text-white">Before</div>
-                </div>
-
-                {/* After Badge (Reveals on hover) */}
-                <div className="absolute top-4 right-4 bg-primary-container text-on-primary-fixed px-3 py-1 rounded font-label-caps text-[10px] tracking-widest uppercase opacity-0 transition-opacity duration-700 delay-300 group-hover:opacity-100 shadow-[0_0_15px_rgba(184,211,0,0.4)]">
-                  After
-                </div>
-
-                {/* Hover Instruction Overlay */}
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none">
-                  <span className="font-label-caps text-xs tracking-[0.2em] text-white/90 uppercase bg-black/60 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
-                    Hover to Reveal
-                  </span>
-                </div>
-              </div>
+              {/* Premium Drag/Move Slider */}
+              <BeforeAfterSlider 
+                before={item.beforeImage} 
+                after={item.afterImage} 
+                name={item.name} 
+              />
 
               {/* Data Section */}
-              <div className="flex flex-col flex-grow">
-                <div className="w-12 h-1 bg-primary mb-6 transition-all duration-500 group-hover:w-full group-hover:bg-primary-container"></div>
+              <div className="flex flex-col flex-grow mt-8">
+                <div className="w-12 h-1 bg-primary mb-6"></div>
                 <h5 className="font-display text-3xl uppercase mb-2 text-on-surface tracking-tight">{item.name}</h5>
                 <p className="font-label-caps text-[11px] tracking-[0.2em] text-primary uppercase mb-6">{item.type}</p>
                 <div className="relative pl-4 border-l-2 border-outline-variant/30 mt-auto">

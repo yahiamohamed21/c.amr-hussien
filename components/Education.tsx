@@ -1,10 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/components/ui";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 
 export function Education() {
-  const educationItems = [
+  const { data: qualifications } = useQuery({
+    queryKey: ["public-qualifications"],
+    queryFn: async () => {
+      const res = await api.get("/api/v1/public/qualifications");
+      return res.data;
+    },
+    retry: false,
+  });
+
+  const defaultItems = [
     {
       id: "01",
       title: "MSc High Performance Sport",
@@ -30,6 +40,16 @@ export function Education() {
       year: "2021",
     }
   ];
+
+  const displayItems = qualifications?.length > 0
+    ? qualifications.map((q: any, index: number) => ({
+        id: String(index + 1).padStart(2, "0"),
+        title: q.name,
+        description: q.description || `${q.name} certificate obtained from ${q.institution}.`,
+        year: q.year ? String(q.year) : "",
+        imageId: q.imageId,
+      }))
+    : defaultItems;
 
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
@@ -64,7 +84,7 @@ export function Education() {
         {/* Interactive Accordion List */}
         <div className="lg:col-span-7 lg:col-start-6">
           <div className="border-t border-outline-variant/20">
-            {educationItems.map((item, index) => {
+            {displayItems.map((item: any, index: number) => {
               const isActive = activeIndex === index;
               
               return (
@@ -93,11 +113,24 @@ export function Education() {
                     {/* Expandable Content */}
                     <div className={`grid transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isActive ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 mt-0'}`}>
                       <div className="overflow-hidden">
-                        <div className="pl-[4.5rem] md:pl-[5.25rem] pr-8 flex flex-col md:flex-row gap-4 md:items-end justify-between">
-                          <p className="font-body-md text-on-surface-variant text-base md:text-lg leading-relaxed max-w-lg">
-                            {item.description}
-                          </p>
-                          <span className="font-display text-5xl font-black text-white/5 select-none self-end">
+                        <div className="pl-[4.5rem] md:pl-[5.25rem] pr-8 flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
+                          <div className="space-y-4 flex-grow">
+                            <p className="font-body-md text-on-surface-variant text-base md:text-lg leading-relaxed max-w-lg">
+                              {item.description}
+                            </p>
+                            
+                            {item.imageId && (
+                              <div className="mt-4 border border-white/10 rounded overflow-hidden max-w-xs shadow-md">
+                                <img 
+                                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${item.imageId}`} 
+                                  alt={item.title} 
+                                  className="w-full object-cover max-h-[160px]"
+                                />
+                              </div>
+                            )}
+                          </div>
+                          
+                          <span className="font-display text-5xl font-black text-white/5 select-none self-end md:self-center">
                             {item.year}
                           </span>
                         </div>
