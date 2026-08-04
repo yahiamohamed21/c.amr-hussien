@@ -20,18 +20,20 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Mission />
-        <Statistics />
-        <About />
-        <InjuryExpert />
-        <QuoteDivider />
-        <Services />
-        <Process />
-        <Philosophy />
-        <Results />
-        <Accreditations />
-        <Education />
-        <Contact />
+        <div className="relative z-20 bg-background flex flex-col">
+          <Mission />
+          <Statistics />
+          <About />
+          <InjuryExpert />
+          <QuoteDivider />
+          <Services />
+          <Process />
+          <Philosophy />
+          <Results />
+          <Accreditations />
+          <Education />
+          <Contact />
+        </div>
       </main>
       <Footer />
     </>

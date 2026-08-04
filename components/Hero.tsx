@@ -274,7 +274,7 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" ref={containerRef} className="relative min-h-screen w-full overflow-hidden flex flex-col justify-center items-center z-10">
+    <section id="hero" ref={containerRef} className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col justify-center items-center z-10">
 
       {/* Base background color layer */}
       <div ref={bgRef} className="absolute inset-0 z-1 w-full h-full bg-[#F2F0E9]"></div>
@@ -372,7 +372,7 @@ export function Hero() {
       {/* ELEMENT 2: Real Portrait Card */}
       <div
         ref={portraitCardRef}
-        className="absolute left-1/2 top-1/2 z-10 h-[55vh] md:h-[65vh] w-auto aspect-[3/4] md:aspect-[4/5] overflow-hidden rounded-md shadow-2xl"
+        className="absolute left-1/2 top-1/2 z-10 h-[50vh] max-w-[85vw] md:max-w-none md:h-[65vh] w-auto aspect-[3/4] md:aspect-[4/5] overflow-hidden rounded-md shadow-2xl"
       >
         <Image
           ref={cardImageRef}
