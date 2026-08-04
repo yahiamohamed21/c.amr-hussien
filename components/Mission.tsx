@@ -12,8 +12,8 @@ export function Mission() {
           <span className="font-label-caps text-label-caps text-primary tracking-[0.3em] uppercase block mb-6 scroll-reveal">
             MISSION
           </span>
-          <h2 className="font-display-xl text-[56px] md:text-[80px] uppercase leading-[1.1] md:leading-none mb-8 scroll-reveal text-on-surface">
-            TO REDEFINE <span className="text-primary-container bg-on-surface px-4 py-1 inline-block mx-1">PERSONAL TRAINING</span>
+          <h2 className="font-display-xl text-4xl sm:text-5xl md:text-[80px] uppercase leading-[1.2] md:leading-none mb-8 scroll-reveal text-on-surface">
+            TO REDEFINE <span className="text-primary-container bg-on-surface px-3 md:px-4 py-1 md:py-2 inline-block mx-1 mt-2 md:mt-0 whitespace-nowrap">PERSONAL TRAINING</span>
           </h2>
           <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto mb-10 scroll-reveal">
             By combining performance coaching, rehabilitation, and lifestyle transformation into one integrated system that delivers lasting results.
