@@ -399,7 +399,7 @@ export function Hero() {
         }}
       >
         <Image
-          src="/IMG_7495.JPG.png"
+          src="/amr-hero.png"
           alt="Coach Amr"
           fill
           quality={100}
