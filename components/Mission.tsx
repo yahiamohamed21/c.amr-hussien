@@ -5,7 +5,7 @@ export function Mission() {
   return (
     <section className="relative flex items-center justify-center overflow-hidden bg-background py-24 border-t border-on-surface/5">
       <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none"></div>
-      
+
       <div className="relative z-10 px-margin-mobile max-w-[1440px] mx-auto w-full flex flex-col items-center justify-center text-center">
         {/* Text Content */}
         <div className="w-full max-w-4xl flex flex-col items-center">
@@ -27,7 +27,7 @@ export function Mission() {
             </a>
           </div>
         </div>
-       </div>
+      </div>
     </section>
   );
 }

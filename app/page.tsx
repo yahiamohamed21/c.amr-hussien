@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Mission } from "@/components/Mission";
+import { Statistics } from "@/components/Statistics";
 import { About } from "@/components/About";
 import { InjuryExpert } from "@/components/InjuryExpert";
 import { QuoteDivider } from "@/components/QuoteDivider";
@@ -20,6 +21,7 @@ export default function Home() {
       <main>
         <Hero />
         <Mission />
+        <Statistics />
         <About />
         <InjuryExpert />
         <QuoteDivider />
