@@ -18,22 +18,22 @@ export function Process() {
     {
       id: "01",
       title: "ASSESS",
-      description: "Biometric screening, movement analysis, and goal profiling to establish your baseline data.",
+      description: "Understand your body before changing it.",
     },
     {
       id: "02",
       title: "BUILD",
-      description: "Foundational programming designed to address imbalances and strengthen the core physiological pillars.",
+      description: "Develop strength, mobility, and movement quality.",
     },
     {
       id: "03",
       title: "PERFORM",
-      description: "High-intensity execution phase focusing on peak outputs, power, and metabolic efficiency.",
+      description: "Improve endurance, athleticism, and confidence.",
     },
     {
       id: "04",
       title: "SUSTAIN",
-      description: "Strategic maintenance and recovery protocols to ensure longevity and permanent transformation.",
+      description: "Create habits that last a lifetime.",
     }
   ];
 
@@ -45,7 +45,7 @@ export function Process() {
       }))
     : defaultSteps;
 
-  const eyebrow = methodology?.eyebrow || "The Process";
+  const eyebrow = methodology?.eyebrow || "SIGNATURE FRAMEWORK";
   const title = methodology?.title || "THE PERFORMANCE METHOD";
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(0); // Default open first one
@@ -57,7 +57,7 @@ export function Process() {
     <section id="methodology" className="py-32 px-margin-mobile md:px-margin-desktop bg-background overflow-hidden relative border-t border-black/5 dark:border-white/5">
       
       {/* Background Accent */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary-container/5 to-transparent pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-1/3 h-full   from-primary-container/5 to-transparent pointer-events-none"></div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
         
@@ -86,8 +86,8 @@ export function Process() {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={`
-                  relative overflow-hidden rounded-2xl border transition-all duration-700 ease-out cursor-pointer flex flex-col justify-end p-8 md:p-10
-                  ${isHovered ? 'lg:flex-[3] border-primary/50 shadow-2xl bg-surface' : 'lg:flex-1 border-black/5 dark:border-white/5 bg-surface-container-lowest shadow-sm'}
+                  relative overflow-hidden rounded-2xl transition-all duration-700 ease-out cursor-pointer flex flex-col justify-end p-8 md:p-10
+                  ${isHovered ? 'lg:flex-[3] shadow-2xl bg-surface' : 'lg:flex-1 bg-surface-container-lowest shadow-sm'}
                   ${!isHovered && isAnyHovered ? 'lg:opacity-40 grayscale-[50%]' : 'opacity-100 grayscale-0'}
                   min-h-[200px] lg:min-h-0
                 `}

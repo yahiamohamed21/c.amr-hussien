@@ -21,9 +21,13 @@ export function Services() {
       })
       .catch(err => {
         setServices([
-          { id: '1', title: 'Personal Training', description: 'One-on-one elite performance coaching.', icon: 'fitness_center', featured: true },
-          { id: '2', title: 'Nutrition Programming', description: 'Custom macros and meal timing.', icon: 'restaurant', featured: false },
-          { id: '3', title: 'Online Coaching', description: 'Remote check-ins and programming.', icon: 'laptop_mac', featured: false }
+          { id: '1', title: 'Personal Training', description: 'Private coaching tailored to your body, lifestyle, and goals, focusing on strength, movement quality, body composition, and long term health.', icon: 'fitness_center', featured: true },
+          { id: '2', title: 'Body Transformation', description: 'Evidence based programs designed to reduce body fat, increase lean muscle, improve energy levels, and create sustainable lifestyle habits.', icon: 'transform', featured: false },
+          { id: '3', title: 'Sports Performance', description: 'Advanced training systems that improve speed, power, endurance, agility, and athletic performance for recreational and competitive athletes.', icon: 'sports_score', featured: false },
+          { id: '4', title: 'Injury Rehabilitation', description: 'Structured recovery programs that bridge the gap between physiotherapy and performance, helping you return stronger and move pain free.', icon: 'healing', featured: false },
+          { id: '5', title: 'Strength & Conditioning', description: 'Scientifically designed programs that develop strength, stability, mobility, and resilience while reducing injury risk.', icon: 'fitness_center', featured: false },
+          { id: '6', title: 'Nutrition Coaching', description: 'Practical nutritional strategies that support performance, recovery, fat loss, and sustainable health without restrictive dieting.', icon: 'restaurant', featured: false },
+          { id: '7', title: 'Online Coaching', description: 'Personalized coaching from anywhere in the world with customized programming, nutrition guidance, progress tracking, and continuous support.', icon: 'laptop_mac', featured: false }
         ]);
       });
   }, []);
@@ -120,10 +124,7 @@ return(
               <div className="absolute inset-0 bg-gradient-to-br from-primary-container/0 via-transparent to-primary-container/0 group-hover:from-primary/5 transition-colors duration-500"></div>
 
               <div className="relative z-10 h-full flex flex-col">
-                <div className="flex justify-between items-start mb-auto">
-                  <div className={`flex items-center justify-center rounded-xl bg-background border border-black/10 dark:border-white/5 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 ${service.featured ? 'w-16 h-16 text-3xl mb-8' : 'w-12 h-12 text-2xl mb-6'}`}>
-                    <span className="material-symbols-outlined">{service.icon}</span>
-                  </div>
+                <div className="flex justify-end items-start mb-auto">
 
                   {/* Decorative Lamp (Lightbulb) */}
                   <div className="w-8 h-8 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:border-primary/50 group-hover:text-primary group-hover:shadow-[0_0_15px_rgba(184,211,0,0.5)]">

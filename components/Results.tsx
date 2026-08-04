@@ -153,12 +153,15 @@ export function Results() {
             <div className="flex items-center gap-4 mb-4">
               <span className="w-12 h-[2px] bg-primary"></span>
               <span className="font-label-caps text-label-caps text-primary uppercase tracking-widest">
-                Wall of Proof
+                RESULTS
               </span>
             </div>
-            <h2 className="font-display-xl text-[clamp(3rem,6vw,5rem)] leading-[0.9] uppercase tracking-tighter text-on-surface">
-              PROVEN <br /> <span className="text-outline-text" style={{ WebkitTextStroke: "2px var(--color-on-surface)", color: "transparent" }}>RESULTS</span>
+            <h2 className="font-display-xl text-[clamp(3rem,6vw,5rem)] leading-[0.9] uppercase tracking-tighter text-on-surface mb-6">
+              REAL PROGRESS. <br /> <span className="text-outline-text" style={{ WebkitTextStroke: "2px var(--color-on-surface)", color: "transparent" }}>REAL PEOPLE.</span>
             </h2>
+            <p className="font-body-md text-on-surface-variant max-w-xl text-lg">
+              Every transformation represents more than a physical change. It reflects discipline, consistency, and a commitment to becoming better every single day.
+            </p>
           </div>
           
           <div className="flex gap-4">

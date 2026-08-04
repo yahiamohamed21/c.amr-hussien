@@ -27,7 +27,6 @@ export function Hero() {
   const originalHeroContentRef = useRef<HTMLDivElement>(null);
   const marquee1Ref = useRef<HTMLDivElement>(null);
   const marquee2Ref = useRef<HTMLDivElement>(null);
-  const signatureRef = useRef<SVGPathElement>(null);
 
   const [imageLoaded, setImageLoaded] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -49,11 +48,9 @@ export function Hero() {
 
     gsap.set(fullCoachRef.current, { autoAlpha: 1, scale: 1, xPercent: -50, x: 0, y: 0, filter: "blur(0px)" });
     gsap.set(portraitCardRef.current, { autoAlpha: 0, scale: 1.15, xPercent: -50, yPercent: -50 });
-    gsap.set(cardImageRef.current, { filter: "grayscale(0) contrast(1)" });
     gsap.set(cardRingRef.current, { opacity: 0, scale: 1.08 });
 
     gsap.set([marquee1Ref.current, marquee2Ref.current], { autoAlpha: 0, filter: "blur(6px)" });
-    if (signatureRef.current) gsap.set(signatureRef.current, { autoAlpha: 0 });
 
     // ---------- Ambient (scroll-independent) motion ----------
     const ambientTl = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: "sine.inOut" } });
@@ -188,24 +185,24 @@ export function Hero() {
         },
         0.1
       );
-      
+
       // 2. Portrait card slides up, scales from small, rotates slightly, and fades in with a bounce
       scrollTl.fromTo(
         portraitCardRef.current,
-        { 
-          autoAlpha: 0, 
-          scale: 0.85, 
+        {
+          autoAlpha: 0,
+          scale: 0.85,
           yPercent: -42,
           rotation: -2,
         },
-        { 
-          autoAlpha: 1, 
-          scale: 1, 
+        {
+          autoAlpha: 1,
+          scale: 1,
           yPercent: -50,
           rotation: 0,
-          duration: 0.35, 
+          duration: 0.35,
           ease: "back.out(1.2)",
-          immediateRender: false 
+          immediateRender: false
         },
         0.25
       );
@@ -236,11 +233,7 @@ export function Hero() {
     scrollTl.to(originalHeroContentRef.current, { autoAlpha: 0, ease: "none", duration: 0.2 }, 0.12);
 
     // 40% - 70%: Grayscale + reveal marquees with lift + blur-in
-    scrollTl.to(
-      cardImageRef.current,
-      { filter: "grayscale(100%) contrast(1.15)", ease: "none", duration: 0.3 },
-      0.4
-    );
+    // Keep image in color (removed grayscale transition)
 
     scrollTl.to(
       [marquee1Ref.current, marquee2Ref.current],
@@ -255,7 +248,7 @@ export function Hero() {
     scrollTl.to(
       glowRef.current,
       {
-        opacity: 1,
+        opacity: 0,
         background:
           "radial-gradient(60% 70% at 50% 45%, rgba(199,255,0,0.22) 0%, rgba(199,255,0,0) 72%)",
         ease: "none",
@@ -265,31 +258,10 @@ export function Hero() {
     );
     scrollTl.to(gridRef.current, { opacity: 0.9, ease: "none", duration: 0.3 }, 0.45);
 
-    // 65% - 90%: Draw signature with a soft glow pulse
-    if (signatureRef.current) {
-      const length = signatureRef.current.getTotalLength();
-      gsap.set(signatureRef.current, { strokeDasharray: length, strokeDashoffset: length });
 
-      scrollTl.to(
-        signatureRef.current,
-        { autoAlpha: 1, strokeDashoffset: 0, ease: "none", duration: 0.25 },
-        0.65
-      );
-
-      scrollTl.fromTo(
-        signatureRef.current,
-        { filter: "drop-shadow(0 0 0px rgba(199,255,0,0))" },
-        {
-          filter: "drop-shadow(0 0 18px rgba(199,255,0,0.65))",
-          ease: "none",
-          duration: 0.15,
-        },
-        0.8
-      );
-    }
 
     // Hide everything in the hero at the very end of the scroll to prevent overlap with transparent sections
-    scrollTl.to(containerRef.current, { autoAlpha: 0, duration: 0.05 }, 0.95);
+    // (Removed so it naturally scrolls up)
 
     ScrollTrigger.refresh();
   }, { scope: containerRef, dependencies: [imageLoaded, isDark] });
@@ -315,11 +287,11 @@ export function Hero() {
         {/* Giant abstract outline circles */}
         <div className="hero-ring absolute -top-[20%] -right-[10%] w-[60vw] max-w-[800px] aspect-square rounded-full border-[1px] border-dashed border-[#10110F]/10 dark:border-[#C7FF00]/15"></div>
         <div className="absolute top-[5%] -right-[10%] w-[60vw] max-w-[700px] aspect-square rounded-full border-[1px] border-[#10110F]/5 dark:border-[#C7FF00]/5"></div>
-        
+
         {/* Bottom left abstract circles */}
         <div className="hero-ring absolute -bottom-[15%] -left-[10%] w-[45vw] max-w-[500px] aspect-square rounded-full border-[1px] border-dashed border-[#10110F]/15 dark:border-[#C7FF00]/15"></div>
         <div className="absolute -bottom-[20%] -left-[15%] w-[55vw] max-w-[600px] aspect-square rounded-full border-[1px] border-[#10110F]/5 dark:border-[#C7FF00]/5"></div>
-        
+
         {/* Floating crosshairs (+) */}
         <div className="absolute top-[20%] left-[15%] text-[#10110F]/20 dark:text-[#C7FF00]/20 font-sans text-xl">+</div>
         <div className="absolute top-[60%] right-[20%] text-[#10110F]/20 dark:text-[#C7FF00]/20 font-sans text-xl">+</div>
@@ -404,7 +376,7 @@ export function Hero() {
       >
         <Image
           ref={cardImageRef}
-          src="/amr-hussien-card-color.webp"
+          src="/amr-card.webp"
           alt="Coach Amr Hussien"
           fill
           className="object-cover"
@@ -414,7 +386,6 @@ export function Hero() {
         <div
           ref={cardRingRef}
           className="hero-ring pointer-events-none absolute -inset-[2px] rounded-md border border-[#C7FF00]/60"
-          style={{ boxShadow: "0 0 30px 2px rgba(199,255,0,0.25)" }}
         ></div>
       </div>
 
@@ -454,20 +425,8 @@ export function Hero() {
         ></div>
       </div>
 
-      {/* Signature Overlay */}
-      <div className="absolute top-[55%] md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-12 pointer-events-none w-[70vw] max-w-[400px] aspect-[2/1] flex justify-center items-center">
-        <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-2xl">
-          <path
-            ref={signatureRef}
-            d="M50 150 C 70 100, 100 50, 130 150 C 120 120, 140 100, 160 120 C 180 150, 200 80, 220 120 C 210 140, 240 100, 260 140 S 300 80, 350 100"
-            stroke="#C7FF00"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
 
-     </section>
+
+    </section>
   );
 }

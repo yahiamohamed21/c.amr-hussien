@@ -17,9 +17,15 @@ export function About() {
   const displayEyebrow = about?.eyebrow || "About the Coach";
   const displayTitle = about?.title || "MORE THAN FITNESS";
   const displayWatermark = about?.watermarkText || "PERFORMANCE";
-  const displayDescription = about?.body || `Amr Hussien is not just a personal trainer; he is a performance architect. With a foundation built on scientific rigor and years of practical application, Amr specializes in transforming human potential into tangible results.
+  const displayDescription = about?.body || `Fitness changes your body.
+Performance changes your life.
 
-His philosophy is simple: performance changes your life. When you master your body, you master your environment. It's about building resilience, power, and an unbreakable mindset.`;
+Amr Hussien believes that true transformation isn't measured by kilograms lost or muscles gained. It is measured by confidence restored, resilience built, and a body that performs the way it was meant to.
+
+With over a decade of experience in elite coaching, rehabilitation, and performance training, his philosophy combines evidence based science with personalized coaching to create sustainable, measurable results.
+
+Every client follows a journey built around one principle.
+Your body should work for you, not against you.`;
   const isVisible = about ? about.isVisible : true;
 
   if (!isVisible) {
@@ -29,19 +35,19 @@ His philosophy is simple: performance changes your life. When you master your bo
   const checkItems = ["Scientific Approach", "Customized Programming", "Mindset Coaching", "Nutritional Guidance"];
 
   return (
-    <section id="about" className="py-24 px-margin-mobile md:px-margin-desktop bg-background relative overflow-hidden">
+    <section id="about" className="py-24 px-margin-mobile md:px-margin-desktop   relative overflow-hidden">
       
       {/* Background ambient light */}
       <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none -z-10"></div>
       <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-primary-container/5 blur-[120px] rounded-full pointer-events-none -z-10"></div>
 
-      <div className="max-w-[1300px] mx-auto bg-surface-container border border-white/5 rounded-3xl p-8 md:p-16 lg:p-20 relative overflow-hidden shadow-2xl">
+      <div className="max-w-[1300px] mx-auto   p-8 md:p-16 lg:p-20 relative overflow-hidden ">
         
         {/* Glow Accent Line at top */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+        <div className="absolute top-0 left-0 right-0 h-[1px]  from-transparent via-primary/30 to-transparent"></div>
 
         {/* Diagonal Light Beam */}
-        <div className="absolute -top-[10%] -left-[10%] w-[30%] h-[50%] bg-gradient-to-br from-primary/10 to-transparent blur-[60px] pointer-events-none transform rotate-12"></div>
+        <div className="absolute -top-[10%] -left-[10%] w-[30%] h-[50%]   from-primary/10 to-transparent blur-[60px] pointer-events-none transform rotate-12"></div>
 
         {/* Background Watermark Text */}
         {displayWatermark && (
@@ -87,43 +93,35 @@ His philosophy is simple: performance changes your life. When you master your bo
           </div>
 
           {/* Right Side: Image Composition */}
-          <div className="lg:col-span-6 relative flex justify-center">
-            <div className="relative w-full max-w-[500px] aspect-[4/5] scroll-reveal">
-              
-              {/* Premium Offset Decorative Frame */}
-              <div className="absolute -inset-4 border border-primary/20 rounded-2xl z-0 pointer-events-none transform translate-x-2 translate-y-2 hidden md:block"></div>
-
-              {/* Premium Overlapping Collage (Dynamic/Fallback) */}
-              <div className="relative w-full h-full">
-                {/* Main Large Image (Left) */}
-                <div className="absolute top-0 left-0 w-[72%] h-[88%] rounded-2xl overflow-hidden shadow-2xl border border-white/10 z-10 group">
-                  <img
-                    className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700 hover:scale-102"
-                    alt="Coach Amr 1"
-                    src={about?.image1Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image1Id}` : "/image-1.jpeg"}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-                </div>
-                
-                {/* Top Right Small Image */}
-                <div className="absolute top-[4%] right-0 w-[46%] h-[42%] rounded-2xl overflow-hidden shadow-2xl border-4 border-surface-container z-20 group">
-                  <img
-                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                    alt="Coach Amr 2"
-                    src={about?.image2Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image2Id}` : "/image-2.jpeg"}
-                  />
-                </div>
-
-                {/* Bottom Right Small Image */}
-                <div className="absolute bottom-[4%] right-[4%] w-[52%] h-[48%] rounded-2xl overflow-hidden shadow-2xl border-4 border-surface-container z-30 group">
-                  <img
-                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                    alt="Coach Amr 3"
-                    src={about?.image3Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image3Id}` : "/image-3.jpeg"}
-                  />
-                </div>
-              </div>
+          <div className="lg:col-span-6 flex flex-col gap-6 items-center justify-center scroll-reveal">
+            
+            {/* Image 1 */}
+            <div className="relative w-full max-w-[320px] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl border border-white/10 group">
+              <img
+                className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+                alt="Coach Amr 1"
+                src={about?.image1Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image1Id}` : "/image-1.jpeg"}
+              />
             </div>
+            
+            {/* Image 2 */}
+            <div className="relative w-full max-w-[320px] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl border border-white/10 group">
+              <img
+                className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+                alt="Coach Amr 2"
+                src={about?.image2Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image2Id}` : "/image-2.jpeg"}
+              />
+            </div>
+
+            {/* Image 3 */}
+            <div className="relative w-full max-w-[320px] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl border border-white/10 group">
+              <img
+                className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+                alt="Coach Amr 3"
+                src={about?.image3Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image3Id}` : "/image-4.jpeg"}
+              />
+            </div>
+            
           </div>
 
         </div>
