@@ -96,7 +96,7 @@ Your body should work for you, not against you.`;
           <div className="lg:col-span-6 flex flex-col gap-6 items-center justify-center scroll-reveal">
             
             {/* Image 1 */}
-            <div className="relative w-full max-w-[320px] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl border border-white/10 group">
+            <div className="relative w-full max-w-[320px] aspect-[16/9]   overflow-hidden shadow-xl border border-white/10 group">
               <img
                 className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
                 alt="Coach Amr 1"
@@ -105,7 +105,7 @@ Your body should work for you, not against you.`;
             </div>
             
             {/* Image 2 */}
-            <div className="relative w-full max-w-[320px] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl border border-white/10 group">
+            <div className="relative w-full max-w-[320px] aspect-[16/9]   overflow-hidden shadow-xl border border-white/10 group">
               <img
                 className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
                 alt="Coach Amr 2"
@@ -114,7 +114,7 @@ Your body should work for you, not against you.`;
             </div>
 
             {/* Image 3 */}
-            <div className="relative w-full max-w-[320px] aspect-[16/9] rounded-2xl overflow-hidden shadow-xl border border-white/10 group">
+            <div className="relative w-full max-w-[320px] aspect-[16/9]   overflow-hidden shadow-xl border border-white/10 group">
               <img
                 className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
                 alt="Coach Amr 3"

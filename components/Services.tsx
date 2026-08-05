@@ -114,29 +114,29 @@ return(
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
           {services.map((service, i) => (
             <div
               key={service.id}
-              className={`group relative overflow-hidden bg-surface-container-lowest rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-500 hover:border-primary/50 hover:shadow-xl hover:-translate-y-1 ${service.featured ? 'md:col-span-2 lg:col-span-2 row-span-2 p-8 md:p-12' : 'p-6 md:p-8'}`}
+              className={`group relative overflow-hidden bg-surface-container-lowest rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-500 hover:border-primary/50 hover:shadow-xl hover:-translate-y-1 ${service.featured ? 'md:col-span-2 lg:col-span-2 row-span-2 p-5 md:p-6' : 'p-3 md:p-4'}`}
             >
               {/* Hover Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary-container/0 via-transparent to-primary-container/0 group-hover:from-primary/5 transition-colors duration-500"></div>
 
               <div className="relative z-10 h-full flex flex-col">
-                <div className="flex justify-end items-start mb-auto">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className={`font-display uppercase tracking-tight text-on-surface group-hover:text-primary transition-colors ${service.featured ? 'text-2xl md:text-3xl' : 'text-lg md:text-xl'}`}>
+                    {service.title}
+                  </h3>
 
                   {/* Decorative Lamp (Lightbulb) */}
-                  <div className="w-8 h-8 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:border-primary/50 group-hover:text-primary group-hover:shadow-[0_0_15px_rgba(184,211,0,0.5)]">
-                    <span className="material-symbols-outlined text-sm animate-pulse">lightbulb</span>
+                  <div className="w-6 h-6 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:border-primary/50 group-hover:text-primary group-hover:shadow-[0_0_15px_rgba(184,211,0,0.5)] shrink-0 ml-2">
+                    <span className="material-symbols-outlined text-[12px] animate-pulse">lightbulb</span>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className={`font-display uppercase tracking-tight text-on-surface mb-3 group-hover:text-primary transition-colors ${service.featured ? 'text-3xl md:text-4xl' : 'text-xl md:text-2xl'}`}>
-                    {service.title}
-                  </h3>
-                  <p className={`font-body-md text-on-surface-variant leading-relaxed ${service.featured ? 'text-base md:text-lg max-w-md' : 'text-sm'}`}>
+                  <p className={`font-body-md text-on-surface-variant leading-snug ${service.featured ? 'text-sm md:text-base max-w-md' : 'text-xs'}`}>
                     {service.description}
                   </p>
                 </div>

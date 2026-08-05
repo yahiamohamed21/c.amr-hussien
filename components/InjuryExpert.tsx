@@ -48,21 +48,21 @@ export function InjuryExpert() {
 
   if (!data) return null;
 
-  const img1Url = data.image1Id 
-    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${data.image1Id}` 
+  const img1Url = data.image1Id
+    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${data.image1Id}`
     : "/amr.jpeg";
-  const img2Url = data.image2Id 
-    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${data.image2Id}` 
+  const img2Url = data.image2Id
+    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${data.image2Id}`
     : "/amr-2.jpeg";
 
   return (
     <section id="injury-rehab" className="py-24 px-margin-mobile md:px-margin-desktop bg-surface relative overflow-hidden">
       {/* Background Accent Blur */}
       <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
-      
+
       <div className="max-w-[1440px] mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
+
           {/* Left Side: Content */}
           <div className="lg:col-span-6">
             <div>
@@ -112,9 +112,9 @@ export function InjuryExpert() {
           {/* Right Side: Images Grid */}
           <div className="lg:col-span-6">
             <div className="grid grid-cols-2 gap-4 md:gap-6">
-              
+
               {/* Image 1 */}
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 group shadow-2xl mt-8 lg:mt-0">
+              <div className="relative aspect-[3/4]   overflow-hidden border border-white/10 group shadow-2xl mt-8 lg:mt-0">
                 <img
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   alt="Injury Rehabilitation - Amr 1"
@@ -124,7 +124,7 @@ export function InjuryExpert() {
               </div>
 
               {/* Image 2 */}
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 group shadow-2xl mt-16 lg:mt-12">
+              <div className="relative aspect-[3/4]   overflow-hidden border border-white/10 group shadow-2xl mt-16 lg:mt-12">
                 <img
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   alt="Injury Rehabilitation - Amr 2"

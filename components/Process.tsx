@@ -75,7 +75,8 @@ export function Process() {
         </div>
 
         {/* Interactive Accordion */}
-        <div className="flex flex-col lg:flex-row gap-4 h-auto lg:h-[450px]">
+        {/* Interactive Accordion */}
+        <div className="flex flex-col lg:flex-row gap-1 md:gap-4 h-auto lg:h-[450px]">
           {displaySteps.map((step: any, index: number) => {
             const isHovered = hoveredIndex === index;
             const isAnyHovered = hoveredIndex !== null;
@@ -86,17 +87,17 @@ export function Process() {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={`
-                  relative overflow-hidden rounded-2xl transition-all duration-700 ease-out cursor-pointer flex flex-col justify-end p-8 md:p-10
+                  relative overflow-hidden rounded-2xl transition-all duration-700 ease-out cursor-pointer flex flex-col justify-end p-3 md:p-10
                   ${isHovered ? 'lg:flex-[3] shadow-2xl bg-surface' : 'lg:flex-1 bg-surface-container-lowest shadow-sm'}
                   ${!isHovered && isAnyHovered ? 'lg:opacity-40 grayscale-[50%]' : 'opacity-100 grayscale-0'}
-                  min-h-[200px] lg:min-h-0
+                  min-h-[80px] lg:min-h-0
                 `}
               >
                 {/* Giant Background Number */}
                 <div 
                   className={`
                     absolute top-4 right-4 md:-right-8 md:-top-10 font-display font-black leading-none select-none transition-all duration-700
-                    ${isHovered ? 'text-[120px] md:text-[250px] text-primary/10' : 'text-[80px] md:text-[150px] text-black/5 dark:text-white/5'}
+                    ${isHovered ? 'text-[120px] md:text-[250px] text-primary/10' : 'text-[60px] md:text-[150px] text-black/5 dark:text-white/5'}
                   `}
                 >
                   {step.id}
@@ -104,11 +105,11 @@ export function Process() {
 
                 {/* Content */}
                 <div className="relative z-10 mt-auto">
-                  <div className="flex items-center gap-6 mb-4">
-                    <span className={`font-display text-2xl md:text-3xl font-bold transition-colors duration-500 ${isHovered ? 'text-primary' : 'text-on-surface-variant'}`}>
+                  <div className="flex items-center gap-4 md:gap-6 mb-1 md:mb-4">
+                    <span className={`font-display text-xl md:text-3xl font-bold transition-colors duration-500 ${isHovered ? 'text-primary' : 'text-on-surface-variant'}`}>
                       {step.id}
                     </span>
-                    <h3 className={`font-display uppercase tracking-wider transition-all duration-500 ${isHovered ? 'text-3xl md:text-4xl text-on-surface' : 'text-xl md:text-2xl text-on-surface-variant'}`}>
+                    <h3 className={`font-display uppercase tracking-wider transition-all duration-500 ${isHovered ? 'text-2xl md:text-4xl text-on-surface' : 'text-lg md:text-2xl text-on-surface-variant'}`}>
                       {step.title}
                     </h3>
                   </div>
