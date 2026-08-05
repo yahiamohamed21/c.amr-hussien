@@ -46,8 +46,25 @@ export function Hero() {
     gsap.set(gridRef.current, { opacity: 0 });
     gsap.set(scanLineRef.current, { autoAlpha: 0, top: "8%" });
 
-    gsap.set(fullCoachRef.current, { autoAlpha: 1, scale: 1, xPercent: -50, x: 0, y: 0, filter: "blur(0px)" });
-    gsap.set(portraitCardRef.current, { autoAlpha: 0, scale: 1.15, xPercent: -50, yPercent: -50 });
+    // Image 1 (full coach) starts perfectly centered, sharp, at rest
+    gsap.set(fullCoachRef.current, {
+      autoAlpha: 1,
+      scale: 1,
+      xPercent: -50,
+      yPercent: -50,
+      x: 0,
+      y: 0,
+      filter: "blur(0px)",
+    });
+
+    // Image 2 (portrait card) starts fully hidden, slightly zoomed + blurred, ready to reveal
+    gsap.set(portraitCardRef.current, {
+      autoAlpha: 0,
+      scale: 1.12,
+      xPercent: -50,
+      yPercent: -50,
+      filter: "blur(14px)",
+    });
     gsap.set(cardRingRef.current, { opacity: 0, scale: 1.08 });
 
     gsap.set([marquee1Ref.current, marquee2Ref.current], { autoAlpha: 0, filter: "blur(6px)" });
@@ -76,8 +93,8 @@ export function Hero() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=200%",
-        scrub: 0.3,
+        end: "+=220%",
+        scrub: 0.6,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
@@ -86,30 +103,13 @@ export function Hero() {
 
     scrollTl.addLabel("start", 0);
 
-    // 0% - 15%: Hold original state
-    scrollTl.to({}, { duration: 0.15 }, 0);
+    // 0% - 12%: Hold the original centered image completely still (no premature motion)
+    scrollTl.to({}, { duration: 0.12 }, 0);
 
-    const getTransitionValues = () => {
-      if (!fullCoachRef.current || !portraitCardRef.current) return { x: 0, y: 0, scale: 1 };
-      const fullRect = fullCoachRef.current.getBoundingClientRect();
-      const cardRect = portraitCardRef.current.getBoundingClientRect();
-
-      const fullCenterX = fullRect.left + fullRect.width / 2;
-      const fullCenterY = fullRect.top + fullRect.height / 2;
-      const cardCenterX = cardRect.left + cardRect.width / 2;
-      const cardCenterY = cardRect.top + cardRect.height / 2;
-
-      return {
-        x: cardCenterX - fullCenterX,
-        y: cardCenterY - fullCenterY,
-        scale: (cardRect.width / fullRect.width) * 1.2,
-      };
-    };
-
-    // Background starts shifting early so the transition feels driven, not switched
+    // Background + ambient glow begin drifting early so the shift feels driven, not switched
     scrollTl.to(
       bgRef.current,
-      { backgroundColor: isDark ? "transparent" : "#e2e4d0", ease: "none", duration: 0.45 },
+      { backgroundColor: isDark ? "transparent" : "#e2e4d0", ease: "sine.inOut", duration: 0.5 },
       0.1
     );
 
@@ -119,130 +119,127 @@ export function Hero() {
         opacity: 0.85,
         background:
           "radial-gradient(55% 65% at 50% 42%, rgba(199,255,0,0.16) 0%, rgba(199,255,0,0) 70%)",
-        ease: "none",
-        duration: 0.45,
+        ease: "sine.inOut",
+        duration: 0.5,
       },
       0.1
     );
 
-    scrollTl.to(gridRef.current, { opacity: 0.5, ease: "none", duration: 0.35 }, 0.15);
+    scrollTl.to(gridRef.current, { opacity: 0.5, ease: "sine.inOut", duration: 0.4 }, 0.15);
 
-    // Scan-line sweep down the full coach as it "digitizes" into the card
+    // Fade out the original hero copy just before the coach starts transforming
+    scrollTl.to(originalHeroContentRef.current, { autoAlpha: 0, ease: "power1.out", duration: 0.15 }, 0.1);
+
+    // Scan-line sweep down the full coach — reads as it being "captured" right before it vanishes
     scrollTl.fromTo(
       scanLineRef.current,
       { autoAlpha: 1, top: "6%" },
-      { top: "92%", ease: "none", duration: 0.3 },
-      0.15
+      { top: "92%", ease: "none", duration: 0.22 },
+      0.12
     );
-    scrollTl.to(scanLineRef.current, { autoAlpha: 0, duration: 0.05 }, 0.44);
+    scrollTl.to(scanLineRef.current, { autoAlpha: 0, duration: 0.04 }, 0.34);
 
-    // 15% - 45%: Transition from full coach to portrait card, with depth blur
-    if (window.innerWidth >= 768) {
+    // ---------------------------------------------------------------
+    // 12% -> 45%: IMAGE 1 fully disappears, THEN (only after it's gone)
+    // IMAGE 2 reveals. No cross-fade overlap — a deliberate, professional beat.
+    // ---------------------------------------------------------------
+    const isDesktop = window.innerWidth >= 768;
+
+    if (isDesktop) {
+      // Step A (0.15 -> 0.35): Image 1 dissolves away
       scrollTl.to(
         fullCoachRef.current,
         {
-          x: () => getTransitionValues().x,
-          y: () => getTransitionValues().y,
-          scale: () => getTransitionValues().scale,
-          filter: "blur(2px)",
-          ease: "none",
-          duration: 0.3,
+          autoAlpha: 0,
+          scale: 0.95,
+          filter: "blur(8px)",
+          ease: "power2.inOut",
+          duration: 0.20,
         },
         0.15
       );
 
-      scrollTl.to(
-        fullCoachRef.current,
-        { autoAlpha: 0, ease: "none", duration: 0.12 },
-        0.33
-      );
-
+      // Step B (0.20 -> 0.40): Image 2 reveals WHILE Image 1 is fading out (Crossfade)
       scrollTl.fromTo(
         portraitCardRef.current,
-        { autoAlpha: 0, scale: 1.15 },
-        { autoAlpha: 1, scale: 1, ease: "none", duration: 0.2, immediateRender: false },
-        0.28
+        { autoAlpha: 0, scale: 1.12, filter: "blur(14px)" },
+        {
+          autoAlpha: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          ease: "power3.out",
+          duration: 0.20,
+          immediateRender: false,
+        },
+        0.20
       );
 
       scrollTl.fromTo(
         cardRingRef.current,
         { opacity: 0, scale: 1.1 },
-        { opacity: 1, scale: 1, ease: "none", duration: 0.2 },
-        0.3
+        { opacity: 1, scale: 1, ease: "power2.out", duration: 0.2 },
+        0.36
       );
     } else {
-      // Mobile-specific premium scroll transitions
-      // 1. Full coach steps back (scales down, moves down, fades out with slight blur)
+      // Mobile-specific premium sequence — same "gone, then appear" logic
+
+      // Step A: Image 1 fades out
       scrollTl.to(
         fullCoachRef.current,
         {
-          opacity: 0,
-          scale: 0.92,
-          y: 40,
-          filter: "blur(4px)",
-          duration: 0.3,
-          ease: "power2.inOut"
+          autoAlpha: 0,
+          scale: 0.95,
+          y: 5,
+          filter: "blur(8px)",
+          ease: "power2.inOut",
+          duration: 0.2,
         },
-        0.1
+        0.15
       );
 
-      // 2. Portrait card slides up, scales from small, rotates slightly, and fades in with a bounce
+      // Step B: Image 2 slides up from below WHILE Image 1 fades out (Crossfade)
       scrollTl.fromTo(
         portraitCardRef.current,
         {
           autoAlpha: 0,
-          scale: 0.85,
-          yPercent: -42,
+          scale: 0.9,
+          yPercent: -45,
           rotation: -2,
+          filter: "blur(8px)",
         },
         {
           autoAlpha: 1,
           scale: 1,
           yPercent: -50,
           rotation: 0,
-          duration: 0.35,
+          filter: "blur(0px)",
+          duration: 0.22,
           ease: "back.out(1.2)",
-          immediateRender: false
+          immediateRender: false,
         },
-        0.25
+        0.20
       );
 
-      // 3. Card neon ring pulses out
+      // Card neon ring pulses out right after the card lands
       scrollTl.fromTo(
         cardRingRef.current,
         { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 0.25, ease: "power2.out" },
-        0.4
+        { opacity: 1, scale: 1, duration: 0.2, ease: "power2.out" },
+        0.48
       );
 
-      // 4. Fade out the portrait card at the end of the scroll (sliding up)
-      scrollTl.to(
-        portraitCardRef.current,
-        {
-          autoAlpha: 0,
-          scale: 0.9,
-          yPercent: -58,
-          duration: 0.2,
-          ease: "power2.in"
-        },
-        0.75
-      );
+      // The portrait card will now stay visible and scroll up naturally with the page
     }
 
-    // Fade out original text
-    scrollTl.to(originalHeroContentRef.current, { autoAlpha: 0, ease: "none", duration: 0.2 }, 0.12);
-
-    // 40% - 70%: Grayscale + reveal marquees with lift + blur-in
-    // Keep image in color (removed grayscale transition)
-
+    // 45% -> 75%: Reveal marquees with a lift + blur-in, once the card has landed
     scrollTl.to(
       [marquee1Ref.current, marquee2Ref.current],
-      { autoAlpha: 1, filter: "blur(0px)", ease: "none", duration: 0.25 },
-      0.4
+      { autoAlpha: 1, filter: "blur(0px)", ease: "power1.out", duration: 0.25 },
+      0.46
     );
 
-    scrollTl.to(marquee1Ref.current, { xPercent: -20, ease: "none", duration: 0.6 }, 0.4);
-    scrollTl.to(marquee2Ref.current, { xPercent: 20, ease: "none", duration: 0.6 }, 0.4);
+    scrollTl.to(marquee1Ref.current, { xPercent: -20, ease: "none", duration: 0.55 }, 0.46);
+    scrollTl.to(marquee2Ref.current, { xPercent: 20, ease: "none", duration: 0.55 }, 0.46);
 
     // Glow intensifies as the lime marquee and grid take over
     scrollTl.to(
@@ -251,17 +248,12 @@ export function Hero() {
         opacity: 0,
         background:
           "radial-gradient(60% 70% at 50% 45%, rgba(199,255,0,0.22) 0%, rgba(199,255,0,0) 72%)",
-        ease: "none",
+        ease: "sine.inOut",
         duration: 0.3,
       },
-      0.45
+      0.5
     );
-    scrollTl.to(gridRef.current, { opacity: 0.9, ease: "none", duration: 0.3 }, 0.45);
-
-
-
-    // Hide everything in the hero at the very end of the scroll to prevent overlap with transparent sections
-    // (Removed so it naturally scrolls up)
+    scrollTl.to(gridRef.current, { opacity: 0.9, ease: "sine.inOut", duration: 0.3 }, 0.5);
 
     ScrollTrigger.refresh();
   }, { scope: containerRef, dependencies: [imageLoaded, isDark] });
@@ -392,19 +384,15 @@ export function Hero() {
       {/* ELEMENT 1: Full Transparent Coach Cutout */}
       <div
         ref={fullCoachRef}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[90vw] md:w-[600px] xl:w-[700px] h-[75vh] md:h-[80vh] origin-bottom flex justify-center items-end"
-        style={{
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)"
-        }}
+        className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-[100vw] md:w-[750px] xl:w-[900px] h-[60vh] md:h-[75vh] origin-center flex justify-center items-center"
       >
         <Image
-          src="/amr-hero.png"
+          src="/amr-hero2.png"
           alt="Coach Amr"
           fill
           quality={100}
-          sizes="(max-width: 768px) 120vw, (max-width: 1024px) 800px, 1000px"
-          className="object-contain object-bottom drop-shadow-2xl"
+          sizes="(max-width: 768px) 120vw, (max-width: 1024px) 900px, 1200px"
+          className="object-contain object-center"
           priority
           onLoad={handleImageLoad}
           onError={() => setImageLoaded(true)}
@@ -424,8 +412,6 @@ export function Hero() {
           }}
         ></div>
       </div>
-
-
 
     </section>
   );
