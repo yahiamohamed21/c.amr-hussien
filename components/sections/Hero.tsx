@@ -15,7 +15,7 @@ export function Hero() {
   const fullCoachRef = useRef<HTMLDivElement>(null);
   const marquee1Ref = useRef<HTMLDivElement>(null);
   const marquee2Ref = useRef<HTMLDivElement>(null);
-  
+
   // Text elements for entrance animation
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -32,11 +32,11 @@ export function Hero() {
       background: "radial-gradient(55% 65% at 50% 42%, rgba(199,255,0,0.16) 0%, rgba(199,255,0,0) 70%)",
     });
     gsap.set(gridRef.current, { opacity: 0.5 });
-    
+
     gsap.set([titleRef.current, subtitleRef.current, ctaRef.current], {
-        autoAlpha: 0,
-        y: 40,
-        filter: "blur(10px)"
+      autoAlpha: 0,
+      y: 40,
+      filter: "blur(10px)"
     });
 
     // Marquees initial state
@@ -45,9 +45,9 @@ export function Hero() {
     // Entrance animation
     const entranceTl = gsap.timeline({ defaults: { ease: "power3.out" } });
     entranceTl
-        .to(titleRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1, delay: 0.2 })
-        .to(subtitleRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8 }, "-=0.6")
-        .to(ctaRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8 }, "-=0.6");
+      .to(titleRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1, delay: 0.2 })
+      .to(subtitleRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8 }, "-=0.6")
+      .to(ctaRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8 }, "-=0.6");
 
     // ---------- Ambient (scroll-independent) motion ----------
     const ambientTl = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: "sine.inOut" } });
@@ -157,24 +157,24 @@ export function Hero() {
       </div>
 
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col md:flex-row items-center justify-between gap-8 pt-28 md:pt-20">
-        
+
         {/* Foreground Content - The Text Layer */}
         <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left order-2 pb-16 md:pb-0">
-            <h1 ref={titleRef} className="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight uppercase text-[#10110F] dark:text-white leading-[0.95] mb-6 drop-shadow-lg">
-                Unlock Your <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10110F] to-[#10110F]/60 dark:from-[#C7FF00] dark:to-[#C7FF00]/60">Elite Potential</span>
-            </h1>
-            <p ref={subtitleRef} className="font-sans text-base md:text-xl text-[#10110F]/80 dark:text-white/80 mb-8 max-w-md mx-auto md:mx-0 font-medium drop-shadow-md">
-                Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies.
-            </p>
-            <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pointer-events-auto">
-                <Button 
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="w-full sm:w-auto bg-[#10110F] text-white hover:bg-[#10110F]/90 dark:bg-[#C7FF00] dark:text-[#10110F] dark:hover:bg-[#C7FF00]/90 text-sm md:text-base py-4 px-8"
-                >
-                    Explore Programs
-                </Button>
-            </div>
+          <h1 ref={titleRef} className="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight uppercase text-[#10110F] dark:text-white leading-[0.95] mb-6 drop-shadow-lg">
+            Unlock Your <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10110F] to-[#10110F]/60 dark:from-[#C7FF00] dark:to-[#C7FF00]/60">Elite Potential</span>
+          </h1>
+          <p ref={subtitleRef} className="font-sans text-base md:text-xl text-[#10110F]/80 dark:text-white/80 mb-8 max-w-md mx-auto md:mx-0 font-medium drop-shadow-md">
+            Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies.
+          </p>
+          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pointer-events-auto">
+            <Button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="w-full sm:w-auto bg-[#10110F] text-white hover:bg-[#10110F]/90 dark:bg-[#C7FF00] dark:text-[#10110F] dark:hover:bg-[#C7FF00]/90 text-sm md:text-base py-4 px-8"
+            >
+              Explore Programs
+            </Button>
+          </div>
         </div>
 
         {/* ELEMENT 1: Full Transparent Coach Cutout */}
@@ -184,15 +184,15 @@ export function Hero() {
         >
           {/* Faded Image Container (Restored the original radial portal look) */}
           <div
-            className="absolute inset-0 z-0 flex justify-center items-center"
+            className="absolute inset-0 z-10 flex justify-center items-center"
             style={{
-              maskImage: "radial-gradient(ellipse at 50% 50%, black 35%, transparent 75%)",
+              maskImage: "radial-gradient(ellipse at 50% 50%, black 55%, transparent 85%)",
               WebkitMaskImage: "radial-gradient(ellipse at 50% 50%, black 35%, transparent 75%)",
             }}
           >
             <div className="relative w-full h-full max-w-[500px] aspect-square">
-                <Image
-                src="/amr-hero-1.jpeg"
+              <Image
+                src="/amr-hero-3.jpeg"
                 alt="Coach Amr"
                 fill
                 quality={100}
@@ -201,16 +201,16 @@ export function Hero() {
                 priority
                 onLoad={handleImageLoad}
                 onError={() => setImageLoaded(true)}
-                />
-                {/* Subtle overlay to integrate the photo with the theme colors */}
-                <div className="absolute inset-0 bg-[#C7FF00]/10 mix-blend-overlay dark:mix-blend-color pointer-events-none"></div>
-                {/* Deep inner shadow to further blend edges into darkness */}
-                <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.9)] pointer-events-none"></div>
+              />
+              {/* Subtle overlay to integrate the photo with the theme colors */}
+              <div className="absolute inset-0 bg-[#C7FF00]/10 mix-blend-overlay dark:mix-blend-color pointer-events-none"></div>
+              {/* Deep inner shadow to further blend edges into darkness */}
+              <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.9)] pointer-events-none"></div>
             </div>
           </div>
 
           {/* HUD Elements - Delicate Square Framing */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[350px] aspect-square pointer-events-none z-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[350px] aspect-square pointer-events-none z-20">
             <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#10110F]/40 dark:border-[#C7FF00]/60"></div>
             <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-[#10110F]/40 dark:border-[#C7FF00]/60"></div>
             <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[#10110F]/40 dark:border-[#C7FF00]/60"></div>
@@ -218,8 +218,8 @@ export function Hero() {
           </div>
 
           {/* Wireframe scan rings centered on the subject */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] max-w-[300px] aspect-square rounded-full border border-dashed border-[#10110F]/15 dark:border-white/10 z-10 pointer-events-none"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] max-w-[240px] aspect-square rounded-full border-[1.5px] border-dashed border-[#10110F]/25 dark:border-[#C7FF00]/25 z-10 pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] max-w-[300px] aspect-square rounded-full border border-dashed border-[#10110F]/15 dark:border-white/10 z-0 pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] max-w-[240px] aspect-square rounded-full border-[1.5px] border-dashed border-[#10110F]/25 dark:border-[#C7FF00]/25 z-0 pointer-events-none"></div>
         </div>
 
       </div>

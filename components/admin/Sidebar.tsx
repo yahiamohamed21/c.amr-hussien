@@ -12,11 +12,10 @@ import clsx from "clsx";
 import { useAuthStore } from "@/lib/store/auth";
 
 const navItems = [
-  { name: "Overview", href: "/admin", icon: LayoutDashboard },
-  { name: "Messages", href: "/admin/messages", icon: MessageSquare },
-  { name: "Media Library", href: "/admin/media", icon: ImageIcon },
-  { name: "Site Settings", href: "/admin/site-settings", icon: Settings },
-  { name: "Hero", href: "/admin/hero", icon: LayoutTemplate },
+  // Core Dashboard
+  
+  // Sections in order of the public site
+  { name: "Coaching Goals", href: "/admin/coaching-goals", icon: Target },
   { name: "About", href: "/admin/about", icon: Info },
   { name: "Injury Rehab", href: "/admin/injury-rehab", icon: Activity },
   { name: "Services", href: "/admin/services", icon: Briefcase },
@@ -24,8 +23,12 @@ const navItems = [
   { name: "Transformations", href: "/admin/transformations", icon: Images },
   { name: "Accreditations", href: "/admin/accreditations", icon: Award },
   { name: "Qualifications", href: "/admin/qualifications", icon: GraduationCap },
-  { name: "Coaching Goals", href: "/admin/coaching-goals", icon: Target },
+  
+  // Management & Settings
+  { name: "Messages", href: "/admin/messages", icon: MessageSquare },
+  { name: "Media Library", href: "/admin/media", icon: ImageIcon },
   { name: "Footer", href: "/admin/footer", icon: LinkIcon },
+  { name: "Site Settings", href: "/admin/site-settings", icon: Settings },
 ];
 
 export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
