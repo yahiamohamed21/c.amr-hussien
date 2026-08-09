@@ -1,17 +1,17 @@
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { Mission } from "@/components/Mission";
-import { Statistics } from "@/components/Statistics";
-import { About } from "@/components/About";
-import { InjuryExpert } from "@/components/InjuryExpert";
-import { QuoteDivider } from "@/components/QuoteDivider";
-import { Services } from "@/components/Services";
-import { Process } from "@/components/Process";
-import { Philosophy } from "@/components/Philosophy";
-import { Results } from "@/components/Results";
-import { Accreditations } from "@/components/Accreditations";
-import { Education } from "@/components/Education";
-import { Contact } from "@/components/Contact";
+import { Hero } from "@/components/sections/Hero";
+import { Mission } from "@/components/sections/Mission";
+import { Statistics } from "@/components/sections/Statistics";
+import { About } from "@/components/sections/About";
+import { InjuryExpert } from "@/components/sections/InjuryExpert";
+import { QuoteDivider } from "@/components/sections/QuoteDivider";
+import { Services } from "@/components/sections/Services";
+import { Process } from "@/components/sections/Process";
+import { Philosophy } from "@/components/sections/Philosophy";
+import { Results } from "@/components/sections/Results";
+import { Accreditations } from "@/components/sections/Accreditations";
+import { Education } from "@/components/sections/Education";
+import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {

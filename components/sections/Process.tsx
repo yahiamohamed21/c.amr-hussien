@@ -39,10 +39,10 @@ export function Process() {
 
   const displaySteps = methodology?.steps?.length > 0
     ? methodology.steps.map((s: any, index: number) => ({
-        id: String(index + 1).padStart(2, "0"),
-        title: s.name,
-        description: s.description,
-      }))
+      id: String(index + 1).padStart(2, "0"),
+      title: s.name,
+      description: s.description,
+    }))
     : defaultSteps;
 
   const eyebrow = methodology?.eyebrow || "SIGNATURE FRAMEWORK";
@@ -55,12 +55,12 @@ export function Process() {
 
   return (
     <section id="methodology" className="py-32 px-margin-mobile md:px-margin-desktop bg-background overflow-hidden relative border-t border-black/5 dark:border-white/5">
-      
+
       {/* Background Accent */}
       <div className="absolute top-0 right-0 w-1/3 h-full   from-primary-container/5 to-transparent pointer-events-none"></div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
-        
+
         {/* Header */}
         <div className="mb-20">
           <div className="flex items-center gap-4 mb-6">
@@ -80,9 +80,9 @@ export function Process() {
           {displaySteps.map((step: any, index: number) => {
             const isHovered = hoveredIndex === index;
             const isAnyHovered = hoveredIndex !== null;
-            
+
             return (
-              <div 
+              <div
                 key={step.id}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -94,7 +94,7 @@ export function Process() {
                 `}
               >
                 {/* Giant Background Number */}
-                <div 
+                <div
                   className={`
                     absolute top-4 right-4 md:-right-8 md:-top-10 font-display font-black leading-none select-none transition-all duration-700
                     ${isHovered ? 'text-[120px] md:text-[250px] text-primary/10' : 'text-[60px] md:text-[150px] text-black/5 dark:text-white/5'}
@@ -113,9 +113,9 @@ export function Process() {
                       {step.title}
                     </h3>
                   </div>
-                  
+
                   {/* Expandable Description */}
-                  <div 
+                  <div
                     className={`
                       grid transition-all duration-700 ease-in-out
                       ${isHovered ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 lg:opacity-0 lg:mt-0 opacity-100 mt-4 grid-rows-[1fr]'}
@@ -130,7 +130,7 @@ export function Process() {
                 </div>
 
                 {/* Active Indicator Line */}
-                <div 
+                <div
                   className={`absolute bottom-0 left-0 h-1 bg-primary transition-all duration-700 ease-out ${isHovered ? 'w-full' : 'w-0'}`}
                 ></div>
               </div>

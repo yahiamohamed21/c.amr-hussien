@@ -22,11 +22,11 @@ function BeforeAfterSlider({ before, after, name }: BeforeAfterProps) {
       }
     };
     updateWidth();
-    
+
     // Use ResizeObserver for responsive width updates
     const observer = new ResizeObserver(updateWidth);
     observer.observe(containerRef.current);
-    
+
     return () => observer.disconnect();
   }, []);
 
@@ -50,7 +50,7 @@ function BeforeAfterSlider({ before, after, name }: BeforeAfterProps) {
   };
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="relative aspect-[4/5] bg-surface-container overflow-hidden rounded-lg shadow-2xl border border-black/5 dark:border-white/5 select-none touch-none cursor-ew-resize group"
       onMouseMove={handleMouseMove}
@@ -68,11 +68,11 @@ function BeforeAfterSlider({ before, after, name }: BeforeAfterProps) {
       </div>
 
       {/* Before Image (Clipped Overlay) */}
-      <div 
+      <div
         className="absolute inset-0 overflow-hidden border-r-2 border-primary z-10 pointer-events-none"
         style={{ width: `${sliderPosition}%` }}
       >
-        <div 
+        <div
           className="absolute inset-0 h-full"
           style={{ width: containerWidth ? `${containerWidth}px` : '100%' }}
         >
@@ -89,7 +89,7 @@ function BeforeAfterSlider({ before, after, name }: BeforeAfterProps) {
       </div>
 
       {/* Slider Bar Handle */}
-      <div 
+      <div
         className="absolute top-0 bottom-0 w-[2px] bg-primary pointer-events-none z-20"
         style={{ left: `${sliderPosition}%` }}
       >
@@ -138,17 +138,17 @@ export function Results() {
   }, []);
 
   return (
-    <section id="transformations" className="py-32 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest relative overflow-hidden border-t border-black/5 dark:border-white/5">
-      
+    <section id="transformations" className="py-1 md:py-20 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest relative overflow-hidden border-t border-black/5 dark:border-white/5">
+
       {/* Background Graphic */}
       <div className="absolute -top-40 -right-40 text-[30rem] font-display font-black text-black/[0.02] dark:text-white/[0.02] select-none pointer-events-none leading-none">
         PROOF
       </div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
-        
+
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-20 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-12 gap-8">
           <div>
             <div className="flex items-center gap-4 mb-4">
               <span className="w-12 h-[2px] bg-primary"></span>
@@ -163,15 +163,15 @@ export function Results() {
               Every transformation represents more than a physical change. It reflects discipline, consistency, and a commitment to becoming better every single day.
             </p>
           </div>
-          
+
           <div className="flex gap-4">
-            <button 
+            <button
               onClick={() => scroll('left')}
               className="w-14 h-14 border border-outline-variant/30 rounded-full flex items-center justify-center hover:bg-primary-container hover:text-on-primary-fixed transition-all text-on-surface bg-background shadow-lg"
             >
               <span className="material-symbols-outlined">arrow_back</span>
             </button>
-            <button 
+            <button
               onClick={() => scroll('right')}
               className="w-14 h-14 border border-outline-variant/30 rounded-full flex items-center justify-center hover:bg-primary-container hover:text-on-primary-fixed transition-all text-on-surface bg-background shadow-lg"
             >
@@ -181,25 +181,25 @@ export function Results() {
         </div>
 
         {/* Transformations Carousel */}
-        <div 
+        <div
           ref={scrollRef}
           className="flex overflow-x-auto snap-x snap-mandatory gap-8 md:gap-12 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {transformations.map((item) => (
             <div key={item.id} className="flex flex-col flex-none w-[85vw] md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] snap-start">
-              
+
               {/* Premium Drag/Move Slider */}
-              <BeforeAfterSlider 
-                before={item.beforeImage} 
-                after={item.afterImage} 
-                name={item.name} 
+              <BeforeAfterSlider
+                before={item.beforeImage}
+                after={item.afterImage}
+                name={item.name}
               />
 
               {/* Data Section */}
               <div className="flex flex-col flex-grow mt-8">
-                <div className="w-12 h-1 bg-primary mb-6"></div>
-                <h5 className="font-display text-3xl uppercase mb-2 text-on-surface tracking-tight">{item.name}</h5>
-                <p className="font-label-caps text-[11px] tracking-[0.2em] text-primary uppercase mb-6">{item.type}</p>
+                <div className="w-12 h-1 bg-primary mb-4"></div>
+                <h5 className="font-display text-2xl md:text-3xl uppercase mb-1 text-on-surface tracking-tight">{item.name}</h5>
+                <p className="font-label-caps text-[10px] tracking-[0.2em] text-primary uppercase mb-4">{item.type}</p>
                 <div className="relative pl-4 border-l-2 border-outline-variant/30 mt-auto">
                   <p className="font-body-md text-on-surface-variant italic text-sm md:text-base leading-relaxed">
                     {item.quote}

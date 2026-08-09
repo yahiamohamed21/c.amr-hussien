@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ShieldAlert, Activity, RefreshCw } from "lucide-react";
+import { FadeUp } from "@/components/ui/FadeUp";
 
 export function InjuryExpert() {
   const [data, setData] = useState<any>(null);
@@ -56,7 +57,7 @@ export function InjuryExpert() {
     : "/amr-2.jpeg";
 
   return (
-    <section id="injury-rehab" className="py-24 px-margin-mobile md:px-margin-desktop bg-surface relative overflow-hidden">
+    <section id="injury-rehab" className="py-24 md:py-32 px-margin-mobile md:px-margin-desktop bg-surface relative overflow-hidden">
       {/* Background Accent Blur */}
       <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
@@ -66,43 +67,49 @@ export function InjuryExpert() {
           {/* Left Side: Content */}
           <div className="lg:col-span-6">
             <div>
-              {data.eyebrow && (
-                <span className="font-label-caps text-label-caps text-primary uppercase mb-4 flex items-center gap-4">
-                  <span className="w-8 h-[2px] bg-primary"></span>
-                  {data.eyebrow}
-                </span>
-              )}
-
-              <h2 className="font-display-xl text-[clamp(2.5rem,6vw,4rem)] leading-[0.9] tracking-tight uppercase mb-6 text-on-surface">
-                {data.title.split(" ").slice(0, -2).join(" ")} <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-on-surface to-on-surface-variant">
-                  {data.title.split(" ").slice(-2).join(" ")}
-                </span>
-              </h2>
-
-              <div className="space-y-6 text-on-surface-variant mb-10">
-                <p className="font-body-md text-base md:text-lg leading-relaxed text-on-surface">
-                  {data.body}
-                </p>
-                {data.bodySecondary && (
-                  <p className="font-body-md text-sm md:text-base leading-relaxed opacity-85">
-                    {data.bodySecondary}
-                  </p>
+              <FadeUp>
+                {data.eyebrow && (
+                  <span className="font-label-caps text-label-caps text-primary uppercase mb-4 flex items-center gap-4">
+                    <span className="w-8 h-[2px] bg-primary"></span>
+                    {data.eyebrow}
+                  </span>
                 )}
-              </div>
+
+                <h2 className="font-display-xl text-[clamp(2.5rem,6vw,4rem)] leading-[0.9] tracking-tight uppercase mb-6 text-on-surface">
+                  {data.title.split(" ").slice(0, -2).join(" ")} <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-on-surface to-on-surface-variant">
+                    {data.title.split(" ").slice(-2).join(" ")}
+                  </span>
+                </h2>
+              </FadeUp>
+
+              <FadeUp delay={0.2}>
+                <div className="space-y-6 text-on-surface-variant mb-10">
+                  <p className="font-body-md text-base md:text-lg leading-relaxed text-on-surface">
+                    {data.body}
+                  </p>
+                  {data.bodySecondary && (
+                    <p className="font-body-md text-sm md:text-base leading-relaxed opacity-85">
+                      {data.bodySecondary}
+                    </p>
+                  )}
+                </div>
+              </FadeUp>
 
               {/* Pillars */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-white/10">
                 {points.map((pt, i) => (
-                  <div key={i} className="flex flex-col gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-surface-container-low border border-white/5 flex items-center justify-center">
-                      {pt.icon}
+                  <FadeUp key={i} delay={0.4 + (i * 0.15)}>
+                    <div className="flex flex-col gap-3 group hover:scale-[1.03] transition-transform duration-300">
+                      <div className="w-10 h-10 rounded-lg bg-surface-container-low border border-white/5 flex items-center justify-center group-hover:bg-surface transition-colors duration-300 group-hover:border-primary/30">
+                        {pt.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-on-surface text-lg tracking-wide mb-1 group-hover:text-primary transition-colors duration-300">{pt.titleEn}</h4>
+                        <p className="text-sm text-on-surface-variant leading-relaxed opacity-80">{pt.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-on-surface text-sm mb-1">{pt.titleEn}</h4>
-                      <p className="text-xs text-on-surface-variant leading-relaxed opacity-75">{pt.desc}</p>
-                    </div>
-                  </div>
+                  </FadeUp>
                 ))}
               </div>
 
@@ -114,24 +121,24 @@ export function InjuryExpert() {
             <div className="grid grid-cols-2 gap-4 md:gap-6">
 
               {/* Image 1 */}
-              <div className="relative aspect-[3/4]   overflow-hidden border border-white/10 group shadow-2xl mt-8 lg:mt-0">
+              <FadeUp delay={0.2} className="relative aspect-[3/4] overflow-hidden border border-white/10 group shadow-2xl mt-8 lg:mt-0 rounded-lg">
                 <img
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   alt="Injury Rehabilitation - Amr 1"
                   src={img1Url}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-45"></div>
-              </div>
+              </FadeUp>
 
               {/* Image 2 */}
-              <div className="relative aspect-[3/4]   overflow-hidden border border-white/10 group shadow-2xl mt-16 lg:mt-12">
+              <FadeUp delay={0.4} className="relative aspect-[3/4] overflow-hidden border border-white/10 group shadow-2xl mt-16 lg:mt-12 rounded-lg">
                 <img
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   alt="Injury Rehabilitation - Amr 2"
                   src={img2Url}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-45"></div>
-              </div>
+              </FadeUp>
 
             </div>
           </div>

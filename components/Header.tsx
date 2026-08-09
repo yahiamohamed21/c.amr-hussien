@@ -62,26 +62,27 @@ export function Header() {
       </div>
 
       {/* Desktop CTA */}
-      <a href="#contact" className="hidden lg:block bg-primary text-black font-label-caps text-xs px-8 py-4 tracking-[0.2em] uppercase hover:bg-white transition-colors shadow-lg hover:shadow-[0_0_20px_rgba(184,211,0,0.4)]">
+      <a href="#contact" className="hidden lg:block bg-primary text-white dark:text-black font-label-caps text-xs px-8 py-4 tracking-[0.2em] uppercase hover:bg-on-surface dark:hover:bg-white hover:text-surface dark:hover:text-black transition-colors shadow-lg hover:shadow-[0_0_20px_rgba(184,211,0,0.4)]">
         GET STARTED
       </a>
 
       {/* Mobile Menu Dropdown */}
       <div 
-        className={`absolute top-full left-0 w-full bg-background/95 backdrop-blur-2xl border-b border-white/5 flex flex-col items-center py-10 gap-8 lg:hidden shadow-2xl transition-all duration-500 origin-top ${isMenuOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-0 pointer-events-none'}`}
+        className={`absolute top-full left-0 w-full h-screen bg-[#050505] flex flex-col items-center pt-12 sm:pt-20 gap-8 lg:hidden transition-all duration-500 origin-top ${isMenuOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-0 pointer-events-none'}`}
       >
         {navLinks.map((link, idx) => (
           <a
             key={idx}
             href={link.href}
             onClick={() => setIsMenuOpen(false)}
-            className="font-display text-3xl uppercase tracking-widest text-on-surface hover:text-primary transition-colors"
+            className="font-display text-3xl sm:text-4xl uppercase tracking-[0.15em] text-white hover:text-primary transition-colors relative group"
           >
             {link.label}
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-1/2"></span>
           </a>
         ))}
-        <div className="w-12 h-px bg-outline-variant/30 my-2"></div>
-        <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-primary text-black font-label-caps text-xs px-12 py-4 tracking-[0.2em] uppercase w-11/12 max-w-sm mt-4 text-center">
+        <div className="w-16 h-[1px] bg-white/10 my-2"></div>
+        <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-primary text-white dark:text-black font-label-caps font-bold text-xs px-12 py-5 tracking-[0.2em] uppercase w-10/12 max-w-sm text-center hover:bg-on-surface dark:hover:bg-white hover:text-surface dark:hover:text-black transition-colors shadow-lg hover:shadow-[0_0_20px_rgba(200,255,0,0.5)]">
           START YOUR JOURNEY
         </a>
       </div>

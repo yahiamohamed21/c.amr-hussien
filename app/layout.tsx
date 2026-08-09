@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { ScrollRevealProvider } from "@/components/ScrollRevealProvider";
 import { SplashScreen } from "@/components/SplashScreen";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -46,16 +47,18 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-on-surface antialiased font-body overflow-x-hidden relative">
-        <Providers>
-          {/* Global Dark Mode Animated Background */}
-          <div className="fixed inset-0 z-[-1] hidden dark:block">
-            <DarkBackground />
-          </div>
+        <SmoothScroll>
+          <Providers>
+            {/* Global Dark Mode Animated Background */}
+            <div className="fixed inset-0 z-[-1] hidden dark:block">
+              <DarkBackground />
+            </div>
 
-          <SplashScreen />
-          <ScrollRevealProvider />
-          {children}
-        </Providers>
+            <SplashScreen />
+            <ScrollRevealProvider />
+            {children}
+          </Providers>
+        </SmoothScroll>
       </body>
     </html>
   );
