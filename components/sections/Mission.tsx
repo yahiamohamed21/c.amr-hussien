@@ -102,15 +102,15 @@ export function Mission() {
               
               {/* Card 1 */}
               <div className="mission-card w-full aspect-square sm:aspect-[4/3] relative rounded-[2rem] overflow-hidden group shadow-2xl">
-                  <div className="absolute inset-0 z-0">
-                      <Image 
-                          src="/amr-hero-1.jpeg" 
-                          alt="Elite Coaching" 
-                          fill 
-                          className="object-cover transition-transform duration-1000 group-hover:scale-110 grayscale"
-                      />
-                      <div className="absolute inset-0 bg-[#10110F]/60 group-hover:bg-[#10110F]/40 transition-colors duration-500"></div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#10110F] via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 z-0 bg-[#10110F] overflow-hidden">
+                      {/* Abstract Performance Glow */}
+                      <div className="absolute top-0 right-0 w-80 h-80 bg-[#C7FF00]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4 group-hover:bg-[#C7FF00]/20 transition-colors duration-700"></div>
+                      <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#C7FF00]/5 rounded-full blur-[60px] translate-y-1/3 -translate-x-1/4 group-hover:scale-150 transition-transform duration-1000"></div>
+                      
+                      {/* Diagonal speed lines pattern */}
+                      <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700" 
+                           style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 11px)' }}>
+                      </div>
                   </div>
                   <div className="absolute inset-0 z-10 p-8 md:p-12 flex flex-col justify-end">
                       <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#C7FF00] flex justify-center items-center mb-6">
