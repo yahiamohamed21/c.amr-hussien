@@ -127,43 +127,23 @@ export function About() {
             </div>
           </div>
 
-          {/* Right Side: Editorial Image Collage */}
-          <div className="w-full lg:w-1/2 h-[500px] md:h-[700px] relative mt-10 lg:mt-0 perspective-1000">
-
-            {/* Image 1: Main Large Image */}
-            <div className="about-img-1 absolute top-0 right-0 w-[65%] h-[75%]   overflow-hidden shadow-2xl z-10 origin-bottom-right">
-              <img
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-100"
-                alt="Coach Amr Main"
-                src={about?.image1Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image1Id}` : "/image-1.jpeg"}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#10110F]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-            </div>
-
-            {/* Image 2: Secondary Overlapping Image */}
-            <div className="about-img-2 absolute bottom-0 left-[10%] w-[55%] aspect-square   overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.4)] z-20 origin-top-left">
-              <img
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-100"
-                alt="Coach Amr Action"
-                src={about?.image2Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image2Id}` : "/image-2.jpeg"}
-              />
-            </div>
-
-            {/* Image 3: Floating Accent Image */}
-            <div className="about-img-3 absolute top-[20%] left-0 w-[40%] aspect-[4/3]   overflow-hidden shadow-2xl z-30 rotate-[-4deg]">
-              <img
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-100"
-                alt="Coach Amr Detail"
-                src={about?.image3Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image3Id}` : "/image-4.jpeg"}
-              />
-              {/* Neon tint overlay that fades on hover */}
-              <div className="absolute inset-0 bg-[#C7FF00]/20 mix-blend-overlay hover:opacity-0 transition-opacity duration-500"></div>
-            </div>
-
-            {/* Decorative Tech Rings */}
-            <div className="absolute top-[40%] right-[10%] w-32 h-32 border border-dashed border-[#10110F]/20 dark:border-[#C7FF00]/30 rounded-full animate-[spin_20s_linear_infinite] z-0"></div>
-            <div className="absolute bottom-[20%] right-[-5%] w-48 h-48 border border-[#10110F]/10 dark:border-white/10 rounded-full z-0"></div>
-
+          {/* Right Side: Image Stack */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-6 mt-10 lg:mt-0">
+            <img
+              className="w-full   object-cover"
+              alt="Coach Amr Main"
+              src={about?.image1Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image1Id}` : "/image-1.jpeg"}
+            />
+            <img
+              className="w-full   object-cover"
+              alt="Coach Amr Action"
+              src={about?.image2Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image2Id}` : "/image-2.jpeg"}
+            />
+            <img
+              className="w-full   object-cover"
+              alt="Coach Amr Detail"
+              src={about?.image3Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image3Id}` : "/image-4.jpeg"}
+            />
           </div>
 
         </div>

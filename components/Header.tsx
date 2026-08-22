@@ -16,20 +16,14 @@ export function Header() {
 
   return (
     <header className="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-3 sm:px-6 md:px-margin-desktop py-3 sm:py-4 md:py-6 transition-all">
-      
+
       {/* Premium Logo */}
       <a href="#" className="group flex flex-col items-center justify-center select-none relative z-50">
         <div className="flex items-baseline gap-2 leading-none">
           <span className="font-extrabold text-2xl sm:text-4xl tracking-[0.05em] text-on-surface" style={{ fontFamily: 'Impact, sans-serif', transform: 'scaleX(1.2)', transformOrigin: 'left' }}>AMR</span>
           <span className="font-light text-2xl sm:text-4xl tracking-tight text-on-surface" style={{ marginLeft: '12px' }}>HUSSIEN</span>
         </div>
-        <div className="flex flex-col items-center mt-2 w-full">
-          <span className="font-bold text-[7px] sm:text-[9px] tracking-[0.4em] sm:tracking-[0.6em] text-on-surface uppercase text-center w-full">
-            Human Performance Lab
-          </span>
-          <div className="w-12 h-[2px] bg-primary mt-1.5 transition-all duration-300 group-hover:w-24"></div>
-        </div>
-      </a>
+       </a>
 
       {/* Desktop Navigation */}
       <nav className="hidden lg:flex gap-8 items-center">
@@ -50,8 +44,8 @@ export function Header() {
       {/* Mobile Controls */}
       <div className="flex items-center gap-2 sm:gap-3 lg:hidden relative z-50">
         <ThemeToggle />
-        <button 
-          onClick={() => setIsMenuOpen(!isMenuOpen)} 
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="w-8 h-8 sm:w-10 sm:h-10 border border-outline-variant/30 flex items-center justify-center text-on-surface hover:bg-primary-container hover:text-on-primary-fixed transition-colors rounded-[2px]"
           aria-label="Toggle Menu"
         >
@@ -67,7 +61,7 @@ export function Header() {
       </a>
 
       {/* Mobile Menu Dropdown */}
-      <div 
+      <div
         className={`absolute top-full left-0 w-full h-screen bg-[#050505] flex flex-col items-center pt-12 sm:pt-20 gap-8 lg:hidden transition-all duration-500 origin-top ${isMenuOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-0 pointer-events-none'}`}
       >
         {navLinks.map((link, idx) => (

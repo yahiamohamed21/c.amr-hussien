@@ -182,44 +182,22 @@ export function Hero() {
           ref={fullCoachRef}
           className="w-full md:w-1/2 relative h-[45vh] md:h-[70vh] flex justify-center items-center order-1"
         >
-          {/* Faded Image Container (Restored the original radial portal look) */}
-          <div
-            className="absolute inset-0 z-10 flex justify-center items-center"
-            style={{
-              maskImage: "radial-gradient(ellipse at 50% 50%, black 55%, transparent 85%)",
-              WebkitMaskImage: "radial-gradient(ellipse at 50% 50%, black 35%, transparent 75%)",
-            }}
-          >
-            <div className="relative w-full h-full max-w-[500px] aspect-square">
+          {/* Simple Image Container */}
+          <div className="absolute inset-0 z-10 flex justify-center items-center">
+            <div className="relative w-full h-full">
               <Image
                 src="/amr-hero-3.jpeg"
                 alt="Coach Amr"
                 fill
                 quality={100}
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover object-top opacity-95"
+                className="object-contain"
                 priority
                 onLoad={handleImageLoad}
                 onError={() => setImageLoaded(true)}
               />
-              {/* Subtle overlay to integrate the photo with the theme colors */}
-              <div className="absolute inset-0 bg-[#C7FF00]/10 mix-blend-overlay dark:mix-blend-color pointer-events-none"></div>
-              {/* Deep inner shadow to further blend edges into darkness */}
-              <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.9)] pointer-events-none"></div>
             </div>
           </div>
-
-          {/* HUD Elements - Delicate Square Framing */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[350px] aspect-square pointer-events-none z-20">
-            <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#10110F]/40 dark:border-[#C7FF00]/60"></div>
-            <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-[#10110F]/40 dark:border-[#C7FF00]/60"></div>
-            <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[#10110F]/40 dark:border-[#C7FF00]/60"></div>
-            <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#10110F]/40 dark:border-[#C7FF00]/60"></div>
-          </div>
-
-          {/* Wireframe scan rings centered on the subject */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] max-w-[300px] aspect-square rounded-full border border-dashed border-[#10110F]/15 dark:border-white/10 z-0 pointer-events-none"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] max-w-[240px] aspect-square rounded-full border-[1.5px] border-dashed border-[#10110F]/25 dark:border-[#C7FF00]/25 z-0 pointer-events-none"></div>
         </div>
 
       </div>

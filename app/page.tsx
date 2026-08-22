@@ -21,17 +21,17 @@ export default function Home() {
       <main>
         <Hero />
         <div className="relative z-20 bg-background flex flex-col">
-          <Mission />
-          <Statistics />
+          <Philosophy />
           <About />
+          <Mission />
           <InjuryExpert />
           <QuoteDivider />
-          <Services />
           <Process />
-          <Philosophy />
+          <Services />
           <Results />
           <Accreditations />
           <Education />
+          <Statistics />
           <Contact />
         </div>
       </main>

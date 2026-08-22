@@ -68,29 +68,29 @@ export function Statistics() {
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
           {statsData.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <div
                 key={index}
-                className="stat-card group relative p-[1px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden rounded-3xl"
+                className="stat-card group relative p-[1px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden rounded-[20px] sm:rounded-3xl"
               >
                 {/* Spinning Gradient Border */}
                 <div className="absolute top-1/2 left-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_0_300deg,#C7FF00_360deg)] animate-[spin_3s_linear_infinite] opacity-30 dark:opacity-50 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
 
                 {/* Inner Card Content */}
-                <div className="relative w-full h-full bg-white dark:bg-[#10110F] transition-colors duration-500 flex flex-col justify-center items-center p-10 z-10 rounded-3xl">
+                <div className="relative w-full h-full bg-white dark:bg-[#10110F] transition-colors duration-500 flex flex-col justify-center items-center p-4 sm:p-10 z-10 rounded-[20px] sm:rounded-3xl">
                   {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#C7FF00]/10 dark:from-[#C7FF00]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#C7FF00]/10 dark:from-[#C7FF00]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[20px] sm:rounded-3xl"></div>
 
                   {/* Icon Container */}
-                  <div className="w-16 h-16 bg-[#10110F]/5 dark:bg-white/[0.03] border border-[#10110F]/10 dark:border-white/10 flex justify-center items-center mb-8 group-hover:scale-110 group-hover:bg-[#C7FF00]/20 dark:group-hover:bg-[#C7FF00]/10 group-hover:border-[#C7FF00]/50 transition-all duration-500 relative z-10 rounded-2xl">
-                    <Icon className="w-8 h-8 text-[#10110F] dark:text-[#C7FF00] transition-colors duration-300" strokeWidth={1.5} />
+                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-[#10110F]/5 dark:bg-white/[0.03] border border-[#10110F]/10 dark:border-white/10 flex justify-center items-center mb-3 sm:mb-8 group-hover:scale-110 group-hover:bg-[#C7FF00]/20 dark:group-hover:bg-[#C7FF00]/10 group-hover:border-[#C7FF00]/50 transition-all duration-500 relative z-10 rounded-xl sm:rounded-2xl">
+                    <Icon className="w-5 h-5 sm:w-8 sm:h-8 text-[#10110F] dark:text-[#C7FF00] transition-colors duration-300" strokeWidth={1.5} />
                   </div>
 
                   {/* Number */}
-                  <div className="font-display text-5xl md:text-6xl text-[#10110F] dark:text-white transition-colors duration-500 mb-3 flex items-center relative z-10">
+                  <div className="font-display text-3xl sm:text-5xl md:text-6xl text-[#10110F] dark:text-white transition-colors duration-500 mb-1 sm:mb-3 flex items-center relative z-10">
                     <span ref={el => { numbersRef.current[index] = el; }}>
                       {stat.value}
                     </span>
@@ -98,7 +98,7 @@ export function Statistics() {
                   </div>
 
                   {/* Label */}
-                  <div className="font-label-caps text-xs md:text-sm tracking-[0.2em] text-[#10110F]/60 dark:text-white/50 uppercase text-center relative z-10 group-hover:text-[#10110F]/90 dark:group-hover:text-white/80 transition-colors duration-300">
+                  <div className="font-label-caps text-[9px] sm:text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.2em] text-[#10110F]/60 dark:text-white/50 uppercase text-center relative z-10 group-hover:text-[#10110F]/90 dark:group-hover:text-white/80 transition-colors duration-300">
                     {stat.label}
                   </div>
                 </div>
