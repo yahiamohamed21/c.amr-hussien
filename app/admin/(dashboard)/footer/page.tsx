@@ -16,7 +16,7 @@ const footerSchema = z.object({
   closingStatement: z.string().optional(),
   isVisible: z.boolean(),
   instagramUrl: z.string().optional(),
-  xUrl: z.string().optional(),
+  whatsappNumber: z.string().optional(),
   facebookUrl: z.string().optional(),
   linkedInUrl: z.string().optional(),
 });
@@ -52,7 +52,7 @@ export default function FooterAdminPage() {
       closingStatement: footerData.closingStatement || "",
       isVisible: footerData.isVisible ?? true,
       instagramUrl: settingsData.instagramUrl || "",
-      xUrl: settingsData.xUrl || "",
+      whatsappNumber: settingsData.whatsAppNumber || settingsData.whatsappNumber || "+966504224831",
       facebookUrl: settingsData.facebookUrl || "",
       linkedInUrl: settingsData.linkedInUrl || "",
     } : {
@@ -62,7 +62,7 @@ export default function FooterAdminPage() {
       closingStatement: "",
       isVisible: true,
       instagramUrl: "",
-      xUrl: "",
+      whatsappNumber: "+966504224831",
       facebookUrl: "",
       linkedInUrl: "",
     },
@@ -79,12 +79,11 @@ export default function FooterAdminPage() {
         isVisible: payload.isVisible,
       });
 
-      // 2. Update site settings (for socials)
       await api.put("/api/v1/admin/site-settings", {
-        ...settingsData, // Preserve current WhatsApp number, email, metadata, etc.
+        ...settingsData, // Preserve current email, metadata, etc.
         brandName: settingsData?.brandName || payload.brandName,
         instagramUrl: payload.instagramUrl,
-        xUrl: payload.xUrl,
+        whatsappNumber: payload.whatsappNumber,
         facebookUrl: payload.facebookUrl,
         linkedInUrl: payload.linkedInUrl,
       });
@@ -138,7 +137,7 @@ export default function FooterAdminPage() {
 
           <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface md:col-span-2">Social Links</h3>
           <Input label="Instagram URL" {...form.register("instagramUrl")} error={form.formState.errors.instagramUrl?.message} />
-          <Input label="Twitter (X) URL" {...form.register("xUrl")} error={form.formState.errors.xUrl?.message} />
+          <Input label="WhatsApp Number (with country code)" {...form.register("whatsappNumber")} error={form.formState.errors.whatsappNumber?.message} />
           <Input label="Facebook URL" {...form.register("facebookUrl")} error={form.formState.errors.facebookUrl?.message} />
           <Input label="LinkedIn URL" {...form.register("linkedInUrl")} error={form.formState.errors.linkedInUrl?.message} />
         </div>

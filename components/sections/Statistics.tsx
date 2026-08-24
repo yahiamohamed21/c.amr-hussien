@@ -12,7 +12,7 @@ if (typeof window !== "undefined") {
 
 const statsData = [
   { value: 10, suffix: "+", label: "Years Exp.", icon: Timer },
-  { value: 2, suffix: "X", label: "Top Trainer", icon: Trophy },
+  { value: 6, suffix: "X", label: "Top Trainer", icon: Trophy },
   { value: 10000, suffix: "+", label: "Sessions", icon: Users },
   { value: 100, suffix: "+", label: "Transformations", icon: Flame }
 ];

@@ -21,7 +21,7 @@ export function Footer() {
   });
 
   const instagramUrl = settings?.instagramUrl;
-  const xUrl = settings?.xUrl;
+  const whatsappNumber = settings?.whatsAppNumber || settings?.whatsappNumber;
   const facebookUrl = settings?.facebookUrl;
   const linkedInUrl = settings?.linkedInUrl;
 
@@ -49,50 +49,42 @@ export function Footer() {
             
             {/* Brutalist Social Blocks */}
             <div className="flex gap-4">
-              {instagramUrl && (
-                <a 
-                  className="w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group" 
-                  href={instagramUrl} 
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                >
-                  <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
-                </a>
-              )}
-              {xUrl && (
-                <a 
-                  className="w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group" 
-                  href={xUrl} 
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Twitter"
-                >
-                  <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.599 3.419-2.13 1.671-4.816 2.272-7.511 1.956 2.189 1.403 4.789 2.221 7.579 2.221 9.143 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
-                </a>
-              )}
-              {facebookUrl && (
-                <a 
-                  className="w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group" 
-                  href={facebookUrl} 
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Facebook"
-                >
-                  <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg>
-                </a>
-              )}
-              {linkedInUrl && (
-                <a 
-                  className="w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group" 
-                  href={linkedInUrl} 
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                >
-                  <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                </a>
-              )}
+              <a 
+                className={`w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group ${!instagramUrl && 'opacity-50'}`}
+                href={instagramUrl || "#"} 
+                target={instagramUrl ? "_blank" : "_self"}
+                rel="noreferrer"
+                aria-label="Instagram"
+              >
+                <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+              </a>
+              <a 
+                className={`w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group ${!whatsappNumber && 'opacity-50'}`}
+                href={whatsappNumber ? `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}` : "#"} 
+                target={whatsappNumber ? "_blank" : "_self"}
+                rel="noreferrer"
+                aria-label="WhatsApp"
+              >
+                <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M12.031 0c-6.627 0-11.996 5.367-12.016 11.994-.006 2.115.548 4.183 1.603 6.002l-1.618 5.926 6.068-1.593c1.761.968 3.743 1.48 5.764 1.481h.005c6.626 0 11.995-5.372 12.001-12.002.004-3.212-1.246-6.231-3.518-8.502s-5.291-3.524-8.505-3.524l.216.218zm.006 20.081h-.003c-1.786 0-3.535-.48-5.068-1.39l-.364-.216-3.766.988.995-3.666-.237-.376c-.997-1.583-1.523-3.432-1.521-5.342.015-5.522 4.512-10.015 10.038-10.015 2.677-.002 5.188 1.037 7.078 2.929 1.889 1.892 2.93 4.402 2.927 7.077-.015 5.516-4.509 10.011-10.031 10.011l-.048.001zm5.503-7.514c-.302-.152-1.789-.884-2.064-.985-.275-.1-.476-.152-.676.152-.201.302-.78 1.011-.955 1.218-.176.208-.352.233-.654.081-1.651-.832-2.924-1.733-4.062-3.626-.176-.291.173-.267.757-1.432.076-.152.038-.284-.038-.435-.075-.152-.676-1.63-.925-2.231-.242-.587-.488-.507-.676-.517-.176-.008-.377-.01-.577-.01-.201 0-.527.076-.803.379s-1.054 1.029-1.054 2.509c0 1.48 1.079 2.912 1.229 3.113.15.201 2.115 3.226 5.127 4.526 2.051.884 2.809.957 3.864.805 1.224-.177 3.518-1.436 4.018-2.825.5-1.389.5-2.578.35-2.825-.15-.247-.552-.399-.854-.551z"></path></svg>
+              </a>
+              <a 
+                className={`w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group ${!facebookUrl && 'opacity-50'}`}
+                href={facebookUrl || "#"} 
+                target={facebookUrl ? "_blank" : "_self"}
+                rel="noreferrer"
+                aria-label="Facebook"
+              >
+                <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg>
+              </a>
+              <a 
+                className={`w-14 h-14 bg-surface-container border border-white/5 flex items-center justify-center text-on-surface hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 shadow-lg group ${!linkedInUrl && 'opacity-50'}`}
+                href={linkedInUrl || "#"} 
+                target={linkedInUrl ? "_blank" : "_self"}
+                rel="noreferrer"
+                aria-label="LinkedIn"
+              >
+                <svg className="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+              </a>
             </div>
           </div>
 

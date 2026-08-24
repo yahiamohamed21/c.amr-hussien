@@ -39,15 +39,11 @@ export function ImageUploader({ label, value, onUpload }: ImageUploaderProps) {
 
     setIsUploading(true);
     try {
-      const res = await api.post("/api/v1/admin/media", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await api.post("/api/v1/admin/media", formData);
       onUpload(res.data.id);
     } catch (err) {
       console.error("Upload failed", err);
-      alert("Upload failed. Make sure it's a valid image (JPEG/PNG/WebP).");
+      alert("Upload failed. Make sure it's a valid file.");
     } finally {
       setIsUploading(false);
     }
@@ -85,7 +81,7 @@ export function ImageUploader({ label, value, onUpload }: ImageUploaderProps) {
             type="file"
             id={`file-upload-${label}`}
             className="hidden"
-            accept="image/png, image/jpeg, image/webp"
+            accept="image/*"
             onChange={handleFileChange}
           />
           <Button

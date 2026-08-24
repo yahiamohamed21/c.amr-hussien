@@ -168,12 +168,13 @@ export function Hero() {
             Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies.
           </p>
           <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pointer-events-auto">
-            <Button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="w-full sm:w-auto bg-[#10110F] text-white hover:bg-[#10110F]/90 dark:bg-[#C7FF00] dark:text-[#10110F] dark:hover:bg-[#C7FF00]/90 text-sm md:text-base py-4 px-8"
+            <a
+              href="/Amr%20Hussien%20CV.docx"
+              download="Amr_Hussien_CV.docx"
+              className="inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring w-full sm:w-auto bg-[#10110F] text-white hover:bg-[#10110F]/90 dark:bg-[#C7FF00] dark:text-[#10110F] dark:hover:bg-[#C7FF00]/90 text-sm md:text-base py-4 px-8"
             >
-              Explore Programs
-            </Button>
+              Download CV
+            </a>
           </div>
         </div>
 
@@ -186,7 +187,7 @@ export function Hero() {
           <div className="absolute inset-0 z-10 flex justify-center items-center">
             <div className="relative w-full h-full">
               <Image
-                src="/amr-hero-3.jpeg"
+                src="/amr-hero-new.jpeg"
                 alt="Coach Amr"
                 fill
                 quality={100}

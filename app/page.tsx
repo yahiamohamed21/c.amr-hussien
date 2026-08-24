@@ -9,10 +9,11 @@ import { Services } from "@/components/sections/Services";
 import { Process } from "@/components/sections/Process";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { Results } from "@/components/sections/Results";
-import { Accreditations } from "@/components/sections/Accreditations";
 import { Education } from "@/components/sections/Education";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/Footer";
+import { TopTrainer } from "@/components/sections/TopTrainer";
+import { ClientFeedback } from "@/components/sections/ClientFeedback";
 
 export default function Home() {
   return (
@@ -29,9 +30,10 @@ export default function Home() {
           <Process />
           <Services />
           <Results />
-          <Accreditations />
+          <ClientFeedback />
           <Education />
           <Statistics />
+          <TopTrainer />
           <Contact />
         </div>
       </main>

@@ -21,7 +21,6 @@ const navItems = [
   { name: "Services", href: "/admin/services", icon: Briefcase },
   { name: "Methodology", href: "/admin/methodology", icon: GraduationCap },
   { name: "Transformations", href: "/admin/transformations", icon: Images },
-  { name: "Accreditations", href: "/admin/accreditations", icon: Award },
   { name: "Qualifications", href: "/admin/qualifications", icon: GraduationCap },
   
   // Management & Settings
