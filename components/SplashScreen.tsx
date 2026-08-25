@@ -29,9 +29,8 @@ function NameLine({
     <div className="relative inline-block" aria-hidden="true">
       {/* Ghost outline — establishes the full word instantly */}
       <span
-        className="block font-display font-bold uppercase leading-[0.86] tracking-tight text-transparent select-none"
+        className="block font-display font-bold uppercase leading-[0.86] tracking-tight text-transparent select-none splash-ghost-text"
         style={{
-          WebkitTextStroke: "1.5px rgba(255,255,255,0.16)",
           fontSize: "clamp(2.75rem, 11vw, 5.25rem)",
         }}
       >
@@ -39,7 +38,7 @@ function NameLine({
       </span>
       {/* Solid fill, revealed left-to-right as this word "loads" */}
       <span
-        className="absolute inset-0 block font-display font-bold uppercase leading-[0.86] tracking-tight text-white select-none overflow-hidden"
+        className="absolute inset-0 block font-display font-bold uppercase leading-[0.86] tracking-tight text-[#10110F] dark:text-white select-none overflow-hidden"
         style={{
           fontSize: "clamp(2.75rem, 11vw, 5.25rem)",
           clipPath: `inset(0 ${100 - fill}% 0 0)`,
@@ -137,7 +136,7 @@ export function SplashScreen() {
 
       {/* Curtain panels: the exit is a split reveal, not a plain fade */}
       <div
-        className="absolute inset-y-0 left-0 w-1/2 bg-[#0a0a0a] overflow-hidden transition-transform ease-[cubic-bezier(.76,0,.24,1)]"
+        className="absolute inset-y-0 left-0 w-1/2 bg-[#F2F0E9] dark:bg-[#0a0a0a] overflow-hidden transition-transform ease-[cubic-bezier(.76,0,.24,1)]"
         style={{
           transform: isExiting ? "translateX(-100%)" : "translateX(0)",
           transitionDuration: curtainDuration,
@@ -146,7 +145,7 @@ export function SplashScreen() {
         <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none" style={grainStyle} />
       </div>
       <div
-        className="absolute inset-y-0 right-0 w-1/2 bg-[#0a0a0a] overflow-hidden transition-transform ease-[cubic-bezier(.76,0,.24,1)]"
+        className="absolute inset-y-0 right-0 w-1/2 bg-[#F2F0E9] dark:bg-[#0a0a0a] overflow-hidden transition-transform ease-[cubic-bezier(.76,0,.24,1)]"
         style={{
           transform: isExiting ? "translateX(100%)" : "translateX(0)",
           transitionDuration: curtainDuration,
@@ -170,7 +169,7 @@ export function SplashScreen() {
           }`}
       >
         <span
-          className="text-white/40 text-[10px] font-label-caps tracking-[0.3em]"
+          className="text-[#10110F]/50 dark:text-white/40 text-[10px] font-label-caps tracking-[0.3em]"
           style={{ animation: reducedMotion ? "none" : "fadeUp 600ms ease-out both" }}
           aria-hidden="true"
         >
@@ -186,12 +185,12 @@ export function SplashScreen() {
         </div>
 
         <div
-          className="flex items-center gap-2 text-white/30"
+          className="flex items-center gap-2 text-[#10110F]/40 dark:text-white/30"
           style={{ animation: reducedMotion ? "none" : "fadeUp 700ms ease-out 200ms both" }}
           aria-hidden="true"
         >
           <span className="text-[10px] font-label-caps tracking-[0.2em]">{getStage(progress)}</span>
-          <span className="w-1 h-1 rounded-full bg-white/20" />
+          <span className="w-1 h-1 rounded-full bg-[#10110F]/30 dark:bg-white/20" />
           <span className="text-[10px] font-label-caps [font-variant-numeric:tabular-nums]">
             {String(Math.round(progress)).padStart(2, "0")}%
           </span>
@@ -201,6 +200,12 @@ export function SplashScreen() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
+        .splash-ghost-text {
+          -webkit-text-stroke: 1.5px rgba(16, 17, 15, 0.16);
+        }
+        :global(.dark) .splash-ghost-text, .dark .splash-ghost-text {
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.16);
+        }
         @keyframes breathe {
           0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
           50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
