@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
 import { Star } from "lucide-react";
 
 const feedbacks = [
@@ -35,7 +36,54 @@ const feedbacks = [
   }
 ];
 
+// Duplicate feedbacks for infinite scrolling effect
+const duplicatedFeedbacks = [...feedbacks, ...feedbacks, ...feedbacks];
+
 export function ClientFeedback() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+  const requestRef = useRef<number>(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const animate = () => {
+      const container = scrollContainerRef.current;
+      if (container && !isHovered && !isDragging.current) {
+        container.scrollLeft += 1; // Speed of auto-scroll
+        
+        // Reset seamlessly when scrolling past half the duplicated content
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+           container.scrollLeft = 0;
+        }
+      }
+      requestRef.current = requestAnimationFrame(animate);
+    };
+
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current!);
+  }, [isHovered]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDragging.current = true;
+    startX.current = e.pageX - (scrollContainerRef.current?.offsetLeft || 0);
+    scrollLeft.current = scrollContainerRef.current?.scrollLeft || 0;
+  };
+  const handleMouseLeave = () => {
+    isDragging.current = false;
+  };
+  const handleMouseUp = () => {
+    isDragging.current = false;
+  };
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX.current) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
   return (
     <section className="py-24 px-margin-mobile md:px-margin-desktop bg-surface relative overflow-hidden border-t border-white/5">
       <div className="max-w-[1400px] mx-auto relative z-10">
@@ -62,11 +110,25 @@ export function ClientFeedback() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {feedbacks.map((feedback, index) => (
+        {/* Horizontal Scroll Carousel */}
+        <div 
+          ref={scrollContainerRef}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => {
+            setIsHovered(false);
+            isDragging.current = false;
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          onTouchStart={() => setIsHovered(true)}
+          onTouchEnd={() => setIsHovered(false)}
+          className="flex overflow-x-auto gap-6 pb-8 cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        >
+          {duplicatedFeedbacks.map((feedback, index) => (
             <div 
               key={index} 
-              className="bg-surface-container-high border border-black/10 dark:border-white/10 p-8 flex flex-col justify-between hover:border-primary/50 transition-colors duration-300 relative group"
+              className="w-[85vw] sm:w-[400px] lg:w-[450px] shrink-0 bg-surface-container-high border border-black/10 dark:border-white/10 p-8 flex flex-col justify-between hover:border-primary/50 transition-colors duration-300 relative group"
             >
               {/* Corner Accents */}
               <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>

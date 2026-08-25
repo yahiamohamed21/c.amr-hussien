@@ -56,7 +56,7 @@ export function Hero() {
         >
           <div className="relative w-full h-[105%] origin-bottom">
             <Image
-              src="/amr-hero-3-new.png"
+              src="/upscalemedia-transformed.png"
               alt="Coach Amr"
               fill
               quality={100}
