@@ -165,7 +165,7 @@ export function Hero() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10110F] to-[#10110F]/60 dark:from-[#C7FF00] dark:to-[#C7FF00]/60">Elite Potential</span>
           </h1>
           <p ref={subtitleRef} className="font-sans text-base md:text-xl text-[#10110F]/80 dark:text-white/80 mb-8 max-w-md mx-auto md:mx-0 font-medium drop-shadow-md">
-            Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies.
+            Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies , 6X TOP TRAINER · 10+ YEARS EXPERIENCE .
           </p>
           <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pointer-events-auto">
             <a

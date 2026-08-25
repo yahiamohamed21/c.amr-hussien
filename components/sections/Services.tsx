@@ -180,14 +180,11 @@ export function Services() {
                 {/* Hover Sweep Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#10110F]/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
-                {/* Top Section: Icon & Number */}
-                <div className="flex justify-between items-start mb-12 relative z-10">
+                {/* Top Section: Icon */}
+                <div className="flex items-start mb-12 relative z-10">
                     <div className={`w-16 h-16 rounded-none flex items-center justify-center transition-transform duration-500 group-hover:scale-110 bg-[#10110F]/5 dark:bg-white/[0.03] text-[#10110F] dark:text-[#C7FF00] border border-[#10110F]/10 dark:border-white/10`}>
                         <IconComponent className="w-8 h-8" strokeWidth={1.5} />
                     </div>
-                    <span className={`font-display text-3xl opacity-30 font-bold text-[#10110F] dark:text-white`}>
-                        0{originalIndex + 1}
-                    </span>
                 </div>
 
                 {/* Bottom Section: Text */}
