@@ -175,13 +175,13 @@ export function Services() {
             return (
               <div 
                 key={`${service.id}-${i}`} 
-                className={`group relative shrink-0 w-[85vw] md:w-[450px] lg:w-[500px] rounded-none p-8 md:p-12 overflow-hidden bg-white dark:bg-[#10110F] border border-[#10110F]/10 dark:border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.05)] dark:shadow-2xl transition-all duration-500 flex flex-col justify-between min-h-[350px]`}
+                className={`group relative shrink-0 w-[85vw] md:w-[450px] lg:w-[500px] rounded-none p-8 md:p-10 overflow-hidden bg-white dark:bg-[#10110F] border border-[#10110F]/10 dark:border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.05)] dark:shadow-2xl transition-all duration-500 flex flex-col justify-between min-h-[260px]`}
               >
                 {/* Hover Sweep Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#10110F]/5 dark:from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
                 {/* Top Section: Icon */}
-                <div className="flex items-start mb-12 relative z-10">
+                <div className="flex items-start mb-8 relative z-10">
                     <div className={`w-16 h-16 rounded-none flex items-center justify-center transition-transform duration-500 group-hover:scale-110 bg-[#10110F]/5 dark:bg-white/[0.03] text-[#10110F] dark:text-[#C7FF00] border border-[#10110F]/10 dark:border-white/10`}>
                         <IconComponent className="w-8 h-8" strokeWidth={1.5} />
                     </div>

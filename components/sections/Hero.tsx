@@ -50,9 +50,9 @@ export function Hero() {
       <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex-1 flex flex-col md:flex-row items-center justify-between z-10">
 
         {/* Mobile: Image First | Desktop: Image Right */}
-        <div
+        <div 
           ref={fullCoachRef}
-          className="relative w-full md:w-1/2 h-[55vh] md:h-[85vh] flex justify-center items-end order-1 md:order-2 md:mt-16"
+          className="relative w-full md:w-1/2 h-[55vh] md:h-[75vh] max-h-[700px] flex justify-center items-end order-1 md:order-2 md:mt-16"
         >
           <div className="relative w-full h-[105%] origin-bottom">
             <Image
@@ -61,7 +61,7 @@ export function Hero() {
               fill
               quality={100}
               priority
-              className="object-contain object-bottom md:object-center"
+              className="object-contain object-bottom md:object-center contrast-[1.1] saturate-[0.85] drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_20px_40px_rgba(255,255,255,0.1)] transition-all duration-500"
               style={{
                 maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
@@ -69,6 +69,15 @@ export function Hero() {
               onLoad={handleImageLoad}
               onError={() => setImageLoaded(true)}
             />
+            {/* Artistic Film Grain Overlay to mask pixelation */}
+            <div 
+              className="absolute inset-0 z-10 opacity-30 pointer-events-none mix-blend-overlay"
+              style={{
+                backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')",
+                maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
+              }}
+            ></div>
           </div>
         </div>
 

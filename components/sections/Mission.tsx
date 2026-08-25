@@ -101,7 +101,7 @@ export function Mission() {
                 <div className="w-full lg:w-1/2 py-10 lg:py-40 px-6 md:px-16 flex flex-col gap-8 lg:gap-24 relative z-20">
 
                     {/* Card 1 */}
-                    <div className="mission-card w-full aspect-[3/4] sm:aspect-[4/3] relative rounded-[2rem] overflow-hidden group border border-[#10110F]/10 dark:border-white/10 shadow-2xl">
+                    <div className="mission-card w-full h-[320px] sm:h-[350px] relative rounded-[2rem] overflow-hidden group border border-[#10110F]/10 dark:border-white/10 shadow-2xl">
                         <div className="absolute inset-0 z-0 bg-[#10110F] overflow-hidden">
                             {/* Abstract Performance Glow */}
                             <div className="absolute top-0 right-0 w-80 h-80 bg-[#C7FF00]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4 group-hover:bg-[#C7FF00]/20 transition-colors duration-700"></div>
@@ -124,7 +124,7 @@ export function Mission() {
                     </div>
 
                     {/* Card 2 */}
-                    <div className="mission-card w-full aspect-[3/4] sm:aspect-[4/3] relative rounded-[2rem] overflow-hidden bg-[#10110F] group border border-[#10110F]/10 dark:border-white/10 shadow-2xl">
+                    <div className="mission-card w-full h-[320px] sm:h-[350px] relative rounded-[2rem] overflow-hidden bg-[#10110F] group border border-[#10110F]/10 dark:border-white/10 shadow-2xl">
                         <div className="absolute inset-0 z-0 opacity-20 transition-opacity duration-500 group-hover:opacity-40">
                             {/* Technical grid background */}
                             <div className="w-full h-full" style={{ backgroundImage: "linear-gradient(to right, rgba(199,255,0,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(199,255,0,0.2) 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
@@ -142,7 +142,7 @@ export function Mission() {
                     </div>
 
                     {/* Card 3 */}
-                    <div className="mission-card w-full aspect-[3/4] sm:aspect-[4/3] relative rounded-[2rem] overflow-hidden bg-gradient-to-br from-[#C7FF00] to-[#9acc00] group shadow-2xl border border-transparent">
+                    <div className="mission-card w-full h-[320px] sm:h-[350px] relative rounded-[2rem] overflow-hidden bg-gradient-to-br from-[#C7FF00] to-[#9acc00] group shadow-2xl border border-transparent">
                         <div className="absolute inset-0 z-0">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-white/30 rounded-full blur-[60px] translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform duration-1000"></div>
                         </div>
