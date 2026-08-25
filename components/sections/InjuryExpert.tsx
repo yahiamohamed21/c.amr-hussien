@@ -21,7 +21,7 @@ export function InjuryExpert() {
     {
       icon: <RefreshCw className="w-6 h-6 text-primary" />,
       titleEn: "Rehab Protocols",
-      desc: "Scientific strength-based rehabilitation that restores full functionality.",
+      desc: "Scientific strength-based rehabilitation that restores full functionalitثy.",
     },
   ];
 

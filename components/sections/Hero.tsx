@@ -4,21 +4,14 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Button } from "@/components/ui/index";
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
 
   // Elements
   const fullCoachRef = useRef<HTMLDivElement>(null);
-  const marquee1Ref = useRef<HTMLDivElement>(null);
-  const marquee2Ref = useRef<HTMLDivElement>(null);
-
-  // Text elements for entrance animation
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const subtitleRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -27,50 +20,17 @@ export function Hero() {
     if (!imageLoaded) return;
 
     // ---------- Initial states ----------
-    gsap.set(glowRef.current, {
-      opacity: 0.85,
-      background: "radial-gradient(55% 65% at 50% 42%, rgba(199,255,0,0.16) 0%, rgba(199,255,0,0) 70%)",
-    });
-    gsap.set(gridRef.current, { opacity: 0.5 });
-
-    gsap.set([titleRef.current, subtitleRef.current, ctaRef.current], {
-      autoAlpha: 0,
-      y: 40,
-      filter: "blur(10px)"
-    });
-
-    // Marquees initial state
-    gsap.set([marquee1Ref.current, marquee2Ref.current], { autoAlpha: 1, filter: "blur(0px)" });
+    gsap.set([titleRef.current, subtitleRef.current, ctaRef.current], { autoAlpha: 0, y: 30 });
+    gsap.set(fullCoachRef.current, { autoAlpha: 0, scale: 0.98, y: 20 });
 
     // Entrance animation
     const entranceTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
     entranceTl
-      .to(titleRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1, delay: 0.2 })
-      .to(subtitleRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8 }, "-=0.6")
-      .to(ctaRef.current, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8 }, "-=0.6");
-
-    // ---------- Ambient (scroll-independent) motion ----------
-    const ambientTl = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: "sine.inOut" } });
-    ambientTl
-      .to(glowRef.current, { xPercent: 4, yPercent: -3, duration: 6 }, 0)
-      .to(".hero-particle", {
-        y: "-=18",
-        x: "+=8",
-        duration: 7,
-        stagger: { each: 0.4, from: "random" },
-      }, 0);
-
-    gsap.to(".hero-ring", {
-      rotate: 360,
-      duration: 40,
-      ease: "none",
-      repeat: -1,
-      transformOrigin: "50% 50%",
-    });
-
-    // Animate marquees continuously
-    gsap.to(marquee1Ref.current, { xPercent: -20, ease: "none", duration: 15, repeat: -1, yoyo: true });
-    gsap.to(marquee2Ref.current, { xPercent: 20, ease: "none", duration: 15, repeat: -1, yoyo: true });
+      .to(fullCoachRef.current, { autoAlpha: 1, scale: 1, y: 0, duration: 1.2 }, 0)
+      .to(titleRef.current, { autoAlpha: 1, y: 0, duration: 1 }, 0.4)
+      .to(subtitleRef.current, { autoAlpha: 1, y: 0, duration: 1 }, 0.6)
+      .to(ctaRef.current, { autoAlpha: 1, y: 0, duration: 1 }, 0.8);
 
   }, { scope: containerRef, dependencies: [imageLoaded] });
 
@@ -82,127 +42,77 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" ref={containerRef} className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col justify-center items-center z-10">
+    <section id="hero" ref={containerRef} className="relative min-h-[100dvh] w-full bg-[#F2F0E9] dark:bg-[#10110F] transition-colors duration-500 z-10 flex flex-col pt-24 md:pt-0">
 
-      {/* Base background color layer */}
-      <div className="absolute inset-0 z-1 w-full h-full bg-[#F2F0E9] dark:bg-[#10110F] transition-colors duration-500">
-        <div className="absolute inset-0 bg-black/5 opacity-0 dark:opacity-100 dark:bg-black/60"></div>
-      </div>
+      {/* Subtle Grain for Premium Feel */}
+      <div className="absolute inset-0 z-0 opacity-[0.04] dark:opacity-[0.02] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
-      {/* Moving spotlight / glow */}
-      <div ref={glowRef} className="absolute inset-0 z-2 w-full h-full pointer-events-none dark:hidden"></div>
+      <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex-1 flex flex-col md:flex-row items-center justify-between z-10">
 
-      {/* Background Geometric Shapes (Static & Rotating decor) */}
-      <div className="absolute inset-0 z-2 pointer-events-none overflow-hidden dark:hidden">
-        {/* Giant abstract outline circles */}
-        <div className="hero-ring absolute -top-[20%] -right-[10%] w-[60vw] max-w-[800px] aspect-square rounded-full border-[1px] border-dashed border-[#10110F]/10 dark:border-[#C7FF00]/15"></div>
-        <div className="absolute top-[5%] -right-[10%] w-[60vw] max-w-[700px] aspect-square rounded-full border-[1px] border-[#10110F]/5 dark:border-[#C7FF00]/5"></div>
-
-        {/* Bottom left abstract circles */}
-        <div className="hero-ring absolute -bottom-[15%] -left-[10%] w-[45vw] max-w-[500px] aspect-square rounded-full border-[1px] border-dashed border-[#10110F]/15 dark:border-[#C7FF00]/15"></div>
-        <div className="absolute -bottom-[20%] -left-[15%] w-[55vw] max-w-[600px] aspect-square rounded-full border-[1px] border-[#10110F]/5 dark:border-[#C7FF00]/5"></div>
-      </div>
-
-      {/* Fine technical grid */}
-      <div
-        ref={gridRef}
-        className="absolute inset-0 z-3 pointer-events-none opacity-0 dark:hidden"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(199,255,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(199,255,0,0.06) 1px, transparent 1px)",
-          backgroundSize: "44px 44px",
-          maskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, black 40%, transparent 85%)",
-          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, black 40%, transparent 85%)",
-        }}
-      ></div>
-
-      {/* Grain texture for a premium, non-flat surface */}
-      <svg className="absolute inset-0 z-4 w-full h-full opacity-[0.05] pointer-events-none mix-blend-overlay dark:hidden">
-        <filter id="heroGrain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#heroGrain)" />
-      </svg>
-
-      {/* Ambient floating particles */}
-      <div className="absolute inset-0 z-5 pointer-events-none dark:hidden">
-        {Array.from({ length: 14 }).map((_, i) => (
-          <span
-            key={i}
-            className="hero-particle absolute rounded-full bg-[#C7FF00]/40"
-            style={{
-              width: `${2 + (i % 3)}px`,
-              height: `${2 + (i % 3)}px`,
-              left: `${(i * 137) % 100}%`,
-              top: `${(i * 71) % 100}%`,
-              opacity: 0.4,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Marquee Layers */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center z-6 pointer-events-none overflow-hidden gap-4 md:gap-8 opacity-10 dark:opacity-10">
-        <div ref={marquee1Ref} className="whitespace-nowrap flex w-[200vw] justify-center">
-          <h2 className="font-display text-7xl md:text-[12vw] tracking-tighter uppercase text-transparent [-webkit-text-stroke:2px_rgba(16,17,15,0.4)] dark:[-webkit-text-stroke:2px_rgba(199,255,0,0.6)] transition-colors duration-500">
-            ELITE PERFORMANCE &middot; ELITE PERFORMANCE &middot; ELITE PERFORMANCE &middot;
-          </h2>
+        {/* Mobile: Image First | Desktop: Image Right */}
+        <div
+          ref={fullCoachRef}
+          className="relative w-full md:w-1/2 h-[55vh] md:h-[85vh] flex justify-center items-end order-1 md:order-2 md:mt-16"
+        >
+          <div className="relative w-full h-[105%] origin-bottom">
+            <Image
+              src="/amr-hero-3-new.png"
+              alt="Coach Amr"
+              fill
+              quality={100}
+              priority
+              className="object-contain object-bottom md:object-center"
+              style={{
+                maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
+              }}
+              onLoad={handleImageLoad}
+              onError={() => setImageLoaded(true)}
+            />
+          </div>
         </div>
-        <div ref={marquee2Ref} className="whitespace-nowrap flex w-[200vw] justify-center -translate-x-[5%]">
-          <h2 className="font-sans font-black text-6xl md:text-[10vw] tracking-widest text-[#10110F]/80 dark:text-[#C7FF00]/80 uppercase transition-colors duration-500">
-            COACHING &middot; COACHING &middot; COACHING &middot; COACHING &middot;
-          </h2>
-        </div>
-      </div>
 
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col md:flex-row items-center justify-between gap-8 pt-28 md:pt-20">
+        {/* Text Section (Mobile: Bottom | Desktop: Left) */}
+        <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left order-2 md:order-1 pt-8 pb-16 md:py-0">
 
-        {/* Foreground Content - The Text Layer */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left order-2 pb-16 md:pb-0">
-          <h1 ref={titleRef} className="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight uppercase text-[#10110F] dark:text-white leading-[0.95] mb-6 drop-shadow-lg">
+          <div className="flex justify-center md:justify-start mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#10110F]/10 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-md shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#10110F] dark:bg-[#C7FF00] animate-pulse"></span>
+              <span className="font-label-caps text-xs tracking-widest text-[#10110F] dark:text-[#C7FF00] uppercase font-bold">
+                Elite Performance
+              </span>
+            </div>
+          </div>
+
+          <h1 ref={titleRef} className="font-display text-[3.5rem] leading-[0.9] md:text-7xl lg:text-8xl md:leading-[0.9] uppercase text-[#10110F] dark:text-white mb-6">
             Unlock Your <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10110F] to-[#10110F]/60 dark:from-[#C7FF00] dark:to-[#C7FF00]/60">Elite Potential</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10110F] to-[#10110F]/60 dark:from-[#C7FF00] dark:to-[#C7FF00]/60">
+              Elite Potential
+            </span>
           </h1>
-          <p ref={subtitleRef} className="font-sans text-base md:text-xl text-[#10110F]/80 dark:text-white/80 mb-8 max-w-md mx-auto md:mx-0 font-medium drop-shadow-md">
-            Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies , 6X TOP TRAINER · 10+ YEARS EXPERIENCE .
-          </p>
-          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pointer-events-auto">
+
+          <div ref={subtitleRef} className="max-w-md mx-auto md:mx-0">
+            <p className="font-sans text-base md:text-lg text-[#10110F]/70 dark:text-white/70 font-medium leading-relaxed mb-4">
+              Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies.
+            </p>
+            <p className="font-sans text-sm font-bold tracking-widest text-[#10110F] dark:text-[#C7FF00] uppercase mb-10">
+              6X TOP TRAINER · 10+ YEARS EXPERIENCE
+            </p>
+          </div>
+
+          <div ref={ctaRef} className="flex justify-center md:justify-start">
             <a
               href="/Amr%20Hussien%20CV.docx"
               download="Amr_Hussien_CV.docx"
-              className="inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring w-full sm:w-auto bg-[#10110F] text-white hover:bg-[#10110F]/90 dark:bg-[#C7FF00] dark:text-[#10110F] dark:hover:bg-[#C7FF00]/90 text-sm md:text-base py-4 px-8"
+              className="inline-flex items-center justify-center h-14 px-10 font-sans font-bold uppercase tracking-widest text-sm transition-all duration-300 bg-[#10110F] text-white dark:bg-white dark:text-[#10110F] hover:bg-[#10110F]/80 dark:hover:bg-white/80 rounded shadow-xl hover:shadow-2xl hover:-translate-y-1"
             >
-              Download CV
+              DOWNLOAD CV
             </a>
           </div>
-        </div>
 
-        {/* ELEMENT 1: Full Transparent Coach Cutout */}
-        <div
-          ref={fullCoachRef}
-          className="w-full md:w-1/2 relative h-[45vh] md:h-[70vh] flex justify-center items-center order-1"
-        >
-          {/* Simple Image Container */}
-          <div className="absolute inset-0 z-10 flex justify-center items-center">
-            <div className="relative w-full h-full">
-              <Image
-                src="/amr-hero-new.jpeg"
-                alt="Coach Amr"
-                fill
-                quality={100}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
-                priority
-                onLoad={handleImageLoad}
-                onError={() => setImageLoaded(true)}
-              />
-            </div>
-          </div>
         </div>
 
       </div>
-
     </section>
   );
 }

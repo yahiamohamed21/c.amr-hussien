@@ -94,8 +94,8 @@ export function About() {
 
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
 
-          {/* Left Side: Typography & Content */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+          {/* Content */}
+          <div className="w-full max-w-5xl flex flex-col justify-center">
 
             <div className="about-reveal inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-[#10110F]/10 dark:border-white/10 bg-white/5 backdrop-blur-md mb-8 w-fit shadow-sm">
               <div className="w-2 h-2 rounded-full bg-[#10110F] dark:bg-[#C7FF00] animate-pulse"></div>
@@ -110,7 +110,7 @@ export function About() {
 
             <div className="about-reveal w-16 h-[3px] bg-[#10110F] dark:bg-[#C7FF00] mb-8"></div>
 
-            <div className="about-reveal font-sans text-lg md:text-xl text-[#10110F]/80 dark:text-white/70 leading-relaxed mb-12 max-w-xl font-medium">
+            <div className="about-reveal font-sans text-lg md:text-xl text-[#10110F]/80 dark:text-white/70 leading-relaxed mb-12 max-w-4xl font-medium">
               <p className="whitespace-pre-line">{displayDescription}</p>
             </div>
 
@@ -127,24 +127,7 @@ export function About() {
             </div>
           </div>
 
-          {/* Right Side: Image Stack */}
-          <div className="w-full lg:w-1/2 flex flex-col gap-6 mt-10 lg:mt-0">
-            <img
-              className="w-full   object-cover"
-              alt="Coach Amr Main"
-              src={about?.image1Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image1Id}` : "/image-1.jpeg"}
-            />
-            <img
-              className="w-full   object-cover"
-              alt="Coach Amr Action"
-              src={about?.image2Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image2Id}` : "/image-2.jpeg"}
-            />
-            <img
-              className="w-full   object-cover"
-              alt="Coach Amr Detail"
-              src={about?.image3Id ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/media/${about.image3Id}` : "/image-4.jpeg"}
-            />
-          </div>
+
 
         </div>
       </div>
