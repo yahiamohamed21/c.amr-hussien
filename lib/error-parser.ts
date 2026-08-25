@@ -35,6 +35,9 @@ export function handleApiError(
   }
 
   if (status === 401) {
+    if (error.config?.url?.includes('/auth/login')) {
+      return data?.message || data?.detail || 'Invalid email or password.';
+    }
     return 'Your session has expired. Please log in again.';
   }
 

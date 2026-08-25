@@ -53,11 +53,12 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // If 401 and not a retry yet, and it's an admin endpoint
+    // If 401 and not a retry yet, and it's an admin endpoint (but not login itself)
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      originalRequest.url?.startsWith('/api/v1/admin')
+      originalRequest.url?.startsWith('/api/v1/admin') &&
+      !originalRequest.url.includes('/auth/login')
     ) {
       originalRequest._retry = true;
 

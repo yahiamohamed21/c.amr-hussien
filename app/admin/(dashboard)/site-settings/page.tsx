@@ -14,7 +14,6 @@ const siteSettingsSchema = z.object({
   defaultMetaTitle: z.string().optional(),
   defaultMetaDescription: z.string().optional(),
   instagramUrl: z.string().optional(),
-  xUrl: z.string().optional(),
   facebookUrl: z.string().optional(),
   linkedInUrl: z.string().optional(),
   whatsAppNumber: z.string().optional(),
@@ -43,7 +42,6 @@ export default function SiteSettingsAdminPage() {
       defaultMetaTitle: "",
       defaultMetaDescription: "",
       instagramUrl: "",
-      xUrl: "",
       facebookUrl: "",
       linkedInUrl: "",
       whatsAppNumber: "",
@@ -113,7 +111,6 @@ export default function SiteSettingsAdminPage() {
           <Input label="WhatsApp Number" {...form.register("whatsAppNumber")} error={form.formState.errors.whatsAppNumber?.message} />
           <Input label="Contact Email" {...form.register("contactEmail")} error={form.formState.errors.contactEmail?.message} />
           <Input label="Instagram URL" {...form.register("instagramUrl")} error={form.formState.errors.instagramUrl?.message} />
-          <Input label="Twitter (X) URL" {...form.register("xUrl")} error={form.formState.errors.xUrl?.message} />
           <Input label="Facebook URL" {...form.register("facebookUrl")} error={form.formState.errors.facebookUrl?.message} />
           <Input label="LinkedIn URL" {...form.register("linkedInUrl")} error={form.formState.errors.linkedInUrl?.message} />
         </div>
@@ -122,6 +119,53 @@ export default function SiteSettingsAdminPage() {
           <Button type="submit" isLoading={mutation.isPending}>Save Changes</Button>
         </div>
       </form>
+      
+      <AdminCredentialsSection />
     </div>
+  );
+}
+
+const adminCredentialsSchema = z.object({
+  currentPassword: z.string().min(1, "Required"),
+  newEmail: z.string().email("Invalid email").min(1, "Required"),
+  newPassword: z.string().min(6, "Must be at least 6 characters"),
+});
+
+type AdminCredentialsForm = z.infer<typeof adminCredentialsSchema>;
+
+function AdminCredentialsSection() {
+  const { showSuccess, showError } = useAdminAlert();
+  const form = useForm<AdminCredentialsForm>({
+    resolver: zodResolver(adminCredentialsSchema),
+    defaultValues: { currentPassword: "", newEmail: "", newPassword: "" }
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (payload: AdminCredentialsForm) => {
+      const res = await api.put("/api/v1/admin/auth/credentials", payload);
+      return res.data;
+    },
+    onSuccess: () => {
+      showSuccess("Credentials updated successfully!");
+      form.reset();
+    },
+    onError: (error) => {
+      const msg = handleApiError(error, form);
+      showError(msg);
+    },
+  });
+
+  return (
+    <form onSubmit={form.handleSubmit((d) => mutation.mutate(d))} className="bg-surface p-8 rounded-2xl border border-white/5 space-y-6 mt-8">
+      <h3 className="font-display text-xl uppercase tracking-widest text-on-surface mb-6 border-b border-white/5 pb-4">Security Settings</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Input label="Current Password" type="password" {...form.register("currentPassword")} error={form.formState.errors.currentPassword?.message} required />
+        <Input label="New Email" type="email" {...form.register("newEmail")} error={form.formState.errors.newEmail?.message} required />
+        <Input label="New Password" type="password" {...form.register("newPassword")} error={form.formState.errors.newPassword?.message} required />
+      </div>
+      <div className="flex justify-end pt-4 border-t border-white/5">
+        <Button type="submit" isLoading={mutation.isPending}>Update Credentials</Button>
+      </div>
+    </form>
   );
 }
