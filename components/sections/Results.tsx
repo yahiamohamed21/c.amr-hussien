@@ -199,11 +199,6 @@ export function Results() {
               <div className="flex flex-col flex-grow mt-8">
                 <div className="w-12 h-1 bg-primary mb-4"></div>
                 <h5 className="font-display text-2xl md:text-3xl uppercase mb-4 text-on-surface tracking-tight">{item.type}</h5>
-                <div className="relative pl-4 border-l-2 border-outline-variant/30 mt-auto">
-                  <p className="font-body-md text-on-surface-variant italic text-sm md:text-base leading-relaxed">
-                    {item.quote}
-                  </p>
-                </div>
               </div>
 
             </div>
