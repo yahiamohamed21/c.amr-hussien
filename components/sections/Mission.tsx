@@ -30,19 +30,18 @@ export function Mission() {
             }
         );
 
-        // Scrub fade up each card on the right
+        // Fade up each card on the right when it enters the viewport
         const cards = gsap.utils.toArray('.mission-card');
         cards.forEach((card: any, i) => {
             gsap.fromTo(card,
-                { y: 100, opacity: 0.3, scale: 0.95 },
+                { y: 100, opacity: 0, scale: 0.95 },
                 {
                     y: 0, opacity: 1, scale: 1,
-                    ease: "none",
+                    duration: 0.8,
+                    ease: "power3.out",
                     scrollTrigger: {
                         trigger: card,
-                        start: "top 95%",
-                        end: "top 70%",
-                        scrub: 1,
+                        start: "top 85%",
                     }
                 }
             );
