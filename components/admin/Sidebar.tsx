@@ -15,6 +15,7 @@ const navItems = [
   // Core Dashboard
   
   // Sections in order of the public site
+  { name: "Hero Section", href: "/admin/hero", icon: LayoutTemplate },
   { name: "Coaching Goals", href: "/admin/coaching-goals", icon: Target },
   { name: "About", href: "/admin/about", icon: Info },
   { name: "Injury Rehab", href: "/admin/injury-rehab", icon: Activity },

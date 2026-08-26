@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -15,6 +17,36 @@ export function Hero() {
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const { data: heroData } = useQuery({
+    queryKey: ["public-hero"],
+    queryFn: async () => {
+      try {
+        const res = await api.get("/api/v1/public/hero");
+        return res.data;
+      } catch (err) {
+        return null;
+      }
+    },
+  });
+
+  const getCvUrl = () => {
+    if (!heroData?.primaryButtonUrl) return "/Amr%20Hussien%20CV.docx";
+    if (heroData.primaryButtonUrl.startsWith('/api')) {
+      return `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}${heroData.primaryButtonUrl}`;
+    }
+    return heroData.primaryButtonUrl;
+  };
+
+  const cvUrl = getCvUrl();
+  const cvText = heroData?.primaryButtonText || "Download My CV";
+
+  const getImageUrl = () => {
+    if (heroData?.imageId) {
+      return `${process.env.NEXT_PUBLIC_API_BASE_URL || ''}/api/v1/public/media/${heroData.imageId}`;
+    }
+    return "/upscalemedia-transformed.png";
+  };
 
   useGSAP(() => {
     if (!imageLoaded) return;
@@ -56,7 +88,7 @@ export function Hero() {
         >
           <div className="relative w-full h-[105%] origin-bottom">
             <Image
-              src="/upscalemedia-transformed.png"
+              src={getImageUrl()}
               alt="Coach Amr"
               fill
               quality={100}
@@ -88,34 +120,35 @@ export function Hero() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#10110F]/10 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-md shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#10110F] dark:bg-[#C7FF00] animate-pulse"></span>
               <span className="font-label-caps text-xs tracking-widest text-[#10110F] dark:text-[#C7FF00] uppercase font-bold">
-                Elite Performance
+                {heroData?.eyebrow || "Elite Performance"}
               </span>
             </div>
           </div>
 
           <h1 ref={titleRef} className="font-display text-[3.5rem] leading-[0.9] md:text-7xl lg:text-8xl md:leading-[0.9] uppercase text-[#10110F] dark:text-white mb-6">
-            Unlock Your <br />
+            {heroData?.title || "Unlock Your"} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10110F] to-[#10110F]/60 dark:from-[#C7FF00] dark:to-[#C7FF00]/60">
-              Elite Potential
+              {heroData?.highlightedText || "Elite Potential"}
             </span>
           </h1>
 
           <div ref={subtitleRef} className="max-w-md mx-auto md:mx-0">
             <p className="font-sans text-base md:text-lg text-[#10110F]/70 dark:text-white/70 font-medium leading-relaxed mb-4">
-              Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies.
+              {heroData?.description || "Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies."}
             </p>
             <p className="font-sans text-sm font-bold tracking-widest text-[#10110F] dark:text-[#C7FF00] uppercase mb-10">
-              6X TOP TRAINER · 10+ YEARS EXPERIENCE
+              {heroData?.coachCardName || "6X TOP TRAINER · 10+ YEARS EXPERIENCE"}
             </p>
           </div>
 
           <div ref={ctaRef} className="flex justify-center md:justify-start">
             <a
-              href="/Amr%20Hussien%20CV.docx"
-              download="Amr_Hussien_CV.docx"
+              href={cvUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center h-14 px-10 font-sans font-bold uppercase tracking-widest text-sm transition-all duration-300 bg-[#10110F] text-white dark:bg-white dark:text-[#10110F] hover:bg-[#10110F]/80 dark:hover:bg-white/80 rounded shadow-xl hover:shadow-2xl hover:-translate-y-1"
             >
-              Download My CV
+              {cvText}
             </a>
           </div>
 

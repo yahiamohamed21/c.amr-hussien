@@ -7,17 +7,19 @@ import * as z from "zod";
 import { api } from "@/lib/api";
 import { handleApiError } from "@/lib/error-parser";
 import { Input, Button } from "@/components/ui";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { Upload } from "lucide-react";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 const heroSchema = z.object({
   eyebrow: z.string().min(1, "Required"),
   title: z.string().min(1, "Required"),
-  highlightedText: z.string().optional(),
+  highlightedText: z.string().nullable().optional(),
   description: z.string().min(1, "Required"),
   primaryButtonText: z.string().min(1, "Required"),
   primaryButtonUrl: z.string().min(1, "Required"),
-  secondaryButtonText: z.string().optional(),
-  secondaryButtonUrl: z.string().optional(),
+  secondaryButtonText: z.string().nullable().optional(),
+  secondaryButtonUrl: z.string().nullable().optional(),
   coachCardName: z.string().min(1, "Required"),
   coachCardSubtitle: z.string().min(1, "Required"),
   imageId: z.string().nullable().optional(),
@@ -29,6 +31,8 @@ type HeroForm = z.infer<typeof heroSchema>;
 export default function HeroAdminPage() {
   const queryClient = useQueryClient();
   const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [isUploadingCV, setIsUploadingCV] = useState(false);
+  const cvFileInputRef = useRef<HTMLInputElement>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-hero"],
@@ -40,19 +44,19 @@ export default function HeroAdminPage() {
 
   const form = useForm<HeroForm>({
     resolver: zodResolver(heroSchema),
-    values: data || {
-      eyebrow: "ELITE PERFORMANCE",
-      title: "Unlock Your",
-      highlightedText: "Elite Potential",
-      description: "Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies.",
-      primaryButtonText: "Explore Programs",
-      primaryButtonUrl: "#contact",
-      secondaryButtonText: "",
-      secondaryButtonUrl: "",
-      coachCardName: "AMR HUSSIEN",
-      coachCardSubtitle: "ELITE PERFORMANCE COACH",
-      imageId: null,
-      isVisible: true,
+    values: {
+      eyebrow: data?.eyebrow === "Evidence-Based Coaching" ? "ELITE PERFORMANCE" : (data?.eyebrow || "ELITE PERFORMANCE"),
+      title: data?.title === "Build The Strongest Version Of Yourself" ? "Unlock Your" : (data?.title || "Unlock Your"),
+      highlightedText: data?.highlightedText === "Strongest Version" ? "Elite Potential" : (data?.highlightedText || "Elite Potential"),
+      description: data?.description?.startsWith("Move better") ? "Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies." : (data?.description || "Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies."),
+      primaryButtonText: data?.primaryButtonText || "Download My CV",
+      primaryButtonUrl: data?.primaryButtonUrl || "/Amr%20Hussien%20CV.docx",
+      secondaryButtonText: data?.secondaryButtonText || "",
+      secondaryButtonUrl: data?.secondaryButtonUrl || "",
+      coachCardName: data?.coachCardName === "AMR HUSSIEN" ? "6X TOP TRAINER · 10+ YEARS EXPERIENCE" : (data?.coachCardName || "6X TOP TRAINER · 10+ YEARS EXPERIENCE"),
+      coachCardSubtitle: "-",
+      imageId: data?.imageId || null,
+      isVisible: data?.isVisible ?? true,
     },
   });
 
@@ -75,6 +79,29 @@ export default function HeroAdminPage() {
   const onSubmit = (payload: HeroForm) => {
     setToastMessage(null);
     mutation.mutate(payload);
+  };
+
+  const handleCVUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setIsUploadingCV(true);
+    try {
+      const res = await api.post("/api/v1/admin/media", formData);
+      const url = `/api/v1/public/media/${res.data.id}`;
+      form.setValue("primaryButtonUrl", url, { shouldValidate: true, shouldDirty: true });
+      setToastMessage({ type: 'success', text: 'CV uploaded successfully! Save changes to apply.' });
+    } catch (err) {
+      console.error("CV Upload failed", err);
+      setToastMessage({ type: 'error', text: 'CV Upload failed. Make sure the file is valid.' });
+    } finally {
+      setIsUploadingCV(false);
+      if (cvFileInputRef.current) {
+        cvFileInputRef.current.value = "";
+      }
+    }
   };
 
   if (isLoading) {
@@ -114,23 +141,50 @@ export default function HeroAdminPage() {
           </div>
         </div>
 
-        <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">Buttons</h3>
+        <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">CV Button</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input label="Primary Button Text" {...form.register("primaryButtonText")} error={form.formState.errors.primaryButtonText?.message} />
-          <Input label="Primary Button URL" {...form.register("primaryButtonUrl")} error={form.formState.errors.primaryButtonUrl?.message} />
-          <Input label="Secondary Button Text" {...form.register("secondaryButtonText")} error={form.formState.errors.secondaryButtonText?.message} />
-          <Input label="Secondary Button URL" {...form.register("secondaryButtonUrl")} error={form.formState.errors.secondaryButtonUrl?.message} />
+          <Input label="CV Button Text" {...form.register("primaryButtonText")} error={form.formState.errors.primaryButtonText?.message} />
+          
+          <div className="flex gap-2 items-end">
+            <div className="flex-1">
+              <Input label="CV File URL (e.g. /cv.pdf)" {...form.register("primaryButtonUrl")} error={form.formState.errors.primaryButtonUrl?.message} />
+            </div>
+            <div className="pb-[22px] flex-shrink-0">
+              <input
+                type="file"
+                className="hidden"
+                accept=".pdf,.doc,.docx"
+                ref={cvFileInputRef}
+                onChange={handleCVUpload}
+              />
+              <Button 
+                type="button" 
+                variant="secondary" 
+                className="h-[42px] px-4 flex items-center gap-2"
+                onClick={() => cvFileInputRef.current?.click()}
+                isLoading={isUploadingCV}
+              >
+                {!isUploadingCV && <Upload className="w-4 h-4" />}
+                Upload
+              </Button>
+            </div>
+          </div>
         </div>
 
-        <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">Coach ID Card</h3>
+        <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">Experience & Stats</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input label="Card Name" {...form.register("coachCardName")} error={form.formState.errors.coachCardName?.message} />
-          <Input label="Card Subtitle" {...form.register("coachCardSubtitle")} error={form.formState.errors.coachCardSubtitle?.message} />
+          <div className="md:col-span-2">
+            <Input label="Experience Text (e.g. 6X TOP TRAINER...)" {...form.register("coachCardName")} error={form.formState.errors.coachCardName?.message} />
+          </div>
+          <input type="hidden" {...form.register("coachCardSubtitle")} value="-" />
         </div>
         
-        {/* Placeholder for Media Library Picker */}
         <div className="pt-6 border-t border-white/5">
-           <p className="text-on-surface-variant text-sm font-body-md italic mb-4">Note: Image selection will be connected once the Media Library module is built.</p>
+          <ImageUploader
+            label="Hero Image"
+            value={form.watch("imageId")}
+            onUpload={(id) => form.setValue("imageId", id, { shouldValidate: true, shouldDirty: true })}
+          />
         </div>
 
         <div className="flex justify-end pt-4">
