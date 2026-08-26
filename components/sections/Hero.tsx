@@ -50,7 +50,7 @@ export function Hero() {
       <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 flex-1 flex flex-col md:flex-row items-center justify-between z-10">
 
         {/* Mobile: Image First | Desktop: Image Right */}
-        <div 
+        <div
           ref={fullCoachRef}
           className="relative w-full md:w-1/2 h-[55vh] md:h-[75vh] max-h-[700px] flex justify-center items-end order-1 md:order-2 md:mt-16"
         >
@@ -70,7 +70,7 @@ export function Hero() {
               onError={() => setImageLoaded(true)}
             />
             {/* Artistic Film Grain Overlay to mask pixelation */}
-            <div 
+            <div
               className="absolute inset-0 z-10 opacity-30 pointer-events-none mix-blend-overlay"
               style={{
                 backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')",
@@ -115,7 +115,7 @@ export function Hero() {
               download="Amr_Hussien_CV.docx"
               className="inline-flex items-center justify-center h-14 px-10 font-sans font-bold uppercase tracking-widest text-sm transition-all duration-300 bg-[#10110F] text-white dark:bg-white dark:text-[#10110F] hover:bg-[#10110F]/80 dark:hover:bg-white/80 rounded shadow-xl hover:shadow-2xl hover:-translate-y-1"
             >
-              DOWNLOAD CV
+              Download My CV
             </a>
           </div>
 
