@@ -53,7 +53,7 @@ export default function HeroAdminPage() {
       primaryButtonUrl: data?.primaryButtonUrl || "/Amr%20Hussien%20CV.docx",
       secondaryButtonText: data?.secondaryButtonText || "",
       secondaryButtonUrl: data?.secondaryButtonUrl || "",
-      coachCardName: data?.coachCardName === "AMR HUSSIEN" ? "6X TOP TRAINER · 10+ YEARS EXPERIENCE" : (data?.coachCardName || "6X TOP TRAINER · 10+ YEARS EXPERIENCE"),
+      coachCardName: data?.coachCardName === "AMR HUSSIEN" ? "7X TOP TRAINER · 10+ YEARS EXPERIENCE" : (data?.coachCardName || "7X TOP TRAINER · 10+ YEARS EXPERIENCE"),
       coachCardSubtitle: "-",
       imageId: data?.imageId || null,
       isVisible: data?.isVisible ?? true,
@@ -121,7 +121,7 @@ export default function HeroAdminPage() {
       )}
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-surface p-8 rounded-2xl border border-white/5 space-y-6">
-        
+
         <div className="flex items-center gap-4 mb-6 pb-6 border-b border-white/5">
           <input type="checkbox" id="isVisible" {...form.register("isVisible")} className="w-5 h-5 accent-primary-container" />
           <label htmlFor="isVisible" className="text-on-surface font-label-caps uppercase tracking-widest text-sm">Visible on Public Site</label>
@@ -133,7 +133,7 @@ export default function HeroAdminPage() {
           <Input label="Highlighted Text" {...form.register("highlightedText")} error={form.formState.errors.highlightedText?.message} />
           <div className="md:col-span-2">
             <label className="block text-sm font-label-caps uppercase tracking-widest text-on-surface-variant mb-2">Description</label>
-            <textarea 
+            <textarea
               {...form.register("description")}
               className="w-full bg-surface-container-low border border-white/10 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors min-h-[120px]"
             />
@@ -144,7 +144,7 @@ export default function HeroAdminPage() {
         <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">CV Button</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input label="CV Button Text" {...form.register("primaryButtonText")} error={form.formState.errors.primaryButtonText?.message} />
-          
+
           <div className="flex gap-2 items-end">
             <div className="flex-1">
               <Input label="CV File URL (e.g. /cv.pdf)" {...form.register("primaryButtonUrl")} error={form.formState.errors.primaryButtonUrl?.message} />
@@ -157,9 +157,9 @@ export default function HeroAdminPage() {
                 ref={cvFileInputRef}
                 onChange={handleCVUpload}
               />
-              <Button 
-                type="button" 
-                variant="secondary" 
+              <Button
+                type="button"
+                variant="secondary"
                 className="h-[42px] px-4 flex items-center gap-2"
                 onClick={() => cvFileInputRef.current?.click()}
                 isLoading={isUploadingCV}
@@ -174,11 +174,11 @@ export default function HeroAdminPage() {
         <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">Experience & Stats</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="md:col-span-2">
-            <Input label="Experience Text (e.g. 6X TOP TRAINER...)" {...form.register("coachCardName")} error={form.formState.errors.coachCardName?.message} />
+            <Input label="Experience Text (e.g. 7X TOP TRAINER...)" {...form.register("coachCardName")} error={form.formState.errors.coachCardName?.message} />
           </div>
           <input type="hidden" {...form.register("coachCardSubtitle")} value="-" />
         </div>
-        
+
         <div className="pt-6 border-t border-white/5">
           <ImageUploader
             label="Hero Image"
