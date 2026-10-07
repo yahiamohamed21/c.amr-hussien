@@ -137,7 +137,7 @@ export function Hero() {
               {heroData?.description || "Precision coaching, biomechanics, and data-driven performance for athletes who demand more from their bodies."}
             </p>
             <p className="font-sans text-sm font-bold tracking-widest text-[#10110F] dark:text-[#C7FF00] uppercase mb-10">
-              {heroData?.coachCardName || "7X TOP TRAINER · 10+ YEARS EXPERIENCE"}
+              {heroData?.coachCardName || "8X TOP TRAINER · 10+ YEARS EXPERIENCE"}
             </p>
           </div>
 

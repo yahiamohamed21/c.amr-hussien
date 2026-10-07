@@ -53,7 +53,7 @@ export default function HeroAdminPage() {
       primaryButtonUrl: data?.primaryButtonUrl || "/Amr%20Hussien%20CV.docx",
       secondaryButtonText: data?.secondaryButtonText || "",
       secondaryButtonUrl: data?.secondaryButtonUrl || "",
-      coachCardName: data?.coachCardName === "AMR HUSSIEN" ? "7X TOP TRAINER · 10+ YEARS EXPERIENCE" : (data?.coachCardName || "7X TOP TRAINER · 10+ YEARS EXPERIENCE"),
+      coachCardName: data?.coachCardName === "AMR HUSSIEN" ? "8X TOP TRAINER · 10+ YEARS EXPERIENCE" : (data?.coachCardName || "8X TOP TRAINER · 10+ YEARS EXPERIENCE"),
       coachCardSubtitle: "-",
       imageId: data?.imageId || null,
       isVisible: data?.isVisible ?? true,
@@ -174,7 +174,7 @@ export default function HeroAdminPage() {
         <h3 className="font-display text-xl uppercase tracking-widest pt-6 border-t border-white/5 text-on-surface">Experience & Stats</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="md:col-span-2">
-            <Input label="Experience Text (e.g. 7X TOP TRAINER...)" {...form.register("coachCardName")} error={form.formState.errors.coachCardName?.message} />
+            <Input label="Experience Text (e.g. 8X TOP TRAINER...)" {...form.register("coachCardName")} error={form.formState.errors.coachCardName?.message} />
           </div>
           <input type="hidden" {...form.register("coachCardSubtitle")} value="-" />
         </div>
